@@ -8,6 +8,7 @@ import Dark from "views/examples/Dark.js";
 import Deposit from "views/examples/Deposit";
 import Withdraw from "views/examples/Withdraw";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
+import MyPlan from "views/examples/MyPlan/MyPlan";
 var routes = [
   {
     path: "/index",
@@ -54,8 +55,15 @@ var routes = [
   {
     path: "/tradingplan",
     name: "Trading Plan",
-    icon: "ni ni-bullet-list-67 text-red",
+    icon: "fa-solid fa-spa text-primary",
     component: <TradingPlan />,
+    layout: "/admin",
+  },
+  {
+    path: "/myplan",
+    name: "My Plan",
+    icon: "fa-solid fa-hand-holding-heart text-primary",
+    component: <MyPlan />,
     layout: "/admin",
   },
   {
