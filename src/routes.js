@@ -33,7 +33,7 @@ var routes = [
   {
     path: "/user-profile",
     name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
+    icon: "fa-solid fa-user text-primary",
     component: <Profile />,
     layout: "/admin",
   },
