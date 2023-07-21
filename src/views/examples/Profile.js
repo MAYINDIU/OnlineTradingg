@@ -1,22 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
 import {
   Button,
   Card,
@@ -30,12 +11,16 @@ import {
   Col,
 } from "reactstrap";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+
 
 const Profile = () => {
   return (
     <>
-      <UserHeader />
+
+
+<div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
+                <h2 className='text-white mb-2'>Account Setting</h2>
+            </div>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -48,7 +33,7 @@ const Profile = () => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                        src={require("../../assets/img/theme/profile.png")}
                       />
                     </a>
                   </div>
@@ -161,7 +146,7 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="lucky.jesse"
+                            defaultValue="mayin"
                             id="input-username"
                             placeholder="Username"
                             type="text"
@@ -179,7 +164,7 @@ const Profile = () => {
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="jesse@example.com"
+                            placeholder="mayin@example.com"
                             type="email"
                           />
                         </FormGroup>
@@ -196,7 +181,7 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
+                            defaultValue="Mayin"
                             id="input-first-name"
                             placeholder="First name"
                             type="text"
@@ -213,7 +198,7 @@ const Profile = () => {
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Jesse"
+                            defaultValue="uddin"
                             id="input-last-name"
                             placeholder="Last name"
                             type="text"
@@ -300,22 +285,10 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
-                  <hr className="my-4" />
-                  {/* Description */}
-                  <h6 className="heading-small text-muted mb-4">About me</h6>
-                  <div className="pl-lg-4">
-                    <FormGroup>
-                      <label>About Me</label>
-                      <Input
-                        className="form-control-alternative"
-                        placeholder="A few words about you ..."
-                        rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                        Open Source."
-                        type="textarea"
-                      />
-                    </FormGroup>
-                  </div>
+                  <div className="col text-center mt-3">
+                    <Button className='btn btn-default'>  <i className="mr-2 shadow fa-solid fa-user" />
+                         Update Profile</Button>                     
+                          </div>
                 </Form>
               </CardBody>
             </Card>
