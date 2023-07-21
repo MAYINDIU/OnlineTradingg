@@ -70,7 +70,7 @@ const Index = (props) => {
              </Row>
        
 
-        <Row className="mt-2">
+        <Row className="mt-2 mb-3">
           <Col className="mb-5 mb-xl-0" xl="12">
             <Card className="shadow">
               <CardHeader className="border-0">

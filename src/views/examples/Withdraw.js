@@ -1,90 +1,213 @@
 import React from 'react';
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    NavItem,
-    NavLink,
-    Nav,
-    Progress,
-    Table,
-    Container,
-    Row,
-    CardTitle,
-    Col,
-    Input,
-    Label,
-  } from "reactstrap";
+import { Button,Card,CardHeader,CardBody,Row,Col} from "reactstrap";
 const Withdraw = () => {
 
     return (
         <div>
             <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
-            <Row className='container-fluid'>
-            <Col lg="12" xl="8" className=' mt--7'>
-                <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
+                <h2 className='text-white mb-4'>Select a withdrawal request</h2>
+            </div>
+            <Row className='container-fluid '>
+            <Col lg="4" xl="4" className=' mt--7'>
+                <Card className="bg-default  shadow-lg  shadow-sm--hover card-lift--hover  mb-4 mb-xl-0 ">
                   <CardBody>
-                  <Label for="exampleEmail">
-                   Enter Amount
-                  </Label>
-                  <Input
-                    id="amount"
-                    name="amount"
-                    placeholder="Enter Amount"
-                    type='number'
-                    min='5'
-                    />
-  
-                   <Label className='mt-3' for="exampleEmail">
-                   Choose Payment Method from the list below
-                  </Label>
-
-                   <Row>
-                   <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>BUSD</p>
-                        </CardBody>
-                        </Card>
-                    </Col>
-                    <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg  mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>USDT</p>
-                        </CardBody>
-                        </Card>
-                    </Col>
-
-                   </Row>
-                   <Row>
-                   <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>Bank Transfer</p>
-                        </CardBody>
-                        </Card>
-                    </Col>
-                    <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p> Paypal</p>
-                        </CardBody>
-                        </Card>
-                    </Col>
-                    <div className="col text-center mt-3">
-                        <Button className='btn btn-default'>Procced to payment</Button>
+                      <div className='text-center'>
+                      <lavel className='btn btn-secondary mt--6 w-50 rounded-1'>BUSD</lavel>
                       </div>
+                   
+                      <div className="text-center">
+                          <i className=" icon icon-shape bg-primary text-white rounded-circle shadow fa-solid fa-money-bill-transfer" />
+                      </div>
+                     
+                    <h5 className='text-white mt-3 text-center'>Minimum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$546</h5>
 
 
-                   </Row>
+                    <h5 className='text-white mt-3 text-center'>Maximum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$1,000</h5>
+                    <h5 className='text-white mt-3 text-center'>Charge Type: percentage</h5>
+                    <h5 className='text-white mt-3 text-center'>Charges Amount: 0%</h5>
+
+                    <h5 className='text-white mt-3 text-center'>Duration:</h5>
+               
+  
+                    <div className="col text-center mt-3">
+                    <Button className='btn btn-primary'>  <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-circle-plus" />
+                         Request Withdrawal</Button>                     
+                          </div>
+
+              
            
                   </CardBody>
                 </Card>
               </Col>
+              <Col lg="4" xl="4" className=' mt--7'>
+                <Card className="bg-default shadow-lg card-lift--hover  shadow-sm--hover  mb-4 mb-xl-0 ">
+                  <CardBody>
+                      <div className='text-center'>
+                      <lavel className='btn btn-secondary mt--6 w-50 rounded-1'>USDT</lavel>
+                      </div>
+                   
+                      <div className="text-center">
+                          <i className=" icon icon-shape bg-primary text-white rounded-circle shadow fa-solid fa-money-bill-transfer" />
+                      </div>
+                     
+                    <h5 className='text-white mt-3 text-center'>Minimum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$546</h5>
+
+
+                    <h5 className='text-white mt-3 text-center'>Maximum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$1,000</h5>
+                    <h5 className='text-white mt-3 text-center'>Charge Type: percentage</h5>
+                    <h5 className='text-white mt-3 text-center'>Charges Amount: 0%</h5>
+
+                    <h5 className='text-white mt-3 text-center'>Duration:</h5>
+               
+  
+                    <div className="col text-center mt-3">
+                    <Button className='btn btn-primary'> 
+                     <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-circle-plus" />
+                         Request Withdrawal</Button>
+                                               </div>
+
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col lg="4" xl="4" className=' mt--7'>
+                <Card className="bg-default shadow-lg   card-lift--hover shadow-sm--hover  mb-4 mb-xl-0 ">
+                  <CardBody>
+                      <div className='text-center'>
+                      <lavel className='btn btn-secondary mt--6 w-75 rounded-1'>BANK TRANSFER</lavel>
+                      </div>
+                   
+                      <div className="text-center">
+                          <i className=" icon icon-shape bg-primary text-white rounded-circle shadow fa-solid fa-money-bill-transfer" />
+                      </div>
+                     
+                    <h5 className='text-white mt-3 text-center'>Minimum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$546</h5>
+
+
+                    <h5 className='text-white mt-3 text-center'>Maximum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$1,000</h5>
+                    <h5 className='text-white mt-3 text-center'>Charge Type: percentage</h5>
+                    <h5 className='text-white mt-3 text-center'>Charges Amount: 0%</h5>
+
+                    <h5 className='text-white mt-3 text-center'>Duration:</h5>
+               
+  
+                    <div className="col text-center mt-3">
+                        <Button className='btn btn-primary'>  <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-circle-plus" />
+                         Request Withdrawal</Button>
+                    
+                      </div>
+                  </CardBody>
+                </Card>
+              </Col>
+              
+            </Row>
+
+            <Row className='container-fluid '>
+            <Col lg="4" xl="4" className=' mt-6'>
+                <Card className="bg-default  shadow-lg  shadow-sm--hover card-lift--hover  mb-4 mb-xl-0 ">
+                  <CardBody>
+                      <div className='text-center'>
+                      <lavel className='btn btn-secondary mt--6 w-50 rounded-1'>BUSD</lavel>
+                      </div>
+                   
+                      <div className="text-center">
+                          <i className=" icon icon-shape bg-primary text-white rounded-circle shadow fa-solid fa-money-bill-transfer" />
+                      </div>
+                     
+                    <h5 className='text-white mt-3 text-center'>Minimum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$546</h5>
+
+
+                    <h5 className='text-white mt-3 text-center'>Maximum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$1,000</h5>
+                    <h5 className='text-white mt-3 text-center'>Charge Type: percentage</h5>
+                    <h5 className='text-white mt-3 text-center'>Charges Amount: 0%</h5>
+
+                    <h5 className='text-white mt-3 text-center'>Duration:</h5>
+               
+  
+                    <div className="col text-center mt-3">
+                    <Button className='btn btn-primary'>  <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-circle-plus" />
+                         Request Withdrawal</Button>                     
+                          </div>
+
+              
+           
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col lg="4" xl="4" className=' mt-6'>
+                <Card className="bg-default shadow-lg card-lift--hover  shadow-sm--hover  mb-4 mb-xl-0 ">
+                  <CardBody>
+                      <div className='text-center'>
+                      <lavel className='btn btn-secondary mt--6 w-50 rounded-1'>USDT</lavel>
+                      </div>
+                   
+                      <div className="text-center">
+                          <i className=" icon icon-shape bg-primary text-white rounded-circle shadow fa-solid fa-money-bill-transfer" />
+                      </div>
+                     
+                    <h5 className='text-white mt-3 text-center'>Minimum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$546</h5>
+
+
+                    <h5 className='text-white mt-3 text-center'>Maximum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$1,000</h5>
+                    <h5 className='text-white mt-3 text-center'>Charge Type: percentage</h5>
+                    <h5 className='text-white mt-3 text-center'>Charges Amount: 0%</h5>
+
+                    <h5 className='text-white mt-3 text-center'>Duration:</h5>
+               
+  
+                    <div className="col text-center mt-3">
+                    <Button className='btn btn-primary'> 
+                     <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-circle-plus" />
+                         Request Withdrawal</Button>
+                                               </div>
+
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col lg="4" xl="4" className=' mt-6'>
+                <Card className="bg-default shadow-lg   card-lift--hover shadow-sm--hover  mb-4 mb-xl-0 ">
+                  <CardBody>
+                      <div className='text-center'>
+                      <lavel className='btn btn-secondary mt--6 w-75 rounded-1'>BANK TRANSFER</lavel>
+                      </div>
+                   
+                      <div className="text-center">
+                          <i className=" icon icon-shape bg-primary text-white rounded-circle shadow fa-solid fa-money-bill-transfer" />
+                      </div>
+                     
+                    <h5 className='text-white mt-3 text-center'>Minimum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$546</h5>
+
+
+                    <h5 className='text-white mt-3 text-center'>Maximum withdrawable amount</h5>
+                    <h5 className='text-white mt-0 text-center'>$1,000</h5>
+                    <h5 className='text-white mt-3 text-center'>Charge Type: percentage</h5>
+                    <h5 className='text-white mt-3 text-center'>Charges Amount: 0%</h5>
+
+                    <h5 className='text-white mt-3 text-center'>Duration:</h5>
+               
+  
+                    <div className="col text-center mt-3">
+                        <Button className='btn btn-primary'>  <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-circle-plus" />
+                         Request Withdrawal</Button>
+                    
+                      </div>
+                  </CardBody>
+                </Card>
+              </Col>
+              
             </Row>
             </div>
-        </div>
+      
     );
 };
 
