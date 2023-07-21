@@ -7,6 +7,7 @@ import Tables from "views/examples/Tables.js";
 import Dark from "views/examples/Dark.js";
 import Deposit from "views/examples/Deposit";
 import Withdraw from "views/examples/Withdraw";
+import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 var routes = [
   {
     path: "/index",
@@ -48,6 +49,13 @@ var routes = [
     name: "Dark",
     icon: "ni ni-bullet-list-67 text-red",
     component: <Dark />,
+    layout: "/admin",
+  },
+  {
+    path: "/tradingplan",
+    name: "Trading Plan",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <TradingPlan />,
     layout: "/admin",
   },
   {
