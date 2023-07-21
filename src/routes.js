@@ -4,8 +4,9 @@ import Maps from "views/examples/Maps.js";
 import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
 import Dark from "views/examples/Dark.js";
+import Deposit from "views/examples/Deposit";
+import Withdraw from "views/examples/Withdraw";
 var routes = [
   {
     path: "/index",
@@ -15,17 +16,17 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: <Icons />,
+    path: "/deposit",
+    name: "Deposit",
+    icon: "fa-solid fa-circle-down text-blue",
+    component: <Deposit />,
     layout: "/admin",
   },
   {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
+    path: "/withdraw",
+    name: "Withdraw",
+    icon: "fa-solid fa-circle-arrow-up text-primary",
+    component: <Withdraw />,
     layout: "/admin",
   },
   {

@@ -50,8 +50,6 @@ const Index = (props) => {
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
-
-    
          <Row>
               <Col lg="12" xl="12" className=' mb-5 mt-3'>
                 <Card className="card-stats   mb-4 mb-xl-0 ">
@@ -61,7 +59,7 @@ const Index = (props) => {
                       <div className="col text-center">
                         <p>You do not have an active investment plan at the moment.</p>
                      
-                        <Button className='btn btn-info'>Click for Buy a new Plan</Button>
+                        <Button className='btn btn-default'>Click for Buy a new Plan</Button>
                       </div>
                      
                     </Row>
@@ -72,7 +70,7 @@ const Index = (props) => {
              </Row>
        
 
-        <Row className="mt-2 mb-4">
+        <Row className="mt-2">
           <Col className="mb-5 mb-xl-0" xl="12">
             <Card className="shadow">
               <CardHeader className="border-0">
