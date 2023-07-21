@@ -1,4 +1,3 @@
-
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 import Maps from "views/examples/Maps.js";
@@ -11,8 +10,8 @@ import Deposit from "views/examples/Deposit";
 var routes = [
   {
     path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
+    name: "Home",
+    icon: "fa-solid fa-house text-primary",
     component: <Index />,
     layout: "/admin",
   },
