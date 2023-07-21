@@ -7,6 +7,8 @@ import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import Dark from "views/examples/Dark.js";
 import Deposit from "views/examples/Deposit";
+import Transactions from "views/examples/Transactions";
+
 var routes = [
   {
     path: "/index",
@@ -20,6 +22,13 @@ var routes = [
     name: "Deposit",
     icon: "ni ni-tv-2 text-primary",
     component: <Deposit />,
+    layout: "/admin",
+  },
+  {
+    path: "/transactions",
+    name: "Transactions",
+    icon: "fa-solid fa-credit-card text-primary",
+    component: <Transactions />,
     layout: "/admin",
   },
   {
