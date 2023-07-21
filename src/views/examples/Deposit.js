@@ -8,58 +8,41 @@ const Deposit = () => {
     return (
         <div className='bg-gradient-info pb-8 pt-5 pt-md-8'>
             <Container fluid>
-                <Row className='border'>
-                    <Col md='8' className='border'>
+                <Row className=''>
+                    <Col md='8' className=''>
                         <div>
                             {/* <h1>Enter Amount</h1> */}
                             <Form>
                                 <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                    <Form.Label>Enter Amount</Form.Label>
+                                    <h1>Enter Amount</h1>
                                     <Form.Control type="number" placeholder="Enter Amount" />
                                 </Form.Group>
 
                                 <h1>Choose Payment Method from the list below</h1>
 
 
-                                <div className="mb-3">
-                                    <Form>
-                                        {['radio'].map((type) => (
-                                            <div key={`reverse-${type}`} className="mb-3">
-                                                <Form.Check
-                                                    className='border p-4 rounded  '
-                                                    reverse
-                                                    label="BUSD"
-                                                    name="group1"
-                                                    type={type}
-                                                    id={`reverse-${type}-1`}
-                                                />
-                                                <Form.Check
-                                                    className='border p-4 rounded  '
-                                                    reverse
-                                                    label="BUSD"
-                                                    name="group1"
-                                                    type={type}
-                                                    id={`reverse-${type}-1`}
-                                                />
-                                                <Form.Check
-                                                    className='border p-4 rounded  '
-                                                    reverse
-                                                    label="BUSD"
-                                                    name="group1"
-                                                    type={type}
-                                                    id={`reverse-${type}-1`}
-                                                />
-                                                <Form.Check
-                                                    className='border p-4 rounded  '
-                                                    reverse
-                                                    label="BUSD"
-                                                    name="group1"
-                                                    type={type}
-                                                    id={`reverse-${type}-1`}
-                                                />
-                                            </div>
-                                        ))}
-                                    </Form>
+                                <div className=" row row-cols-2 mb-3">
+                                    <Form.Check
+                                        className='border p-4 rounded col '
+                                        reverse
+                                        type='radio'
+                                        label="BUSD"
+                                        name="group1"
+                                    />
+                                    <Form.Check
+                                        className='border p-4 rounded  col '
+                                        reverse
+                                        type='radio'
+                                        label="BUSD"
+                                        name="group1"
+                                    />
+                                    <Form.Check
+                                        className='border p-4 rounded  col '
+                                        reverse
+                                        type='radio'
+                                        label="BUSD"
+                                        name="group1"
+                                    />
                                 </div>
 
                                 <Button variant="primary">Process to Payment</Button>
