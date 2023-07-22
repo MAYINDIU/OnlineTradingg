@@ -7,6 +7,7 @@ import Tables from "views/examples/Tables.js";
 import Dark from "views/examples/Dark.js";
 import Deposit from "views/examples/Deposit";
 import Withdraw from "views/examples/Withdraw";
+import Transactions from "views/examples/Transactions";
 var routes = [
   {
     path: "/index",
@@ -27,6 +28,14 @@ var routes = [
     name: "Withdraw",
     icon: "fa-solid fa-circle-arrow-up text-primary",
     component: <Withdraw />,
+    layout: "/admin",
+  },
+
+  {
+    path: "/transactions",
+    name: "Transactions",
+    icon: "fa-solid fa-money-bill-transfer text-primary",
+    component: <Transactions />,
     layout: "/admin",
   },
   {
