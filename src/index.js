@@ -25,6 +25,8 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
+import Transactions from "views/examples/Transactions";
+import TransactionsTable from "components/TransactionsTable/TransactionsTable";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -34,6 +36,9 @@ root.render(
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/auth/*" element={<AuthLayout />} />
       <Route path="*" element={<Navigate to="/admin/index" replace />} />
+      <Route path="/transactions" element={<Transactions />}>
+        <Route path="withdrawal" element={<TransactionsTable />} />
+      </Route>
     </Routes>
   </BrowserRouter>
 );
