@@ -27,13 +27,6 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/transactions",
-    name: "Transactions",
-    icon: "fa-solid fa-credit-card text-primary",
-    component: <Transactions />,
-    layout: "/admin",
-  },
-  {
     path: "/icons",
     name: "Icons",
     icon: "ni ni-planet text-blue",
