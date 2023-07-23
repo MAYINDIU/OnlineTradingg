@@ -24,8 +24,8 @@ const Login = () => {
               <small>Sign in with</small>
             </div>
             <div className="btn-wrapper text-center">
-              <Button
-                className="btn-neutral btn-icon"
+            <Button
+                className="btn-neutral btn-icon mr-4"
                 color="default"
                 href="#pablo"
                 onClick={(e) => e.preventDefault()}
@@ -34,12 +34,12 @@ const Login = () => {
                   <img
                     alt="..."
                     src={
-                      require("../../assets/img/icons/common/github.svg")
+                      require("../../assets/img/icons/common/telegram.svg")
                         .default
                     }
                   />
                 </span>
-                <span className="btn-inner--text">Github</span>
+                <span className="btn-inner--text">Telegram</span>
               </Button>
               <Button
                 className="btn-neutral btn-icon"
@@ -107,8 +107,8 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
-                  Sign in
+                <Button className="my-4 " color="primary" type="button">
+                  Log in
                 </Button>
               </div>
             </Form>

@@ -22,7 +22,7 @@ const Profile = () => {
                 <h2 className='text-white mb-2'>Account Setting</h2>
             </div>
       {/* Page content */}
-      <Container className="mt--7" fluid>
+      <Container className="mt--7 mb-3" fluid>
         <Row>
           <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
             <Card className="card-profile shadow">
@@ -285,10 +285,12 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
-                  <div className="col text-center mt-3">
-                    <Button className='btn btn-default'>  <i className="mr-2 shadow fa-solid fa-user" />
-                         Update Profile</Button>                     
-                          </div>
+ 
+                          <div className="text-center col mt-1">
+                        <Button className="my-2" color="primary" type="button">
+                        <i className="mr-2 shadow fa-solid fa-user" /> Update Profile
+                        </Button>
+                      </div>
                 </Form>
               </CardBody>
             </Card>

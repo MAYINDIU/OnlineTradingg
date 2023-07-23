@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 // reactstrap components
@@ -58,16 +41,16 @@ const Auth = (props) => {
     <>
       <div className="main-content" ref={mainContent}>
         <AuthNavbar />
-        <div className="header bg-gradient-info py-7 py-lg-8">
+        <div className="header bg-gradient-info py-3 py-lg-8">
           <Container>
-            <div className="header-body text-center mb-7">
+            <div className="header-body text-center mb-2">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
-                  <p className="text-lead text-light">
+                  {/* <h1 className="text-white">Welcome!</h1> */}
+                  {/* <p className="text-lead text-light">
                     Use these awesome forms to login or create new account in
                     your project for free.
-                  </p>
+                  </p> */}
                 </Col>
               </Row>
             </div>
@@ -89,7 +72,7 @@ const Auth = (props) => {
           </div>
         </div>
         {/* Page content */}
-        <Container className="mt--8 pb-5">
+        <Container className="mt--8 pb-4">
           <Row className="justify-content-center">
             <Routes>
               {getRoutes(routes)}
@@ -98,7 +81,7 @@ const Auth = (props) => {
           </Row>
         </Container>
       </div>
-      <AuthFooter />
+      {/* <AuthFooter /> */}
     </>
   );
 };
