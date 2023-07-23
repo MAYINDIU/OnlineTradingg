@@ -11,7 +11,7 @@ import Withdraw from "views/examples/Withdraw";
 import Transactions from "views/examples/Transactions";
 import MyPlan from "views/examples/MyPlan/MyPlan";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
-import TransactionsTable from "components/TransactionsTable/TransactionsTable";
+
 var routes = [
   {
     path: "/index",

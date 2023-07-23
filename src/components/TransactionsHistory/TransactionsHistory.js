@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, Card, CardBody, Input, Label, Table } from 'reactstrap';
 
 const TransactionsTable = () => {
+
     return (
         <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
             <CardBody className=' d-flex justify-content-between'>

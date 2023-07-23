@@ -8,6 +8,8 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import Transactions from "views/examples/Transactions";
+import TransactionsHistory from "components/TransactionsHistory/TransactionsHistory";
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -61,7 +63,12 @@ const Admin = (props) => {
         />
         <Routes>
           {getRoutes(routes)}
+
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
+
+          <Route path="transactions" element={<Transactions />}>
+            <Route path=":id" element={<TransactionsHistory />} />
+          </Route>
         </Routes>
         {/* <Container fluid>
           <AdminFooter />
