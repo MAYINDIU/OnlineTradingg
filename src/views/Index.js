@@ -59,7 +59,13 @@ const Index = (props) => {
                       <div className="col text-center">
                         <p>You do not have an active investment plan at the moment.</p>
                      
-                        <Button className='btn btn-default'>Click for Buy a new Plan</Button>
+                        
+                        <div className="text-center">
+                        <Button className="my-4" color="primary" type="button">
+                        Click for Buy a new Plan
+                        </Button>
+                      </div>
+                     
                       </div>
                      
                     </Row>

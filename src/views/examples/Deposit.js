@@ -75,10 +75,12 @@ const Deposit = () => {
                         </CardBody>
                         </Card>
                     </Col>
-                    <div className="col text-center mt-3">
-                        <Button className='btn btn-default'>Procced to payment</Button>
+                 
+                      <div className="text-center col mt-3">
+                        <Button className="my-4" color="primary" type="button">
+                        Procced to payment
+                        </Button>
                       </div>
-
 
                    </Row>
            

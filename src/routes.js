@@ -7,12 +7,9 @@ import Tables from "views/examples/Tables.js";
 import Dark from "views/examples/Dark.js";
 import Deposit from "views/examples/Deposit";
 import Withdraw from "views/examples/Withdraw";
-<<<<<<< HEAD
+import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
-=======
-import Transactions from "views/examples/Transactions";
->>>>>>> mayin
 var routes = [
   {
     path: "/index",
@@ -50,20 +47,7 @@ var routes = [
     component: <Profile />,
     layout: "/admin",
   },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
-    layout: "/admin",
-  },
-  {
-    path: "/dark",
-    name: "Dark",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Dark />,
-    layout: "/admin",
-  },
+,
   {
     path: "/tradingplan",
     name: "Trading Plan",
@@ -76,6 +60,20 @@ var routes = [
     name: "My Plan",
     icon: "fa-solid fa-hand-holding-heart text-primary",
     component: <MyPlan />,
+    layout: "/admin",
+  },
+  {
+    path: "/tables",
+    name: "Tables",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <Tables />,
+    layout: "/admin",
+  },
+  {
+    path: "/dark",
+    name: "Dark",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: <Dark />,
     layout: "/admin",
   },
   {
