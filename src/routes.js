@@ -7,12 +7,10 @@ import Tables from "views/examples/Tables.js";
 import Dark from "views/examples/Dark.js";
 import Deposit from "views/examples/Deposit";
 import Withdraw from "views/examples/Withdraw";
-<<<<<<< HEAD
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
-=======
 import Transactions from "views/examples/Transactions";
->>>>>>> mayin
+import Referrals from "views/examples/Referrals/Referrals";
 var routes = [
   {
     path: "/index",
@@ -76,6 +74,13 @@ var routes = [
     name: "My Plan",
     icon: "fa-solid fa-hand-holding-heart text-primary",
     component: <MyPlan />,
+    layout: "/admin",
+  },
+  {
+    path: "/referuser",
+    name: "Referrals",
+    icon: "fa-solid fa-hand-holding-heart text-primary",
+    component: <Referrals />,
     layout: "/admin",
   },
   {
