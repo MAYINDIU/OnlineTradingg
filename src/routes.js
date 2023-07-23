@@ -9,14 +9,8 @@ import Dark from "views/examples/Dark.js";
 import Deposit from "views/examples/Deposit";
 import Withdraw from "views/examples/Withdraw";
 import Transactions from "views/examples/Transactions";
-<<<<<<< HEAD
-import MyPlan from "views/examples/MyPlan/MyPlan";
-import TradingPlan from "views/examples/TradingPlan/TradingPlan";
-
-=======
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
->>>>>>> mayin
 var routes = [
   {
     path: "/index",

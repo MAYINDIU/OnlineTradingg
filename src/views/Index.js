@@ -50,27 +50,6 @@ const Index = (props) => {
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
-<<<<<<< HEAD
-        <Row>
-          <Col lg="12" xl="12" className=' mb-5 mt-3'>
-            <Card className="card-stats   mb-4 mb-xl-0 ">
-              <CardBody>
-                <h2>Your Active Plans (0)</h2>
-                <Row>
-                  <div className="col text-center">
-                    <p>You do not have an active investment plan at the moment.</p>
-
-                    <Button className='btn btn-default'>Click for Buy a new Plan</Button>
-                  </div>
-
-                </Row>
-
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-
-=======
          <Row>
               <Col lg="12" xl="12" className=' mb-5 mt-3'>
                 <Card className="card-stats   mb-4 mb-xl-0 ">
@@ -96,7 +75,6 @@ const Index = (props) => {
               </Col>
              </Row>
        
->>>>>>> mayin
 
         <Row className="mt-2 mb-3">
           <Col className="mb-5 mb-xl-0" xl="12">

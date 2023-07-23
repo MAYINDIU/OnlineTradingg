@@ -8,17 +8,10 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
-<<<<<<< HEAD
-import Transactions from "views/examples/Transactions";
-import DepositHistory from "components/TransactionsHistory/DepositHistory";
-import WithdrawalHistory from "components/TransactionsHistory/WithdrawalHistory";
-import OthersHistory from "components/TransactionsHistory/OthersHistory";
-=======
 import DepositHistory from "views/examples/TransactionsHistory/DepositHistory";
 import WithdrawalHistory from "views/examples/TransactionsHistory/WithdrawalHistory";
 import OthersHistory from "views/examples/TransactionsHistory/OthersHistory";
 import Transactions from "views/examples/Transactions";
->>>>>>> mayin
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -74,16 +67,6 @@ const Admin = (props) => {
           {getRoutes(routes)}
 
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
-<<<<<<< HEAD
-
-          <Route path="transactions" element={<Transactions />}>
-
-            <Route path="deposit" element={<DepositHistory />} />
-            <Route path="withdrawal" element={<WithdrawalHistory />} />
-            <Route path="others" element={<OthersHistory />} />
-
-          </Route>
-=======
           <Route path="transactions" element={<Transactions />}>
 
 <Route path="deposit" element={<DepositHistory />} />
@@ -91,7 +74,6 @@ const Admin = (props) => {
 <Route path="others" element={<OthersHistory />} />
 
 </Route>
->>>>>>> mayin
         </Routes>
         {/* <Container fluid>
           <AdminFooter />
