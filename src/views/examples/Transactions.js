@@ -3,6 +3,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { Card, CardBody, CardTitle, Col, Container, Row } from 'reactstrap'
 
 const Transactions = () => {
+
     return (
         <div>
             <Container fluid className="container-fluid header bg-gradient-info pb-8 pt-5 pt-md-8">
@@ -10,7 +11,7 @@ const Transactions = () => {
                 <div className="">
                     <Row>
                         <Col lg="6" xl="4">
-                            <Link className='text-dark text-decoration-none' to={`/admin/transactions/deposit`}>
+                            <Link className='text-decoration-none text-primary' to={`/admin/transactions/deposit`}>
                                 <Card className="card-stats bg mb-4 mb-xl-0 text-center">
                                     <CardBody>
                                         <div className="icon icon-shape bg-primary text-white rounded-circle shadow mb-2">

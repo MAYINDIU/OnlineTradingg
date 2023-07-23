@@ -9,7 +9,6 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
 import Transactions from "views/examples/Transactions";
-import TransactionsHistory from "components/TransactionsHistory/TransactionsHistory";
 import DepositHistory from "components/TransactionsHistory/DepositHistory";
 import WithdrawalHistory from "components/TransactionsHistory/WithdrawalHistory";
 import OthersHistory from "components/TransactionsHistory/OthersHistory";
