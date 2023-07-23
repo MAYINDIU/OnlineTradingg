@@ -12,8 +12,14 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import TelegramLoginButton from 'react-telegram-login';
 
 const Register = () => {
+
+  const handleTelegramResponse = response => {
+    console.log(response);
+  };
+  
   return (
     <>
       <Col lg="6" md="8">
@@ -23,6 +29,7 @@ const Register = () => {
               <small>Sign up with</small>
             </div>
             <div className="text-center">
+      
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
@@ -100,6 +107,16 @@ const Register = () => {
                     type="password"
                     autoComplete="new-password"
                   />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-hat-3" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input placeholder="Refferal Code" type="text" />
                 </InputGroup>
               </FormGroup>
               <div className="text-muted font-italic">
