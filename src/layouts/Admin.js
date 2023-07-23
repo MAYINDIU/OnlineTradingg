@@ -10,6 +10,9 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import routes from "routes.js";
 import Transactions from "views/examples/Transactions";
 import TransactionsHistory from "components/TransactionsHistory/TransactionsHistory";
+import DepositHistory from "components/TransactionsHistory/DepositHistory";
+import WithdrawalHistory from "components/TransactionsHistory/WithdrawalHistory";
+import OthersHistory from "components/TransactionsHistory/OthersHistory";
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -67,7 +70,11 @@ const Admin = (props) => {
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
 
           <Route path="transactions" element={<Transactions />}>
-            <Route path=":id" element={<TransactionsHistory />} />
+
+            <Route path="deposit" element={<DepositHistory />} />
+            <Route path="withdrawal" element={<WithdrawalHistory />} />
+            <Route path="others" element={<OthersHistory />} />
+
           </Route>
         </Routes>
         {/* <Container fluid>
