@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 // reactstrap components
@@ -25,6 +8,10 @@ import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import DepositHistory from "views/examples/TransactionsHistory/DepositHistory";
+import WithdrawalHistory from "views/examples/TransactionsHistory/WithdrawalHistory";
+import OthersHistory from "views/examples/TransactionsHistory/OthersHistory";
+import Transactions from "views/examples/Transactions";
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -72,13 +59,21 @@ const Admin = (props) => {
         }}
       />
       <div className="main-content" ref={mainContent}>
-        {/* <AdminNavbar
+        <AdminNavbar
           {...props}
           brandText={getBrandText(props?.location?.pathname)}
-        /> */}
+        />
         <Routes>
           {getRoutes(routes)}
+
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
+          <Route path="transactions" element={<Transactions />}>
+
+<Route path="deposit" element={<DepositHistory />} />
+<Route path="withdrawal" element={<WithdrawalHistory />} />
+<Route path="others" element={<OthersHistory />} />
+
+</Route>
         </Routes>
         {/* <Container fluid>
           <AdminFooter />

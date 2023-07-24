@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 import Maps from "views/examples/Maps.js";
@@ -23,12 +6,24 @@ import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import Dark from "views/examples/Dark.js";
+import Deposit from "views/examples/Deposit";
+import Withdraw from "views/examples/Withdraw";
+import Transactions from "views/examples/Transactions";
+import TradingPlan from "views/examples/TradingPlan/TradingPlan";
+import MyPlan from "views/examples/MyPlan/MyPlan";
 var routes = [
   {
     path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
+    name: "Home",
+    icon: "fa-solid fa-house text-primary",
     component: <Index />,
+    layout: "/admin",
+  },
+  {
+    path: "/deposit",
+    name: "Deposit",
+    icon: "ni ni-tv-2 text-primary",
+    component: <Deposit />,
     layout: "/admin",
   },
   {
@@ -45,11 +40,34 @@ var routes = [
     component: <Maps />,
     layout: "/admin",
   },
+
+  {
+    path: "/transactions",
+    name: "Transactions",
+    icon: "fa-solid fa-money-bill-transfer text-primary",
+    component: <Transactions />,
+    layout: "/admin",
+  },
   {
     path: "/user-profile",
     name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
+    icon: "fa-solid fa-user text-primary",
     component: <Profile />,
+    layout: "/admin",
+  },
+,
+  {
+    path: "/tradingplan",
+    name: "Trading Plan",
+    icon: "fa-solid fa-spa text-primary",
+    component: <TradingPlan />,
+    layout: "/admin",
+  },
+  {
+    path: "/myplan",
+    name: "My Plan",
+    icon: "fa-solid fa-hand-holding-heart text-primary",
+    component: <MyPlan />,
     layout: "/admin",
   },
   {

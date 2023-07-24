@@ -1,22 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
 import {
   Button,
   Card,
@@ -32,7 +13,11 @@ import {
   Col,
 } from "reactstrap";
 
+import { FacebookShareButton, FacebookIcon } from 'react-share';
 const Register = () => {
+
+
+  
   return (
     <>
       <Col lg="6" md="8">
@@ -42,6 +27,16 @@ const Register = () => {
               <small>Sign up with</small>
             </div>
             <div className="text-center">
+      
+            <div>
+      <FacebookShareButton
+        url={'https://www.example.com'}
+        quote={'Dummy text!'}
+        hashtag="#muo"
+      >
+        <FacebookIcon size={32} round />
+      </FacebookShareButton>
+    </div>
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
@@ -52,12 +47,12 @@ const Register = () => {
                   <img
                     alt="..."
                     src={
-                      require("../../assets/img/icons/common/github.svg")
+                      require("../../assets/img/icons/common/telegram.svg")
                         .default
                     }
                   />
                 </span>
-                <span className="btn-inner--text">Github</span>
+                <span className="btn-inner--text">Telegram</span>
               </Button>
               <Button
                 className="btn-neutral btn-icon"
@@ -119,6 +114,16 @@ const Register = () => {
                     type="password"
                     autoComplete="new-password"
                   />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-hat-3" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input placeholder="Refferal Code" type="text" />
                 </InputGroup>
               </FormGroup>
               <div className="text-muted font-italic">
