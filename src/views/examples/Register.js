@@ -12,14 +12,11 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import TelegramLoginButton from 'react-telegram-login';
+
 
 const Register = () => {
 
-  const handleTelegramResponse = response => {
-    console.log(response);
-  };
-  
+
   return (
     <>
       <Col lg="6" md="8">
@@ -29,7 +26,7 @@ const Register = () => {
               <small>Sign up with</small>
             </div>
             <div className="text-center">
-      
+
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
