@@ -46,6 +46,7 @@
     "bootstrap": "^4.6.2",
     "chart.js": "2.9.4",
     "classnames": "2.3.2",
+    "firebase": "^10.1.0",
     "moment": "2.29.4",
     "nouislider": "15.4.0",
     "react": ">=16.0.0",
@@ -58,7 +59,8 @@
     "react-share": "^4.4.1",
     "react-telegram-login": "^1.1.2",
     "reactstrap": "8.10.0",
-    "sass": "1.62.1"
+    "sass": "1.62.1",
+    "sweetalert": "^2.1.2"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
