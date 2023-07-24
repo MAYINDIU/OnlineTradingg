@@ -11,6 +11,8 @@ import Withdraw from "views/examples/Withdraw";
 import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
+import AllUser from "views/examples/AllUser";
+import AddPackage from "views/examples/Package/AddPackage";
 var routes = [
   {
     path: "/index",
@@ -77,11 +79,25 @@ var routes = [
     layout: "/auth",
   },
   {
+    path: "/addpackage",
+    name: "Add Package",
+    icon: "ni ni-key-25 text-info",
+    component: <AddPackage />,
+    layout: "/auth",
+  },
+  {
     path: "/register",
     name: "Register",
     icon: "ni ni-circle-08 text-pink",
     component: <Register />,
     layout: "/auth",
+  },
+  {
+    path: "/alluser",
+    name: "All User",
+    icon: "ni ni-circle-08 text-pink",
+    component: <AllUser />,
+    layout: "/admin"
   },
 ];
 export default routes;

@@ -19,7 +19,6 @@ import {
 import swal from "sweetalert";
 
 
-import { FacebookShareButton, FacebookIcon } from 'react-share';
 const Register = () => {
 
   const { providerLogin } = useContext(AuthContext);
@@ -61,6 +60,7 @@ const Register = () => {
               <small>Sign up with</small>
             </div>
             <div className="text-center">
+
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
