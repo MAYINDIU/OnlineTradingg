@@ -1,8 +1,7 @@
-import axios from "axios";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-
-import { toast } from "react-toastify";
+import { AuthContext } from "Context/AuthProvider";
+import { GoogleAuthProvider } from "firebase/auth";
+import { useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -17,54 +16,41 @@ import {
   Row,
   Col,
 } from "reactstrap";
-// import TelegramLoginButton from 'react-telegram-login';
+import swal from "sweetalert";
+
 
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [referal_code , setReferalCode] = useState("");
 
-  const handleSubmit = async (e) => {
-    console.log(e)
-    e.preventDefault();
+  const { providerLogin } = useContext(AuthContext);
 
-    const data = {
-      name,
-      email,
-      password,
-      referal_code,
-     
-    };
-    console.log(data);
-    try {
-      const response = await axios.post(
-        "https://indian.munihaelectronics.com/public/api/create-user",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+  const navigate = useNavigate();
+  const location = useLocation();
 
-      // Reset the form inputs
-      setName("");
-      setEmail("");
-      setPassword("");
-      setReferalCode("");
-     
+  const from = location.state?.from?.pathname || '/'
 
-      if (response) {
-        toast.success("Succeessfully Added");
-      }
-    } catch (error) {
-      toast.error(error?.response?.data?.error);
-    }
-  };
+  const loginAlert = () => {
+    swal({
+      // title: "Congratulations",
+      title: "You are successfully Login",
+      // text: `You are successfully Login`,
+      icon: "success",
+      button: "Done",
+    });
+  }
 
- 
-  
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleSignIn = () => {
+    providerLogin(googleProvider)
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+        loginAlert();
+      })
+      .catch(error => console.error(error))
+  }
+
+
   return (
     <>
       <Col lg="6" md="8">
@@ -74,7 +60,6 @@ const Register = () => {
               <small>Sign up with</small>
             </div>
             <div className="text-center">
-      
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
@@ -115,10 +100,7 @@ const Register = () => {
             <div className="text-center text-muted mb-4">
               <small>Or sign up with credentials</small>
             </div>
-
-            {/* Main Form  */}
-            
-            <form onSubmit={handleSubmit}>
+            <Form role="form">
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
@@ -126,8 +108,7 @@ const Register = () => {
                       <i className="ni ni-hat-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Name" type="text" onChange={(e) => setName(e.target.value)} />
-                  
+                  <Input placeholder="Name" type="text" />
                 </InputGroup>
               </FormGroup>
               <FormGroup>
@@ -141,7 +122,6 @@ const Register = () => {
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
-                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </InputGroup>
               </FormGroup>
@@ -156,7 +136,6 @@ const Register = () => {
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
-                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </InputGroup>
               </FormGroup>
@@ -167,7 +146,7 @@ const Register = () => {
                       <i className="ni ni-hat-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Refferal Code" type="text" onChange={(e) => setReferalCode(e.target.value)}/>
+                  <Input placeholder="Refferal Code" type="text" />
                 </InputGroup>
               </FormGroup>
               <div className="text-muted font-italic">
@@ -179,7 +158,7 @@ const Register = () => {
               <Row className="my-4">
                 <Col xs="12">
                   <div className="custom-control custom-control-alternative custom-checkbox">
-                    <Input
+                    <input
                       className="custom-control-input"
                       id="customCheckRegister"
                       type="checkbox"
@@ -199,14 +178,11 @@ const Register = () => {
                 </Col>
               </Row>
               <div className="text-center">
-              <button
-              className='btn btn-info'
-                    type="submit"
-                  >
-                    Register
-                  </button>
+                <Button className="mt-4" color="primary" type="button">
+                  Create account
+                </Button>
               </div>
-            </form>
+            </Form>
           </CardBody>
         </Card>
       </Col>
