@@ -1,3 +1,7 @@
+import { AuthContext } from "Context/AuthProvider";
+import { GoogleAuthProvider } from "firebase/auth";
+import { useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -12,12 +16,42 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import swal from "sweetalert";
+
 
 import { FacebookShareButton, FacebookIcon } from 'react-share';
 const Register = () => {
 
+  const { providerLogin } = useContext(AuthContext);
 
-  
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/'
+
+  const loginAlert = () => {
+    swal({
+      // title: "Congratulations",
+      title: "You are successfully Login",
+      // text: `You are successfully Login`,
+      icon: "success",
+      button: "Done",
+    });
+  }
+
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleSignIn = () => {
+    providerLogin(googleProvider)
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+        loginAlert();
+      })
+      .catch(error => console.error(error))
+  }
+
+
   return (
     <>
       <Col lg="6" md="8">
@@ -27,16 +61,6 @@ const Register = () => {
               <small>Sign up with</small>
             </div>
             <div className="text-center">
-      
-            <div>
-      <FacebookShareButton
-        url={'https://www.example.com'}
-        quote={'Dummy text!'}
-        hashtag="#muo"
-      >
-        <FacebookIcon size={32} round />
-      </FacebookShareButton>
-    </div>
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
@@ -57,8 +81,8 @@ const Register = () => {
               <Button
                 className="btn-neutral btn-icon"
                 color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+
+                onClick={handleGoogleSignIn}
               >
                 <span className="btn-inner--icon">
                   <img
