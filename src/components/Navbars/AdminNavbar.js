@@ -1,20 +1,6 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
+import { AuthContext } from "Context/AuthProvider";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -35,6 +21,19 @@ import {
 } from "reactstrap";
 
 const AdminNavbar = (props) => {
+
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleSignOut = () => {
+    logOut().then(() => {
+
+    }).catch((error) => {
+
+    });
+  }
+
+
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -62,15 +61,29 @@ const AdminNavbar = (props) => {
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img
-                      alt="..."
-                      src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                    />
+
+                    {user?.photoURL ?
+                      <img
+                        alt="..."
+                        src={user.photoURL}
+                      />
+                      : <img
+                        alt="..."
+                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                      />
+                    }
+
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
-                    </span>
+                    {user?.uid ?
+                      <span className="mb-0 text-sm font-weight-bold">
+                        {user.displayName}
+                      </span>
+                      : <span className="mb-0 text-sm font-weight-bold">
+                        Jessica Jones
+                      </span>
+                    }
+
                   </Media>
                 </Media>
               </DropdownToggle>
@@ -95,7 +108,7 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem onClick={handleSignOut}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

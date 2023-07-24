@@ -19,10 +19,16 @@ import { GoogleAuthProvider } from "firebase/auth";
 import { AuthContext } from "../../Context/AuthProvider";
 import { useContext } from "react";
 import swal from "sweetalert";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
 
   const { providerLogin } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/'
 
   const loginAlert = () => {
     swal({
@@ -40,7 +46,7 @@ const Login = () => {
       .then(result => {
         const user = result.user;
         console.log(user);
-        // navigate(from, { replace: true });
+        navigate(from, { replace: true });
         loginAlert();
       })
       .catch(error => console.error(error))
@@ -76,7 +82,6 @@ const Login = () => {
               <Button
                 className="btn-neutral btn-icon"
                 color="default"
-                // href="#pablo"
                 onClick={handleGoogleSignIn}
               >
                 <span className="btn-inner--icon">
