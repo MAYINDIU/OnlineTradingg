@@ -1,3 +1,8 @@
+import axios from "axios";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -12,13 +17,53 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import TelegramLoginButton from 'react-telegram-login';
+// import TelegramLoginButton from 'react-telegram-login';
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [referal_code, setReferalCode] = useState("");
 
-  const handleTelegramResponse = response => {
-    console.log(response);
+  const handleSubmit = async (e) => {
+    console.log(e)
+    e.preventDefault();
+
+    const data = {
+      name,
+      email,
+      password,
+      referal_code,
+     
+    };
+    console.log(data);
+    try {
+      const response = await axios.post(
+        "https://indian.munihaelectronics.com/public/api/create-user",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      // Reset the form inputs
+      setName("");
+      setEmail("");
+      setPassword("");
+      setReferalCode("");
+     
+
+      if (response) {
+        toast.success("Succeessfully Added");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.error);
+    }
   };
+
+ 
   
   return (
     <>
@@ -70,7 +115,10 @@ const Register = () => {
             <div className="text-center text-muted mb-4">
               <small>Or sign up with credentials</small>
             </div>
-            <Form role="form">
+
+            {/* Main Form  */}
+            
+            <form onSubmit={handleSubmit}>
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
@@ -78,7 +126,8 @@ const Register = () => {
                       <i className="ni ni-hat-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Name" type="text" />
+                  <Input placeholder="Name" type="text" onChange={(e) => setName(e.target.value)} />
+                  
                 </InputGroup>
               </FormGroup>
               <FormGroup>
@@ -92,6 +141,7 @@ const Register = () => {
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </InputGroup>
               </FormGroup>
@@ -106,6 +156,7 @@ const Register = () => {
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </InputGroup>
               </FormGroup>
@@ -116,7 +167,7 @@ const Register = () => {
                       <i className="ni ni-hat-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Refferal Code" type="text" />
+                  <Input placeholder="Refferal Code" type="text" onChange={(e) => setReferalCode(e.target.value)}/>
                 </InputGroup>
               </FormGroup>
               <div className="text-muted font-italic">
@@ -128,7 +179,7 @@ const Register = () => {
               <Row className="my-4">
                 <Col xs="12">
                   <div className="custom-control custom-control-alternative custom-checkbox">
-                    <input
+                    <Input
                       className="custom-control-input"
                       id="customCheckRegister"
                       type="checkbox"
@@ -148,11 +199,14 @@ const Register = () => {
                 </Col>
               </Row>
               <div className="text-center">
-                <Button className="mt-4" color="primary" type="button">
-                  Create account
-                </Button>
+              <button
+              className='btn btn-info'
+                    type="submit"
+                  >
+                    Register
+                  </button>
               </div>
-            </Form>
+            </form>
           </CardBody>
         </Card>
       </Col>
