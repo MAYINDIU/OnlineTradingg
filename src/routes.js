@@ -24,25 +24,17 @@ var routes = [
   {
     path: "/deposit",
     name: "Deposit",
-    icon: "ni ni-tv-2 text-primary",
+    icon: "fa-solid fa-circle-down text-blue",
     component: <Deposit />,
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: <Icons />,
+    path: "/withdraw",
+    name: "Withdraw",
+    icon: "fa-solid fa-circle-arrow-up text-primary",
+    component: <Withdraw />,
     layout: "/admin",
   },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
-    layout: "/admin",
-  },
-
   {
     path: "/transactions",
     name: "Transactions",
@@ -77,13 +69,6 @@ var routes = [
     name: "Tables",
     icon: "ni ni-bullet-list-67 text-red",
     component: <Tables />,
-    layout: "/admin",
-  },
-  {
-    path: "/dark",
-    name: "Dark",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Dark />,
     layout: "/admin",
   },
   {
