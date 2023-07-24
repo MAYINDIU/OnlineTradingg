@@ -68,11 +68,11 @@ const Admin = (props) => {
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
           <Route path="transactions" element={<Transactions />}>
 
-<Route path="deposit" element={<DepositHistory />} />
-<Route path="withdrawal" element={<WithdrawalHistory />} />
-<Route path="others" element={<OthersHistory />} />
+          <Route path="deposit" element={<DepositHistory />} />
+          <Route path="withdrawal" element={<WithdrawalHistory />} />
+          <Route path="others" element={<OthersHistory />} />
 
-</Route>
+        </Route>
         </Routes>
         {/* <Container fluid>
           <AdminFooter />

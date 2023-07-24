@@ -69,13 +69,7 @@ var routes = [
     component: <Tables />,
     layout: "/admin",
   },
-  {
-    path: "/dark",
-    name: "Dark",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Dark />,
-    layout: "/admin",
-  },
+
   {
     path: "/login",
     name: "Login",

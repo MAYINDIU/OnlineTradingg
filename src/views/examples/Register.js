@@ -27,16 +27,16 @@ const Register = () => {
               <small>Sign up with</small>
             </div>
             <div className="text-center">
-      
+{/*       
             <div>
       <FacebookShareButton
-        url={'https://www.example.com'}
+        url={'https://www.daraz.com.bd/products/travel-bags-for-boys-girls-weekend-outdoor-waterproof-teenage-children-school-bags-men-women-backpack-bag-for-boys-i157684973-s1088670589.html?spm=a2a0e.home.just4u.2.3afa12f7Ll8S18&scm=1007.28811.349576.0&pvid=8bac83da-e804-4394-9939-49743b38d13e&clickTrackInfo=pvid%3A8bac83da-e804-4394-9939-49743b38d13e%3Bchannel_id%3A0000%3Bmt%3Ahot%3Bitem_id%3A157684973%3B'}
         quote={'Dummy text!'}
         hashtag="#muo"
       >
         <FacebookIcon size={32} round />
       </FacebookShareButton>
-    </div>
+    </div> */}
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
