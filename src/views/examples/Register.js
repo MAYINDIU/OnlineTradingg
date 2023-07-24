@@ -12,13 +12,11 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import TelegramLoginButton from 'react-telegram-login';
 
+import { FacebookShareButton, FacebookIcon } from 'react-share';
 const Register = () => {
 
-  const handleTelegramResponse = response => {
-    console.log(response);
-  };
+
   
   return (
     <>
@@ -30,6 +28,15 @@ const Register = () => {
             </div>
             <div className="text-center">
       
+            <div>
+      <FacebookShareButton
+        url={'https://www.example.com'}
+        quote={'Dummy text!'}
+        hashtag="#muo"
+      >
+        <FacebookIcon size={32} round />
+      </FacebookShareButton>
+    </div>
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
