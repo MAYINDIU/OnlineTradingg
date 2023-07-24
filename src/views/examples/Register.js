@@ -23,7 +23,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [referal_code, setReferalCode] = useState("");
+  const [referal_code , setReferalCode] = useState("");
 
   const handleSubmit = async (e) => {
     console.log(e)
