@@ -11,6 +11,8 @@ import Withdraw from "views/examples/Withdraw";
 import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
+import AllUser from "views/examples/AllUser";
+import AddPackage from "views/examples/Package/AddPackage";
 var routes = [
   {
     path: "/index",
@@ -22,25 +24,17 @@ var routes = [
   {
     path: "/deposit",
     name: "Deposit",
-    icon: "ni ni-tv-2 text-primary",
+    icon: "fa-solid fa-circle-down text-blue",
     component: <Deposit />,
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: <Icons />,
+    path: "/withdraw",
+    name: "Withdraw",
+    icon: "fa-solid fa-circle-arrow-up text-primary",
+    component: <Withdraw />,
     layout: "/admin",
   },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: <Maps />,
-    layout: "/admin",
-  },
-
   {
     path: "/transactions",
     name: "Transactions",
@@ -78,17 +72,17 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/dark",
-    name: "Dark",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Dark />,
-    layout: "/admin",
-  },
-  {
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
     component: <Login />,
+    layout: "/auth",
+  },
+  {
+    path: "/addpackage",
+    name: "Add Package",
+    icon: "ni ni-key-25 text-info",
+    component: <AddPackage />,
     layout: "/auth",
   },
   {
@@ -97,6 +91,13 @@ var routes = [
     icon: "ni ni-circle-08 text-pink",
     component: <Register />,
     layout: "/auth",
+  },
+  {
+    path: "/alluser",
+    name: "All User",
+    icon: "ni ni-circle-08 text-pink",
+    component: <AllUser />,
+    layout: "/admin"
   },
 ];
 export default routes;
