@@ -17,7 +17,7 @@ import {
 import { GoogleAuthProvider } from "firebase/auth";
 
 import { AuthContext } from "../../Context/AuthProvider";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import swal from "sweetalert";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -42,21 +42,21 @@ const Login = () => {
     });
   }
 
-  //***// upload user infromation to database //***//
+  //***// upload user information to database //***//
 
   const uploadUserInfoToDatabase = (user) => {
 
     const userName = user.displayName;
     const userEmail = user.email;
     const userPassword = 'NA';
-    const referalCode = 'NA';
+    const referralCode = 'NA';
     const status = '1';
 
     const formdata = new FormData();
     formdata.append('name', userName);
     formdata.append('email', userEmail);
     formdata.append('password', userPassword);
-    formdata.append('referal_code', referalCode);
+    formdata.append('referal_code', referralCode);
     formdata.append('status', status);
 
     axios.post('https://indian.munihaelectronics.com/public/api/create-user', formdata)
