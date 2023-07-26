@@ -4,8 +4,6 @@ import Maps from "views/examples/Maps.js";
 import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
-import Dark from "views/examples/Dark.js";
 import Deposit from "views/examples/Deposit";
 import Withdraw from "views/examples/Withdraw";
 import Transactions from "views/examples/Transactions";
@@ -49,7 +47,7 @@ var routes = [
     component: <Profile />,
     layout: "/admin",
   },
-,
+  ,
   {
     path: "/tradingplan",
     name: "Trading Plan",

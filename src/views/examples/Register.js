@@ -1,4 +1,5 @@
 import { AuthContext } from "Context/AuthProvider";
+import axios from "axios";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -38,6 +39,31 @@ const Register = () => {
     });
   }
 
+  const uploadUserInfoToDatabase = (user) => {
+
+    const userName = user.displayName;
+    const userEmail = user.email;
+    const userPassword = 'NA';
+    const referalCode = 'NA';
+    const status = '1';
+
+    const formdata = new FormData();
+    formdata.append('name', userName);
+    formdata.append('email', userEmail);
+    formdata.append('password', userPassword);
+    formdata.append('referal_code', referalCode);
+    formdata.append('status', status);
+
+    axios.post('https://indian.munihaelectronics.com/public/api/create-user', formdata)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+  }
+
   const googleProvider = new GoogleAuthProvider();
   const handleGoogleSignIn = () => {
     providerLogin(googleProvider)
@@ -46,6 +72,7 @@ const Register = () => {
         console.log(user);
         navigate(from, { replace: true });
         loginAlert();
+        uploadUserInfoToDatabase();
       })
       .catch(error => console.error(error))
   }
