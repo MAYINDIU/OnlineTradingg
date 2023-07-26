@@ -10,8 +10,11 @@ import AuthFooter from "components/Footers/AuthFooter.js";
 import routes from "routes.js";
 
 const Auth = (props) => {
+
   const mainContent = React.useRef(null);
   const location = useLocation();
+
+
 
   React.useEffect(() => {
     document.body.classList.add("bg-default");
