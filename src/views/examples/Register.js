@@ -39,21 +39,19 @@ const Register = () => {
     });
   }
 
-  //***// upload user information to database //***//
-
   const uploadUserInfoToDatabase = (user) => {
 
     const userName = user.displayName;
     const userEmail = user.email;
     const userPassword = 'NA';
-    const referralCode = 'NA';
+    const referalCode = 'NA';
     const status = '1';
 
     const formdata = new FormData();
     formdata.append('name', userName);
     formdata.append('email', userEmail);
     formdata.append('password', userPassword);
-    formdata.append('referal_code', referralCode);
+    formdata.append('referal_code', referalCode);
     formdata.append('status', status);
 
     axios.post('https://indian.munihaelectronics.com/public/api/create-user', formdata)
@@ -75,7 +73,7 @@ const Register = () => {
         navigate(from, { replace: true });
         uploadUserInfoToDatabase(user);
         loginAlert();
-
+        uploadUserInfoToDatabase();
       })
       .catch(error => console.error(error))
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 // reactstrap components
 import { Container } from "reactstrap";
@@ -11,11 +11,15 @@ import DepositHistory from "views/examples/TransactionsHistory/DepositHistory";
 import WithdrawalHistory from "views/examples/TransactionsHistory/WithdrawalHistory";
 import OthersHistory from "views/examples/TransactionsHistory/OthersHistory";
 import Transactions from "views/examples/Transactions";
+import { AuthContext } from "Context/AuthProvider";
 import routes from "Routers/routes";
 
 const Admin = (props) => {
+  const { user } = useContext(AuthContext);
+
   const mainContent = React.useRef(null);
   const location = useLocation();
+
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -25,6 +29,9 @@ const Admin = (props) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
+      if (!user) {
+        return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
+      }
       if (prop.layout === "/admin") {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />
@@ -63,24 +70,21 @@ const Admin = (props) => {
           {...props}
           brandText={getBrandText(props?.location?.pathname)}
         />
-        <privateRoutes>
-          <Routes>
-            {getRoutes(routes)}
+        <Routes>
+          {getRoutes(routes)}
+          {/* <Route path="*" element={<Navigate to="/admin/index" replace />} /> */}
+          <Route path="transactions" element={<Transactions />}>
 
-            <Route path="*" element={<Navigate to="/admin/index" replace />} />
-            <Route path="transactions" element={<Transactions />}>
+            <Route path="deposit" element={<DepositHistory />} />
+            <Route path="withdrawal" element={<WithdrawalHistory />} />
+            <Route path="others" element={<OthersHistory />} />
 
-              <Route path="deposit" element={<DepositHistory />} />
-              <Route path="withdrawal" element={<WithdrawalHistory />} />
-              <Route path="others" element={<OthersHistory />} />
-
-            </Route>
-          </Routes>
-        </privateRoutes>
+          </Route>
+        </Routes>
         {/* <Container fluid>
           <AdminFooter />
         </Container> */}
-      </div>
+      </div >
     </>
   );
 };

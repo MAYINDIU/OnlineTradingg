@@ -17,17 +17,18 @@ import {
 import { GoogleAuthProvider } from "firebase/auth";
 
 import { AuthContext } from "../../Context/AuthProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import swal from "sweetalert";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
 
-  const { providerLogin } = useContext(AuthContext);
+  const { providerLogin, setUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
+  const [error, setError] = useState(null);
 
 
   const from = location.state?.from?.pathname || '/'
@@ -42,21 +43,19 @@ const Login = () => {
     });
   }
 
-  //***// upload user information to database //***//
-
   const uploadUserInfoToDatabase = (user) => {
 
     const userName = user.displayName;
     const userEmail = user.email;
     const userPassword = 'NA';
-    const referralCode = 'NA';
+    const referalCode = 'NA';
     const status = '1';
 
     const formdata = new FormData();
     formdata.append('name', userName);
     formdata.append('email', userEmail);
     formdata.append('password', userPassword);
-    formdata.append('referal_code', referralCode);
+    formdata.append('referal_code', referalCode);
     formdata.append('status', status);
 
     axios.post('https://indian.munihaelectronics.com/public/api/create-user', formdata)
@@ -83,7 +82,37 @@ const Login = () => {
       .catch(error => console.error(error))
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value
+    const password = form.password.value
 
+    console.log(email)
+    console.log(password)
+
+    const formdata = new FormData();
+    formdata.append('email', email);
+    formdata.append('password', password);
+
+    axios.post('https://indian.munihaelectronics.com/public/api/login?email', formdata)
+      .then((response) => {
+        setUser(response.data);
+        console.log(response.data);
+        if (response.data) {
+          // Successful login
+          navigate(from, { replace: true });
+          // <Navigate to={'/admin/index'} state={{ from: location }} replace />
+          loginAlert();
+        }
+
+      })
+      .catch((error) => {
+        console.error(error);
+        setError('Email or Password is wrong, Please Enter Correct email or password !')
+      });
+
+  }
 
   return (
     <>
@@ -133,7 +162,7 @@ const Login = () => {
             <div className="text-center text-muted mb-4">
               <small>Or sign in with credentials</small>
             </div>
-            <Form role="form">
+            <Form role="form" onSubmit={handleSubmit}>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -145,6 +174,7 @@ const Login = () => {
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
+                    name='email'
                   />
                 </InputGroup>
               </FormGroup>
@@ -159,10 +189,13 @@ const Login = () => {
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
+                    name='password'
                   />
                 </InputGroup>
               </FormGroup>
+              <p className='text-danger'>{error}</p>
               <div className="custom-control custom-control-alternative custom-checkbox">
+
                 <input
                   className="custom-control-input"
                   id=" customCheckLogin"
@@ -176,7 +209,7 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4 " color="primary" type="button">
+                <Button className="my-4 " color="primary" type="submit">
                   Log in
                 </Button>
               </div>
