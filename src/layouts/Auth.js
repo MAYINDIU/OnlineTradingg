@@ -6,8 +6,8 @@ import { Container, Row, Col } from "reactstrap";
 // core components
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
+import routes from "Routers/routes";
 
-import routes from "routes.js";
 
 const Auth = (props) => {
   const mainContent = React.useRef(null);

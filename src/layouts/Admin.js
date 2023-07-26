@@ -7,11 +7,11 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
-import routes from "routes.js";
 import DepositHistory from "views/examples/TransactionsHistory/DepositHistory";
 import WithdrawalHistory from "views/examples/TransactionsHistory/WithdrawalHistory";
 import OthersHistory from "views/examples/TransactionsHistory/OthersHistory";
 import Transactions from "views/examples/Transactions";
+import routes from "Routers/routes";
 
 const Admin = (props) => {
   const mainContent = React.useRef(null);
@@ -63,18 +63,20 @@ const Admin = (props) => {
           {...props}
           brandText={getBrandText(props?.location?.pathname)}
         />
-        <Routes>
-          {getRoutes(routes)}
+        <privateRoutes>
+          <Routes>
+            {getRoutes(routes)}
 
-          <Route path="*" element={<Navigate to="/admin/index" replace />} />
-          <Route path="transactions" element={<Transactions />}>
+            <Route path="*" element={<Navigate to="/admin/index" replace />} />
+            <Route path="transactions" element={<Transactions />}>
 
-<Route path="deposit" element={<DepositHistory />} />
-<Route path="withdrawal" element={<WithdrawalHistory />} />
-<Route path="others" element={<OthersHistory />} />
+              <Route path="deposit" element={<DepositHistory />} />
+              <Route path="withdrawal" element={<WithdrawalHistory />} />
+              <Route path="others" element={<OthersHistory />} />
 
-</Route>
-        </Routes>
+            </Route>
+          </Routes>
+        </privateRoutes>
         {/* <Container fluid>
           <AdminFooter />
         </Container> */}
