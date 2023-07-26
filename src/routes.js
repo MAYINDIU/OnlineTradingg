@@ -13,6 +13,8 @@ import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
 import AllUser from "views/examples/AllUser";
 import AddPackage from "views/examples/Package/AddPackage";
+import PackageList from "views/examples/Package/PackageList";
+import UpdatePackages from "views/examples/Package/UpdatePackages";
 var routes = [
   {
     path: "/index",
@@ -83,7 +85,7 @@ var routes = [
     name: "Add Package",
     icon: "ni ni-key-25 text-info",
     component: <AddPackage />,
-    layout: "/auth",
+    layout: "/admin",
   },
   {
     path: "/register",
@@ -97,6 +99,20 @@ var routes = [
     name: "All User",
     icon: "ni ni-circle-08 text-pink",
     component: <AllUser />,
+    layout: "/admin"
+  },
+  {
+    path: "/packages",
+    name: "Package List",
+    icon: "ni ni-circle-08 text-pink",
+    component: <PackageList />,
+    layout: "/admin"
+  },
+  {
+    path: "/updatepackages/:id",
+    name: "Update Packages",
+    icon: "ni ni-circle-08 text-pink",
+    component: <UpdatePackages />,
     layout: "/admin"
   },
 ];
