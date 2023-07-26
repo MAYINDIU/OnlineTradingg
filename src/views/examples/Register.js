@@ -71,12 +71,12 @@ const Register = () => {
         const user = result.user;
         console.log(user);
         navigate(from, { replace: true });
+        uploadUserInfoToDatabase(user);
         loginAlert();
         uploadUserInfoToDatabase();
       })
       .catch(error => console.error(error))
   }
-
 
   return (
     <>

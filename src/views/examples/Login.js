@@ -29,6 +29,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+
   const from = location.state?.from?.pathname || '/'
 
   const loginAlert = () => {
@@ -73,10 +74,13 @@ const Login = () => {
         const user = result.user;
         console.log(user);
         navigate(from, { replace: true });
+        uploadUserInfoToDatabase(user);
         loginAlert();
+
       })
       .catch(error => console.error(error))
   }
+
 
 
   return (
