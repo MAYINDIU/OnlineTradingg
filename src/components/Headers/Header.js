@@ -4,9 +4,9 @@ const Header = () => {
   return (
     <>
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
-   
+
         <Container fluid>
-        <h2 class='text-white'>Your Account Summary</h2>
+          <h2 class='text-white'>Your Account Summary</h2>
           <div className="header-body">
             {/* Card stats */}
             <Row>
@@ -31,20 +31,20 @@ const Header = () => {
                         </div>
                       </Col>
                     </Row>
-               
+
                   </CardBody>
                 </Card>
               </Col>
               <Col lg="6" xl="4">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
-                  <Row>
+                    <Row>
                       <div className="col">
                         <CardTitle
                           tag="h4"
                           className="text-uppercase text-primary mb-0"
                         >
-                      Total Profit
+                          Total Profit
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           $350,897
@@ -53,7 +53,7 @@ const Header = () => {
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
                           <i className="fa-solid fa-coins" />
-                     
+
                         </div>
                       </Col>
                     </Row>
@@ -63,13 +63,13 @@ const Header = () => {
               <Col lg="6" xl="4">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
-                  <Row>
+                    <Row>
                       <div className="col">
                         <CardTitle
                           tag="h4"
                           className="text-uppercase text-primary mb-0"
                         >
-                    Bonus
+                          Bonus
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           $350,897
@@ -78,7 +78,7 @@ const Header = () => {
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
                           <i className="fa-solid fa-gift" />
-                          
+
                         </div>
                       </Col>
                     </Row>
@@ -88,13 +88,13 @@ const Header = () => {
               <Col className='mt-3' lg="6" xl="4">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
-                  <Row>
+                    <Row>
                       <div className="col">
                         <CardTitle
                           tag="h4"
                           className="text-uppercase text-primary mb-0"
                         >
-                   Trading Accounts
+                          Trading Accounts
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           $3504
@@ -103,7 +103,7 @@ const Header = () => {
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
                           <i className="fa-regular fa-address-card" />
-                
+
                         </div>
                       </Col>
                     </Row>
@@ -113,13 +113,13 @@ const Header = () => {
               <Col className='mt-3' lg="6" xl="4">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
-                  <Row>
+                    <Row>
                       <div className="col">
                         <CardTitle
                           tag="h4"
                           className="text-uppercase text-primary mb-0"
                         >
-                  Referral Bonus
+                          Referral Bonus
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           $350
@@ -128,7 +128,7 @@ const Header = () => {
                       <Col className="col-auto">
                         <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
                           <i className="fa-solid fa-gifts" />
-                          
+
                         </div>
                       </Col>
                     </Row>
@@ -139,13 +139,13 @@ const Header = () => {
               <Col className='mt-3' lg="6" xl="4">
                 <Card className="card-stats mb-4 mb-xl-0">
                   <CardBody>
-                  <Row>
+                    <Row>
                       <div className="col">
                         <CardTitle
                           tag="h4"
                           className="text-uppercase text-primary mb-0"
                         >
-                Total Deposit
+                          Total Deposit
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           $350

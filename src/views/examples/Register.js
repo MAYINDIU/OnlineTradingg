@@ -1,3 +1,7 @@
+import { AuthContext } from "Context/AuthProvider";
+import { GoogleAuthProvider } from "firebase/auth";
+import { useContext } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -12,12 +16,41 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import swal from "sweetalert";
 
-import { FacebookShareButton, FacebookIcon } from 'react-share';
+
 const Register = () => {
 
+  const { providerLogin } = useContext(AuthContext);
 
-  
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/'
+
+  const loginAlert = () => {
+    swal({
+      // title: "Congratulations",
+      title: "You are successfully Login",
+      // text: `You are successfully Login`,
+      icon: "success",
+      button: "Done",
+    });
+  }
+
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleSignIn = () => {
+    providerLogin(googleProvider)
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+        loginAlert();
+      })
+      .catch(error => console.error(error))
+  }
+
+
   return (
     <>
       <Col lg="6" md="8">
@@ -27,16 +60,6 @@ const Register = () => {
               <small>Sign up with</small>
             </div>
             <div className="text-center">
-{/*       
-            <div>
-      <FacebookShareButton
-        url={'https://www.daraz.com.bd/products/travel-bags-for-boys-girls-weekend-outdoor-waterproof-teenage-children-school-bags-men-women-backpack-bag-for-boys-i157684973-s1088670589.html?spm=a2a0e.home.just4u.2.3afa12f7Ll8S18&scm=1007.28811.349576.0&pvid=8bac83da-e804-4394-9939-49743b38d13e&clickTrackInfo=pvid%3A8bac83da-e804-4394-9939-49743b38d13e%3Bchannel_id%3A0000%3Bmt%3Ahot%3Bitem_id%3A157684973%3B'}
-        quote={'Dummy text!'}
-        hashtag="#muo"
-      >
-        <FacebookIcon size={32} round />
-      </FacebookShareButton>
-    </div> */}
               <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
@@ -57,8 +80,8 @@ const Register = () => {
               <Button
                 className="btn-neutral btn-icon"
                 color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+
+                onClick={handleGoogleSignIn}
               >
                 <span className="btn-inner--icon">
                   <img

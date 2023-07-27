@@ -14,7 +14,45 @@ import {
   Col,
 } from "reactstrap";
 
+import { GoogleAuthProvider } from "firebase/auth";
+
+import { AuthContext } from "../../Context/AuthProvider";
+import { useContext } from "react";
+import swal from "sweetalert";
+import { useLocation, useNavigate } from "react-router-dom";
+
 const Login = () => {
+
+  const { providerLogin } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/'
+
+  const loginAlert = () => {
+    swal({
+      // title: "Congratulations",
+      title: "You are successfully Login",
+      // text: `You are successfully Login`,
+      icon: "success",
+      button: "Done",
+    });
+  }
+
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleSignIn = () => {
+    providerLogin(googleProvider)
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+        loginAlert();
+      })
+      .catch(error => console.error(error))
+  }
+
+
   return (
     <>
       <Col lg="5" md="7">
@@ -24,7 +62,7 @@ const Login = () => {
               <small>Sign in with</small>
             </div>
             <div className="btn-wrapper text-center">
-            <Button
+              <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
                 href="#pablo"
@@ -44,8 +82,7 @@ const Login = () => {
               <Button
                 className="btn-neutral btn-icon"
                 color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={handleGoogleSignIn}
               >
                 <span className="btn-inner--icon">
                   <img

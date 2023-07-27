@@ -65,6 +65,7 @@ const Admin = (props) => {
         />
         <Routes>
           {getRoutes(routes)}
+
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
           <Route path="transactions" element={<Transactions />}>
 
