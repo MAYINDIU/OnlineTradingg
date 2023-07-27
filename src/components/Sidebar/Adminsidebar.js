@@ -34,9 +34,10 @@ import {
   Col,
 } from "reactstrap";
 
+
 var ps;
 
-const Sidebar = (props) => {
+const Adminsidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
@@ -51,8 +52,8 @@ const Sidebar = (props) => {
     setCollapseOpen(false);
   };
   // creates the links that appear in the left menu / Sidebar
-  const createLinks = (routes) => {
-    return routes.map((prop, key) => {
+  const createLinks = (adminroutes) => {
+    return adminroutes.map((prop, key) => {
       return (
         <NavItem key={key}>
           <NavLink
@@ -68,7 +69,7 @@ const Sidebar = (props) => {
     });
   };
 
-  const { bgColor, routes, logo } = props;
+  const { bgColor, adminroutes, logo } = props;
   let navbarBrandProps;
   if (logo && logo.innerLink) {
     navbarBrandProps = {
@@ -139,19 +140,19 @@ const Sidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
-              <DropdownItem to="/user/user-profile" tag={Link}>
+              <DropdownItem to="/admin/user-profile" tag={Link}>
                 <i className="ni ni-single-02" />
-                <span>My profile</span>
+                <span>My profile(Admin)</span>
               </DropdownItem>
-              <DropdownItem to="/user/user-profile" tag={Link}>
+              <DropdownItem to="/admin/user-profile" tag={Link}>
                 <i className="ni ni-settings-gear-65" />
-                <span>Settings</span>
+                <span>Settings(Admin)</span>
               </DropdownItem>
-              <DropdownItem to="/user/user-profile" tag={Link}>
+              <DropdownItem to="/admin/user-profile" tag={Link}>
                 <i className="ni ni-calendar-grid-58" />
                 <span>Activity</span>
               </DropdownItem>
-              <DropdownItem to="/user/user-profile" tag={Link}>
+              <DropdownItem to="/admin/user-profile" tag={Link}>
                 <i className="ni ni-support-16" />
                 <span>Support</span>
               </DropdownItem>
@@ -210,26 +211,26 @@ const Sidebar = (props) => {
             </InputGroup>
           </Form>
           {/* Navigation */}
-          <Nav navbar>{createLinks(routes)}</Nav>
+          <Nav navbar>{createLinks(adminroutes)}</Nav>
           {/* Divider */}
- 
+
           {/* Heading */}
 
           {/* Navigation */}
-   
+
         </Collapse>
       </Container>
     </Navbar>
   );
 };
 
-Sidebar.defaultProps = {
-  routes: [{}],
+Adminsidebar.defaultProps = {
+  adminroutes: [{}],
 };
 
-Sidebar.propTypes = {
+Adminsidebar.propTypes = {
   // links that will be displayed inside the component
-  routes: PropTypes.arrayOf(PropTypes.object),
+  adminroutes: PropTypes.arrayOf(PropTypes.object),
   logo: PropTypes.shape({
     // innerLink is for links that will direct the user within the app
     // it will be rendered as <Link to="...">...</Link> tag
@@ -244,4 +245,4 @@ Sidebar.propTypes = {
   }),
 };
 
-export default Sidebar;
+export default Adminsidebar;

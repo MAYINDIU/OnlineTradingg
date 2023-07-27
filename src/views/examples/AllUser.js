@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "reactstrap";
+import { Button, Card, Table } from "reactstrap";
 
 const AllUser = () => {
   const [users, setUsers] = useState([]);
@@ -11,38 +11,41 @@ const AllUser = () => {
   console.log(users)
   return (
     <div>
-      <div className="container-fluid header bg-gradient-info pb-2 pt-5 pt-md-8">
-        <h2 className="text-white text-center mb-4">All User</h2>
+      <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
+        <h2 className="text-white text-center mb-2">All USERS</h2>
       </div>
-      <div className="container mx-auto">
-        <Table hover>
-          <thead>
-            <tr className="text-md">
+      <div className="container-fluid  mb-2 mx-auto mt--7">
+      <Card  className="shadow-lg  ">
+        <Table hover bordered responsive>
+          <thead className="text-white bg-gradient-info">
+            <tr className="text-md text-center">
               <th>Sl No</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Action</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user, index) => (
               <tr>
-                <th scope="row">{index + 1}</th>
-                <td>{user?.name}</td>
-                <td>{user?.email}</td>
-                <td>
+                <th className="text-center" scope="row">{index + 1}</th>
+                <td className="text-center">{user?.name}</td>
+                <td className="text-center">{user?.email}</td>
+                <td className="text-center">
                   {
-                    user?.status == 0  ? <button className="btn btn-success border-none">
+                    user?.status != "0"  ? <Button size="sm" className="btn btn-success border-none">
                     Active
-                  </button> : <button className="btn btn-danger border-none">
+                  </Button> :    <Button size="sm"  className="btn btn-danger h-12 border-none">
                     Diactive
-                  </button>
+                    </Button>
+                
                   }
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
+        </Card>
       </div>
     </div>
   );
