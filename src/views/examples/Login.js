@@ -1,4 +1,3 @@
-// reactstrap components
 import {
   Button,
   Card,
@@ -14,7 +13,153 @@ import {
   Col,
 } from "reactstrap";
 
+import { GoogleAuthProvider } from "firebase/auth";
+
+import { AuthContext } from "../../Context/AuthProvider";
+import { useContext, useState } from "react";
+import swal from "sweetalert";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+
 const Login = () => {
+
+  const { providerLogin, setUser } = useContext(AuthContext);
+  
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [error, setError] = useState(null);
+  const[data,setuserdata]   = useState(['']);
+   console.log(data);
+
+  const from = location.state?.from?.pathname || '/'
+
+  const loginAlert = () => {
+    swal({
+      // title: "Congratulations",
+      title: "You are successfully Login",
+      // text: `You are successfully Login`,
+      icon: "success",
+      button: "Done",
+    });
+  }
+
+  const uploadUserInfoToDatabase = (user) => {
+
+    const userName = user.displayName;
+    const userEmail = user.email;
+    const userPassword = 'NA';
+    const referalCode = 'NA';
+    const status = '1';
+
+    const formdata = new FormData();
+    formdata.append('name', userName);
+    formdata.append('email', userEmail);
+    formdata.append('password', userPassword);
+    formdata.append('referal_code', referalCode);
+    formdata.append('status', status);
+
+    axios.post('https://indian.munihaelectronics.com/public/api/create-user', formdata)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+  }
+
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleSignIn = () => {
+    providerLogin(googleProvider)
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+        uploadUserInfoToDatabase(user);
+        loginAlert();
+
+      })
+      .catch(error => console.error(error))
+  }
+
+
+  // const handleSubmitt = (event) => {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const email = form.email.value
+  //   const password = form.password.value
+
+  //   // console.log(email)
+  //   // console.log(password)
+
+  //   if(email==="admin@gmail.com" && password==='123456'){
+  //     navigate("/admin/index");
+  //    }else{
+  //     const formdata = new FormData();
+  //     formdata.append('email', email);
+  //     formdata.append('password', password);
+  
+  //     axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
+  //       .then((response) => {
+  //         setuserdata(response.data)
+      
+  //       if(response.data.status==='0'){
+  //         console.error(error);
+  //         setError('You are not active user')
+  //       }else{
+  //         navigate("/admin/index");
+  //       }
+  
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //         setError('You are not active user')
+  //       });
+  //    }
+  
+  // }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value
+    const password = form.password.value
+
+    // console.log(email)
+    // console.log(password)
+
+    if(email==="admin@gmail.com" && password==='123456'){
+      navigate("/admin/index");
+     }else{
+      const formdata = new FormData();
+      formdata.append('email', email);
+      formdata.append('password', password);
+  
+      axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
+        .then((response) => {
+        setUser(response.data);
+          console.log(response);
+          if (response.data.status==='1') {
+            // Successful login
+            navigate(from, { replace: true });
+            // <Navigate to={'/admin/index'} state={{ from: location }} replace />
+            loginAlert();
+          }else if(response.data.status==='0'){
+
+            console.error(error);
+            setError('You are Deactive user')
+  
+          }
+  
+        })
+        .catch((error) => {
+          console.error(error);
+          setError('Email or Password is wrong, Please Enter Correct email or password !')
+        });
+     }
+  
+  }
+
   return (
     <>
       <Col lg="5" md="7">
@@ -24,7 +169,7 @@ const Login = () => {
               <small>Sign in with</small>
             </div>
             <div className="btn-wrapper text-center">
-            <Button
+              <Button
                 className="btn-neutral btn-icon mr-4"
                 color="default"
                 href="#pablo"
@@ -44,8 +189,7 @@ const Login = () => {
               <Button
                 className="btn-neutral btn-icon"
                 color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={handleGoogleSignIn}
               >
                 <span className="btn-inner--icon">
                   <img
@@ -64,7 +208,7 @@ const Login = () => {
             <div className="text-center text-muted mb-4">
               <small>Or sign in with credentials</small>
             </div>
-            <Form role="form">
+            <Form role="form" onSubmit={handleSubmit}>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -76,6 +220,7 @@ const Login = () => {
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
+                    name='email'
                   />
                 </InputGroup>
               </FormGroup>
@@ -90,10 +235,13 @@ const Login = () => {
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
+                    name='password'
                   />
                 </InputGroup>
               </FormGroup>
+              <p className='text-danger'>{error}</p>
               <div className="custom-control custom-control-alternative custom-checkbox">
+
                 <input
                   className="custom-control-input"
                   id=" customCheckLogin"
@@ -107,17 +255,14 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4 " color="primary" type="button">
-                  Log in
+                <Button className="my-4 w-100" color="primary" type="submit">
+                  LOG IN
                 </Button>
               </div>
-            </Form>
-          </CardBody>
-        </Card>
-        <Row className="mt-3">
+              <Row className="mt-3">
           <Col xs="6">
             <a
-              className="text-light"
+              className="text-blue"
               href="#pablo"
               onClick={(e) => e.preventDefault()}
             >
@@ -125,15 +270,15 @@ const Login = () => {
             </a>
           </Col>
           <Col className="text-right" xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Create new account</small>
-            </a>
+          <Link className='text-primary text-decoration-none' to={`/auth/register`}>
+                    <small>Create new account</small>
+              </Link>
           </Col>
         </Row>
+            </Form>
+          </CardBody>
+        </Card>
+    
       </Col>
     </>
   );

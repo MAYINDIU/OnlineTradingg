@@ -1,3 +1,5 @@
+import { AuthContext } from "Context/AuthProvider";
+import { useContext } from "react";
 import {
   Button,
   Card,
@@ -14,13 +16,15 @@ import {
 
 
 const Profile = () => {
+
+  const { user } = useContext(AuthContext);
   return (
     <>
 
 
-<div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
-                <h2 className='text-white mb-2'>Account Setting</h2>
-            </div>
+      <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
+        <h2 className='text-white mb-2'>Account Setting</h2>
+      </div>
       {/* Page content */}
       <Container className="mt--7 mb-3" fluid>
         <Row>
@@ -30,11 +34,18 @@ const Profile = () => {
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <img
-                        alt="..."
-                        className="rounded-circle"
-                        src={require("../../assets/img/theme/profile.png")}
-                      />
+                      {user?.photoURL ?
+                        <img
+                          alt="..."
+                          className="rounded-circle"
+                          src={user.photoURL}
+                        />
+                        : <img
+                          alt="..."
+                          className="rounded-circle"
+                          src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                        />
+                      }
                     </a>
                   </div>
                 </Col>
@@ -82,7 +93,14 @@ const Profile = () => {
                 </Row>
                 <div className="text-center">
                   <h3>
-                    Jessica Jones
+                    {user?.uid ?
+                      <span >
+                        {user.displayName}
+                      </span>
+                      : <span >
+                        Jessica Jones
+                      </span>
+                    }
                     <span className="font-weight-light">, 27</span>
                   </h3>
                   <div className="h5 font-weight-300">
@@ -91,7 +109,7 @@ const Profile = () => {
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    Solution Manager - Creative Tim Officer
+                    Solution Manager - Dark tech Officer
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
@@ -285,12 +303,12 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
- 
-                          <div className="text-center col mt-1">
-                        <Button className="my-2" color="primary" type="button">
-                        <i className="mr-2 shadow fa-solid fa-user" /> Update Profile
-                        </Button>
-                      </div>
+
+                  <div className="text-center col mt-1">
+                    <Button className="my-2" color="primary" type="button">
+                      <i className="mr-2 shadow fa-solid fa-user" /> Update Profile
+                    </Button>
+                  </div>
                 </Form>
               </CardBody>
             </Card>
