@@ -53,7 +53,7 @@ const Register = () => {
 
   return (
     <>
-      <Col lg="6" md="8">
+      <Col lg="6" md="8" className='mt--7'>
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-2">
             <div className="text-muted text-center mt-2 mb-4">

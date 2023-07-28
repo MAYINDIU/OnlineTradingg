@@ -1,13 +1,61 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, CardHeader, CardBody, Row, Col, Container, CardText, CardSubtitle } from "reactstrap";
+import { useContext} from "react";
+import { AuthContext } from "Context/AuthProvider";
+import axios from "axios";
+import swal from "sweetalert";
 const MyPlan = () => {
+  const { user } = useContext(AuthContext);
+  const current = new Date();
+  const purchase_dt = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+// console.log(purchase_date);
+const buyalert = () => {
+  swal({
+    // title: "Congratulations",
+    title: "Thank you for purchase package",
+    icon: "success",
+    button: "Done",
+  });
+}
   const [packages, setPackages] = useState([]);
+  const [purchase, setPurchase] = useState([]);
+  console.log(purchase);
   useEffect(() => {
     fetch("https://indian.munihaelectronics.com/public/api/packages")
       .then((res) => res.json())
       .then((data) => setPackages(data));
   }, []);
-  console.log('pac', packages)
+
+    //******Handle post data in database********
+    const handlePurchase = (id) => {
+      const userId=user?.id;
+      const purchase_date=purchase_dt;
+      const planId=id;
+      const status="Pending";
+      const data = {
+        userId,
+        planId,
+        purchase_date,
+        status
+      };
+      console.log(data);
+      const url = `https://indian.munihaelectronics.com/public/api/purchase_pkg`;
+      fetch(url, {
+          method: "POST",
+          headers: {
+              "content-type": "application/json"
+          },
+          body: JSON.stringify(data)
+      })
+          .then(res => res.json())
+          .then(data=>setPurchase(data));
+
+          if(purchase?.message==='Purchase Successfully'){
+            buyalert();
+          }
+ 
+  }
+
   return (
     <div>
       <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
@@ -51,9 +99,9 @@ const MyPlan = () => {
                   </h5>
 
                   <div className="col text-center mt-3">
-                    <Button className="btn btn-primary">
-                      <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-arrow-right-long" />
-                      Show Your Plan
+                    <Button onClick={() => handlePurchase(p?.id)} className="btn btn-primary">
+                      <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-cart-shopping" />
+                      Purchase
                     </Button>
                   </div>
                 </CardBody>

@@ -12,9 +12,11 @@ import OthersHistory from "views/examples/TransactionsHistory/OthersHistory";
 import Transactions from "views/examples/Transactions";
 import Adminsidebar from "components/Sidebar/Adminsidebar";
 import adminroutes from "views/adminroutes";
-
+import { useContext, useState } from "react";
+import { AuthContext } from "Context/AuthProvider";
 const Admin = (props) => {
-
+  const { user } = useContext(AuthContext);
+  console.log(user);
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -26,6 +28,9 @@ const Admin = (props) => {
 
   const getRoutes = (adminroutes) => {
     return adminroutes.map((prop, key) => {
+      if (!user) {
+        return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
+      }
       if (prop.layout === "/admin") {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />

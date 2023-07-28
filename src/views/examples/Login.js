@@ -128,9 +128,7 @@ const Login = () => {
     // console.log(email)
     // console.log(password)
 
-    if(email==="admin@gmail.com" && password==='123456'){
-      navigate("/admin/index");
-     }else{
+
       const formdata = new FormData();
       formdata.append('email', email);
       formdata.append('password', password);
@@ -139,16 +137,17 @@ const Login = () => {
         .then((response) => {
         setUser(response.data);
           console.log(response);
-          if (response.data.status==='1') {
+          if(email==="admin@gmail.com" && password==='123456'){
+            navigate("/admin/index");
+           }
+          else if (response.data.status==='1') {
             // Successful login
             navigate(from, { replace: true });
             // <Navigate to={'/admin/index'} state={{ from: location }} replace />
             loginAlert();
           }else if(response.data.status==='0'){
-
             console.error(error);
-            setError('You are Deactive user')
-  
+            setError('You account is Deactive')
           }
   
         })
@@ -156,13 +155,13 @@ const Login = () => {
           console.error(error);
           setError('Email or Password is wrong, Please Enter Correct email or password !')
         });
-     }
+     
   
   }
 
   return (
     <>
-      <Col lg="5" md="7">
+      <Col lg="5" md="7" className='mt--7'>
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center mt-2 mb-3">

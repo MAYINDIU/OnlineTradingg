@@ -13,6 +13,7 @@ import AddPackage from "views/examples/Package/AddPackage";
 import PackageList from "views/examples/Package/PackageList";
 import UpdatePackages from "views/examples/Package/UpdatePackages";
 import Adminindex from "views/examples/Adminindex";
+import Purchaselist from "./examples/Purchase/Purchaselist";
 var adminroutes = [
   {
     path: "/index",
@@ -35,11 +36,19 @@ var adminroutes = [
     component: <AllUser />,
     layout: "/admin"
   },
+
   {
     path: "/packages",
     name: "Package List",
     icon: "fa-solid fa-list text-primary",
     component: <PackageList />,
+    layout: "/admin"
+  },
+  {
+    path: "/purchaselist",
+    name: "Purchase list",
+    icon: "fa-solid fa-cart-shopping text-primary",
+    component: <Purchaselist />,
     layout: "/admin"
   },
   {
