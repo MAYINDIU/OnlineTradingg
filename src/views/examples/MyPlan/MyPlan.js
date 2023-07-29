@@ -11,20 +11,29 @@ const MyPlan = () => {
 // console.log(purchase_date);
 const buyalert = () => {
   swal({
-    // title: "Congratulations",
     title: "Thank you for purchase package",
     icon: "success",
     button: "Done",
   });
 }
   const [packages, setPackages] = useState([]);
+  console.log(packages);
   const [purchase, setPurchase] = useState([]);
-  console.log(purchase);
+  if(purchase?.message==='Purchase Successfully'){
+    buyalert();
+  }
+  
+
+
+
+  const userid=user?.id;
   useEffect(() => {
-    fetch("https://indian.munihaelectronics.com/public/api/packages")
+    fetch(`https://indian.munihaelectronics.com/public/api/packages-with-status/${userid}`)
       .then((res) => res.json())
       .then((data) => setPackages(data));
   }, []);
+
+
 
     //******Handle post data in database********
     const handlePurchase = (id) => {
@@ -48,11 +57,7 @@ const buyalert = () => {
           body: JSON.stringify(data)
       })
           .then(res => res.json())
-          .then(data=>setPurchase(data));
-
-          if(purchase?.message==='Purchase Successfully'){
-            buyalert();
-          }
+          .then(data=>setPurchase(data));  
  
   }
 
@@ -64,8 +69,8 @@ const buyalert = () => {
       <Row className="container-fluid mt--7">
 
         {
-          packages.map(p => (
-            <Col lg="4" xl="4" className=''>
+          packages.map(p => {
+            return <Col lg="4" xl="4" className=''>
               <Card className="bg-default  shadow-lg  shadow-sm--hover card-lift--hover mt-5  mb-4 mb-xl-0 ">
                 <CardBody>
                   <div className="text-center">
@@ -99,15 +104,28 @@ const buyalert = () => {
                   </h5>
 
                   <div className="col text-center mt-3">
+                  {/* condition1 ? condition2 ? Expression1 : Expression2 : Expression3 */}
+                  {
+                  p?.status=="Active"? <Button className='w-50' disabled>Active</Button>: p?.status=="Upgrade"?<Button>Buy Now</Button>: p?.status!="Upgrade"?
+                  <Button onClick={() => handlePurchase(p?.id)}  className="btn btn-danger w-50  border-none">
+                  Upgrade </Button> :""
+                 
+                 
+          
+                  }
+              
+
+                      {/* 
                     <Button onClick={() => handlePurchase(p?.id)} className="btn btn-primary">
                       <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-cart-shopping" />
-                      Purchase
-                    </Button>
+                     {p?.status}
+                    </Button> */}
                   </div>
                 </CardBody>
               </Card>
             </Col>
-          ))
+          
+          })
         }
       </Row>
 
