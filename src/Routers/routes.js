@@ -11,28 +11,27 @@ import MyPlan from "views/examples/MyPlan/MyPlan";
 import AllUser from "views/examples/AllUser";
 import AddPackage from "views/examples/Package/AddPackage";
 
-
 var routes = [
   {
     path: "/index",
     name: "Home",
     icon: "fa-solid fa-house text-primary",
     component: <Index />,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/deposit",
     name: "Deposit",
     icon: "fa-solid fa-circle-down text-blue",
     component: <Deposit />,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/withdraw",
     name: "Withdraw",
     icon: "fa-solid fa-circle-arrow-up text-primary",
     component: <Withdraw />,
-    layout: "/admin",
+    layout: "/user",
   },
 
   {
@@ -40,22 +39,21 @@ var routes = [
     name: "Transactions",
     icon: "fa-solid fa-money-bill-transfer text-primary",
     component: <Transactions />,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/user-profile",
     name: "User Profile",
     icon: "fa-solid fa-user text-primary",
     component: <Profile />,
-    layout: "/admin",
+    layout: "/user",
   },
-
   {
     path: "/tradingplan",
     name: "Trading Plan",
     icon: "fa-solid fa-spa text-primary",
     component: <TradingPlan />,
-    layout: "/admin",
+    layout: "/user",
   },
   {
     path: "/myplan",
@@ -81,9 +79,20 @@ var routes = [
   },
   {
     path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
     component: <Register />,
+    layout: "/auth",
+  },
+
+  // {
+  //   path: "/tables",
+  //   name: "Tables",
+  //   icon: "ni ni-bullet-list-67 text-red",
+  //   component: <Tables />,
+  //   layout: "/user",
+  // },
+  {
+    path: "/login",
+    component: <Login />,
     layout: "/auth",
   },
 ];

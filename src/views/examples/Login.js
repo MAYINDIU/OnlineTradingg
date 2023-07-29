@@ -1,4 +1,3 @@
-// reactstrap components
 import {
   Button,
   Card,
@@ -19,7 +18,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 import { AuthContext } from "../../Context/AuthProvider";
 import { useContext, useState } from "react";
 import swal from "sweetalert";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
@@ -29,7 +28,8 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState(null);
-
+  const [data, setuserdata] = useState(['']);
+  console.log(data);
 
   const from = location.state?.from?.pathname || '/'
 
@@ -114,9 +114,85 @@ const Login = () => {
 
   }
 
+  // const handleSubmitt = (event) => {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const email = form.email.value
+  //   const password = form.password.value
+
+  //   // console.log(email)
+  //   // console.log(password)
+
+  //   if(email==="admin@gmail.com" && password==='123456'){
+  //     navigate("/admin/index");
+  //    }else{
+  //     const formdata = new FormData();
+  //     formdata.append('email', email);
+  //     formdata.append('password', password);
+
+  //     axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
+  //       .then((response) => {
+  //         setuserdata(response.data)
+
+  //       if(response.data.status==='0'){
+  //         console.error(error);
+  //         setError('You are not active user')
+  //       }else{
+  //         navigate("/admin/index");
+  //       }
+
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //         setError('You are not active user')
+  //       });
+  //    }
+
+  // }
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const email = form.email.value
+  //   const password = form.password.value
+
+  //   // console.log(email)
+  //   // console.log(password)
+
+
+  //   const formdata = new FormData();
+  //   formdata.append('email', email);
+  //   formdata.append('password', password);
+
+  //   axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
+  //     .then((response) => {
+  //       setUser(response.data);
+  //       console.log(response);
+  //       if (email === "admin@gmail.com" && password === '123456') {
+  //         navigate("/admin/index");
+  //       }
+  //       else if (response.data.status === '1') {
+  //         // Successful login
+  //         navigate(from, { replace: true });
+  //         // <Navigate to={'/admin/index'} state={{ from: location }} replace />
+  //         loginAlert();
+  //       } else if (response.data.status === '0') {
+  //         console.error(error);
+  //         setError('You account is Deactive')
+  //       }
+
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setError('Email or Password is wrong, Please Enter Correct email or password !')
+  //     });
+
+
+  // }
+
   return (
     <>
-      <Col lg="5" md="7">
+      <Col lg="5" md="7" className='mt--7'>
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center mt-2 mb-3">
@@ -209,33 +285,30 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4 " color="primary" type="submit">
-                  Log in
+                <Button className="my-4 w-100" color="primary" type="submit">
+                  LOG IN
                 </Button>
               </div>
+              <Row className="mt-3">
+                <Col xs="6">
+                  <a
+                    className="text-blue"
+                    href="#pablo"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <small>Forgot password?</small>
+                  </a>
+                </Col>
+                <Col className="text-right" xs="6">
+                  <Link className='text-primary text-decoration-none' to={`/auth/register`}>
+                    <small>Create new account</small>
+                  </Link>
+                </Col>
+              </Row>
             </Form>
           </CardBody>
         </Card>
-        <Row className="mt-3">
-          <Col xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Forgot password?</small>
-            </a>
-          </Col>
-          <Col className="text-right" xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
-            >
-              <small>Create new account</small>
-            </a>
-          </Col>
-        </Row>
+
       </Col>
     </>
   );
