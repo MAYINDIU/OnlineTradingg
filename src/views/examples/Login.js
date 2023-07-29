@@ -14,13 +14,12 @@ import {
 } from "reactstrap";
 
 import { GoogleAuthProvider } from "firebase/auth";
-
 import { AuthContext } from "../../Context/AuthProvider";
 import { useContext, useState } from "react";
 import swal from "sweetalert";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import TelegramLoginButton, { TelegramUser } from 'telegram-login-button'
 const Login = () => {
 
   const { providerLogin, setUser } = useContext(AuthContext);
@@ -42,6 +41,9 @@ const Login = () => {
       button: "Done",
     });
   }
+
+
+
 
   const uploadUserInfoToDatabase = (user) => {
 
@@ -158,6 +160,7 @@ const Login = () => {
      
   
   }
+  
 
   return (
     <>
@@ -167,6 +170,7 @@ const Login = () => {
             <div className="text-muted text-center mt-2 mb-3">
               <small>Sign in with</small>
             </div>
+
             <div className="btn-wrapper text-center">
               <Button
                 className="btn-neutral btn-icon mr-4"

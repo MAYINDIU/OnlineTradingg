@@ -6,6 +6,7 @@ import axios from "axios";
 import swal from "sweetalert";
 const MyPlan = () => {
   const { user } = useContext(AuthContext);
+
   const current = new Date();
   const purchase_dt = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
 // console.log(purchase_date);
@@ -27,6 +28,7 @@ const buyalert = () => {
 
 
   const userid=user?.id;
+  console.log(userid);
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/packages-with-status/${userid}`)
       .then((res) => res.json())
@@ -38,6 +40,7 @@ const buyalert = () => {
     //******Handle post data in database********
     const handlePurchase = (id) => {
       const userId=user?.id;
+      
       const purchase_date=purchase_dt;
       const planId=id;
       const status="Pending";
@@ -105,21 +108,26 @@ const buyalert = () => {
 
                   <div className="col text-center mt-3">
                   {/* condition1 ? condition2 ? Expression1 : Expression2 : Expression3 */}
-                  {
+                  {/* {
                   p?.status=="Active"? <Button className='w-50' disabled>Active</Button>: p?.status=="Upgrade"?<Button>Buy Now</Button>: p?.status!="Upgrade"?
                   <Button onClick={() => handlePurchase(p?.id)}  className="btn btn-danger w-50  border-none">
                   Upgrade </Button> :""
                  
-                 
-          
+                  } */}
+
+                     {
+                  p?.status=="Active"? <Button className='w-50 btn btn-danger text-white' disabled>Active</Button>: p?.status=="Pending"?<Button className='w-50 btn btn-danger text-white' disabled>  {p?.status}</Button>:
+                  <Button onClick={() => handlePurchase(p?.id)}  className="btn btn-info w-50  border-none">
+                     {p?.status} </Button> 
+                    
                   }
               
 
-                      {/* 
+                      {/* {
                     <Button onClick={() => handlePurchase(p?.id)} className="btn btn-primary">
                       <i className="mr-2 bg-white text-primary rounded-circle shadow fa-solid fa-cart-shopping" />
                      {p?.status}
-                    </Button> */}
+                    </Button> } */}
                   </div>
                 </CardBody>
               </Card>

@@ -69,7 +69,7 @@ const Header = () => {
                           tag="h4"
                           className="text-uppercase text-primary mb-0"
                         >
-                          Bonus
+                         TOTAL WITHDRAW
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           $350,897
