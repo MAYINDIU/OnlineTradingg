@@ -49,7 +49,7 @@ var routes = [
     component: <Profile />,
     layout: "/admin",
   },
-  ,
+
   {
     path: "/tradingplan",
     name: "Trading Plan",
