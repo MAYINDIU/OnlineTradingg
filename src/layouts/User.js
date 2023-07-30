@@ -31,13 +31,7 @@ const User = (props) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-<<<<<<< HEAD
-=======
-      // if (!user) {
-      //   return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
-      // }
 
->>>>>>> f392681a6360426e5da30c5c6d1bdb440da37a84
       if (isAdminLoggedIn) {
         return <Route path="*" element={<Navigate to="/admin/index" state={{ from: location }} replace />} />;
       }

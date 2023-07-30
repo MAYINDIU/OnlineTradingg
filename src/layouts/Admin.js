@@ -6,13 +6,10 @@ import { Container } from "reactstrap";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import DepositHistory from "views/examples/TransactionsHistory/DepositHistory";
-import WithdrawalHistory from "views/examples/TransactionsHistory/WithdrawalHistory";
-import OthersHistory from "views/examples/TransactionsHistory/OthersHistory";
-import Transactions from "views/examples/Transactions";
 import Adminsidebar from "components/Sidebar/Adminsidebar";
 import adminroutes from "views/adminroutes";
 import { AuthContext } from "Context/AuthProvider";
+import ManageUser from "views/examples/User/ManageUser";
 
 const Admin = (props) => {
   const { user } = useContext(AuthContext);
@@ -82,6 +79,9 @@ const Admin = (props) => {
           {getRoutes(adminroutes)}
 
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
+          <Route path="user/:id" element={<ManageUser />}>
+          </Route>
+
 
         </Routes>
         {/* <Container fluid>
