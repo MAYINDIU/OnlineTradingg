@@ -20,6 +20,8 @@ const Admin = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
 
+  const isLogedIn = window.localStorage.getItem('user-log')
+
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -29,7 +31,7 @@ const Admin = (props) => {
 
   const getRoutes = (adminroutes) => {
     return adminroutes.map((prop, key) => {
-      if (!user) {
+      if (!isLogedIn) {
         return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
       }
       if (prop.layout === "/admin") {

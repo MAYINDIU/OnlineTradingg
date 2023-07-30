@@ -20,6 +20,8 @@ const User = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
 
+  const isLogedIn = window.localStorage.getItem('user-log')
+
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -28,7 +30,7 @@ const User = (props) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (!user) {
+      if (!isLogedIn) {
         return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
       }
       if (prop.layout === "/user") {

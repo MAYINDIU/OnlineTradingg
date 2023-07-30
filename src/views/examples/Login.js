@@ -35,9 +35,7 @@ const Login = () => {
 
   const loginAlert = () => {
     swal({
-      // title: "Congratulations",
       title: "You are successfully Login",
-      // text: `You are successfully Login`,
       icon: "success",
       button: "Done",
     });
@@ -76,43 +74,45 @@ const Login = () => {
         console.log(user);
         navigate(from, { replace: true });
         uploadUserInfoToDatabase(user);
+        window.localStorage.setItem('user-log', true)
         loginAlert();
+
 
       })
       .catch(error => console.error(error))
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value
-    const password = form.password.value
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const form = event.target;
+  //   const email = form.email.value
+  //   const password = form.password.value
 
-    console.log(email)
-    console.log(password)
+  //   console.log(email)
+  //   console.log(password)
 
-    const formdata = new FormData();
-    formdata.append('email', email);
-    formdata.append('password', password);
+  //   const formdata = new FormData();
+  //   formdata.append('email', email);
+  //   formdata.append('password', password);
 
-    axios.post('https://indian.munihaelectronics.com/public/api/login?email', formdata)
-      .then((response) => {
-        setUser(response.data);
-        console.log(response.data);
-        if (response.data) {
-          // Successful login
-          navigate(from, { replace: true });
-          // <Navigate to={'/admin/index'} state={{ from: location }} replace />
-          loginAlert();
-        }
+  //   axios.post('https://indian.munihaelectronics.com/public/api/login?email', formdata)
+  //     .then((response) => {
+  //       setUser(response.data);
+  //       console.log(response.data);
+  //       if (response.data) {
+  //         // Successful login
+  //         navigate(from, { replace: true });
+  //         // <Navigate to={'/admin/index'} state={{ from: location }} replace />
+  //         loginAlert();
+  //       }
 
-      })
-      .catch((error) => {
-        console.error(error);
-        setError('Email or Password is wrong, Please Enter Correct email or password !')
-      });
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       setError('Email or Password is wrong, Please Enter Correct email or password !')
+  //     });
 
-  }
+  // }
 
   // const handleSubmitt = (event) => {
   //   event.preventDefault();
@@ -150,45 +150,46 @@ const Login = () => {
 
   // }
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const form = event.target;
-  //   const email = form.email.value
-  //   const password = form.password.value
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value
+    const password = form.password.value
 
-  //   // console.log(email)
-  //   // console.log(password)
-
-
-  //   const formdata = new FormData();
-  //   formdata.append('email', email);
-  //   formdata.append('password', password);
-
-  //   axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
-  //     .then((response) => {
-  //       setUser(response.data);
-  //       console.log(response);
-  //       if (email === "admin@gmail.com" && password === '123456') {
-  //         navigate("/admin/index");
-  //       }
-  //       else if (response.data.status === '1') {
-  //         // Successful login
-  //         navigate(from, { replace: true });
-  //         // <Navigate to={'/admin/index'} state={{ from: location }} replace />
-  //         loginAlert();
-  //       } else if (response.data.status === '0') {
-  //         console.error(error);
-  //         setError('You account is Deactive')
-  //       }
-
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       setError('Email or Password is wrong, Please Enter Correct email or password !')
-  //     });
+    // console.log(email)
+    // console.log(password)
 
 
-  // }
+    const formdata = new FormData();
+    formdata.append('email', email);
+    formdata.append('password', password);
+
+    axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
+      .then((response) => {
+        window.localStorage.setItem('user-log', true)
+        setUser(response.data);
+        console.log(response);
+        if (email === "admin@gmail.com" && password === '123456') {
+          navigate("/admin/index");
+        }
+        else if (response.data.status === '1') {
+          // Successful login
+          navigate(from, { replace: true });
+          // <Navigate to={'/admin/index'} state={{ from: location }} replace />
+          loginAlert();
+        } else if (response.data.status === '0') {
+          console.error(error);
+          setError('You account is Deactive')
+        }
+
+      })
+      .catch((error) => {
+        console.error(error);
+        setError('Email or Password is wrong, Please Enter Correct email or password !')
+      });
+
+
+  }
 
   return (
     <>
