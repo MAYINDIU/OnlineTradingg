@@ -168,7 +168,7 @@ const Login = () => {
       .then((response) => {
 
         setUser(response.data);
-        console.log(response);
+        console.log(response.data);
         if (email === "admin@gmail.com" && password === '123456') {
           navigate("/admin/index");
           window.localStorage.setItem('admin-loggedIn', true)

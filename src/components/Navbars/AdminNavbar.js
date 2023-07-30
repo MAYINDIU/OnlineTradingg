@@ -36,6 +36,7 @@ const AdminNavbar = (props) => {
 
     });
   }
+  console.log(user);
 
 
 
@@ -85,7 +86,7 @@ const AdminNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
+                        {user?.name}
                       </span>
                     }
 
