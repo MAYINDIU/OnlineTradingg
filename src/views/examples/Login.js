@@ -166,7 +166,7 @@ const Login = () => {
 
     axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
       .then((response) => {
-        window.localStorage.setItem('user-loggedIn', true)
+
         setUser(response.data);
         console.log(response);
         if (email === "admin@gmail.com" && password === '123456') {
@@ -174,10 +174,12 @@ const Login = () => {
           window.localStorage.setItem('admin-loggedIn', true)
         }
         else if (response.data.status === '1') {
+          window.localStorage.setItem('user-loggedIn', true)
           // Successful login
           navigate(from, { replace: true });
           // <Navigate to={'/admin/index'} state={{ from: location }} replace />
           loginAlert();
+
         } else if (response.data.status === '0') {
           console.error(error);
           setError('You account is Deactive')

@@ -21,6 +21,7 @@ const Admin = (props) => {
   const location = useLocation();
 
   const isLoggedIn = window.localStorage.getItem('user-loggedIn')
+  const isAdminLoggedIn = window.localStorage.getItem('admin-loggedIn')
 
 
   React.useEffect(() => {
@@ -35,7 +36,7 @@ const Admin = (props) => {
       if (isLoggedIn) {
         return <Route path="*" element={<Navigate to="/user/index" state={{ from: location }} replace />} />;
       }
-      if (!isLoggedIn) {
+      if (!isAdminLoggedIn) {
         return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
       }
       if (prop.layout === "/admin") {
