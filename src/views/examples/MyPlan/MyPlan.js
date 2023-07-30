@@ -5,7 +5,7 @@ import { AuthContext } from "Context/AuthProvider";
 import axios from "axios";
 import swal from "sweetalert";
 const MyPlan = () => {
-  const { user } = useContext(AuthContext);
+const { user } = useContext(AuthContext);
 
   const current = new Date();
   const purchase_dt = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;

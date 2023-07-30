@@ -9,6 +9,7 @@ import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
 var routes = [
+  
   {
     path: "/index",
     name: "Home",

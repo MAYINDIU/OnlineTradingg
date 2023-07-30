@@ -16,9 +16,10 @@ import { useContext, useState } from "react";
 import { AuthContext } from "Context/AuthProvider";
 const Admin = (props) => {
   const { user } = useContext(AuthContext);
-  console.log(user);
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const isLoggedIn = window.localStorage.getItem('user-loggedIn')
+  const isAdminLoggedIn = window.localStorage.getItem('admin-loggedIn')
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -28,7 +29,13 @@ const Admin = (props) => {
 
   const getRoutes = (adminroutes) => {
     return adminroutes.map((prop, key) => {
-      if (!user) {
+      // if (!user) {
+      //   return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
+      // }
+      if (isLoggedIn) {
+        return <Route path="*" element={<Navigate to="/user/index" state={{ from: location }} replace />} />;
+      }
+      if (!isAdminLoggedIn) {
         return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
       }
       if (prop.layout === "/admin") {

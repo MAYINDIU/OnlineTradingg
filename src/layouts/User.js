@@ -20,6 +20,9 @@ const User = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
 
+  const isLoggedIn = window.localStorage.getItem('user-loggedIn')
+  const isAdminLoggedIn = window.localStorage.getItem('admin-loggedIn')
+
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -28,7 +31,14 @@ const User = (props) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (!user) {
+      // if (!user) {
+      //   return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
+      // }
+
+      if (isAdminLoggedIn) {
+        return <Route path="*" element={<Navigate to="/admin/index" state={{ from: location }} replace />} />;
+      }
+      if (!isLoggedIn) {
         return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
       }
       if (prop.layout === "/user") {
