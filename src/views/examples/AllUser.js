@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Card, Table } from "reactstrap";
 
 const AllUser = () => {
@@ -31,15 +32,21 @@ const AllUser = () => {
                 <th className="text-center" scope="row">{index + 1}</th>
                 <td className="text-center">{user?.name}</td>
                 <td className="text-center">{user?.email}</td>
-                <td className="text-center">
+                <td className="text-center  justify-content-between">
+               
                   {
-                    user?.status != "0"  ? <Button size="sm" className="btn btn-success border-none">
+                    user?.status != "0"  ? <Button size="sm" className="btn btn-success w-25 border-none">
                     Active
-                  </Button> :    <Button size="sm"  className="btn btn-danger h-12 border-none">
+                  </Button> :    <Button size="sm"  className="btn btn-danger w-25 h-12 border-none">
                     Diactive
                     </Button>
                 
                   }
+                   <Link to={`/admin/user/${user?.id}`}>
+                      <Button size="sm" className="btn btn-info border-none ml-2">
+                        Manage
+                      </Button>
+                    </Link>
                 </td>
               </tr>
             ))}

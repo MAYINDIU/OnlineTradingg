@@ -14,6 +14,7 @@ import Adminsidebar from "components/Sidebar/Adminsidebar";
 import adminroutes from "views/adminroutes";
 import { useContext, useState } from "react";
 import { AuthContext } from "Context/AuthProvider";
+import Manageuser from "views/examples/Manageuser";
 const Admin = (props) => {
   const { user } = useContext(AuthContext);
   const mainContent = React.useRef(null);
@@ -81,7 +82,8 @@ const Admin = (props) => {
           {getRoutes(adminroutes)}
 
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
-    
+          <Route path="user/:id" element={<Manageuser />}>
+          </Route>
         </Routes>
         {/* <Container fluid>
           <AdminFooter />
