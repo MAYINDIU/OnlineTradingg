@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { Card, CardBody, CardTitle, Col, Container, Row } from 'reactstrap'
+import DepositHistory from './TransactionsHistory/DepositHistory';
 
 const Transactions = () => {
+
 
     return (
         <div>
@@ -68,6 +70,7 @@ const Transactions = () => {
             </Container>
 
             <Container fluid className='mt--7 mb-7'>
+
                 <Outlet></Outlet>
             </Container>
 

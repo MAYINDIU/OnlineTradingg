@@ -68,27 +68,16 @@ const AdminNavbar = (props) => {
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
 
-                    {user?.photoURL ?
-                      <img
-                        alt="..."
-                        src={user.photoURL}
-                      />
-                      : <img
-                        alt="..."
-                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                      />
-                    }
+                    <img
+                      alt="..."
+                      src={require("../../assets/img/theme/administration-vector-icon.jpg")}
+                    />
 
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
-                    {user?.uid ?
-                      <span className="mb-0 text-sm font-weight-bold">
-                        {user.displayName}
-                      </span>
-                      : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name}
-                      </span>
-                    }
+                    <span className="mb-0 text-sm font-weight-bold">
+                      Admin
+                    </span>
 
                   </Media>
                 </Media>

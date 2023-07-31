@@ -12,7 +12,7 @@ import AllUser from "views/examples/AllUser";
 import AddPackage from "views/examples/Package/AddPackage";
 
 var routes = [
-  
+
   {
     path: "/index",
     name: "Home",

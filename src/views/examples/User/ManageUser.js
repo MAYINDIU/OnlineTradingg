@@ -6,8 +6,8 @@ const ManageUser = () => {
 
     const { id } = useParams();
 
-    const [isInfoClicked, setIsInfoClicked] = useState(false);
-    const [isAddClicked, setIsAddClicked] = useState(true);
+    const [isInfoClicked, setIsInfoClicked] = useState(true);
+    const [isAddClicked, setIsAddClicked] = useState(false);
 
     const [user, setUser] = useState([]);
 
@@ -22,12 +22,12 @@ const ManageUser = () => {
 
 
     const handleInfoClick = () => {
-        setIsInfoClicked(false);
-        setIsAddClicked(true);
-    };
-    const handleAddClick = () => {
         setIsInfoClicked(true);
         setIsAddClicked(false);
+    };
+    const handleAddClick = () => {
+        setIsInfoClicked(false);
+        setIsAddClicked(true);
     };
     return (
         <div>
@@ -35,34 +35,35 @@ const ManageUser = () => {
                 {/* <h2 className='text-white font-weight-bold'>User</h2> */}
                 <div className="">
                     <Row>
-                        <Col lg="6" xl="6">
+                        <Col lg="6" xl="6" >
                             {/* <Link className='text-decoration-none text-primary' to={`/admin/${id}/info`}>
                                 
                             </Link> */}
-                            <Card className="bg-secondary shadow border-0 card-stats bg mb-4 mb-xl-0 text-center">
+                            <Card className={isInfoClicked ? 'bg-primary shadow border-0 card-stats bg mb-4 mb-xl-0 text-center' : 'bg-secondary shadow border-0 card-stats bg mb-4 mb-xl-0 text-center'} >
                                 <CardBody onClick={handleInfoClick}>
                                     {/* <div className="icon icon-shape bg-primary text-white rounded-circle shadow mb-2">
                                             <i className="fa-solid fa-download" />
                                         </div> */}
                                     <CardTitle
                                         tag="h4"
-                                        className="text-uppercase mb-0"
-                                    >
+                                        className={isInfoClicked ? 'text-white text-uppercase mb-0' : 'text-uppercase mb-0'}
+                                    > <i className="fa-solid fa-user-pen mx-3"></i>
                                         User Information
                                     </CardTitle>
                                 </CardBody>
                             </Card>
                         </Col>
                         <Col lg="6" xl="6">
-                            <Card className=" bg-secondary shadow border-0 card-stats bg mb-4 mb-xl-0 text-center">
+                            <Card className={isAddClicked ? 'bg-primary shadow border-0 card-stats bg mb-4 mb-xl-0 text-center' : 'bg-secondary shadow border-0 card-stats bg mb-4 mb-xl-0 text-center'}>
                                 <CardBody onClick={handleAddClick}>
                                     {/* <div className="icon icon-shape bg-primary text-white rounded-circle shadow mb-2">
                                             <i className="fa-solid fa-download" />
                                         </div> */}
                                     <CardTitle
                                         tag="h4"
-                                        className="text-uppercase mb-0"
+                                        className={isAddClicked ? 'text-white text-uppercase mb-0' : 'text-uppercase mb-0'}
                                     >
+                                        <i className="fa-solid fa-plus mx-3"></i>
                                         Add Money
                                     </CardTitle>
                                 </CardBody>
@@ -74,7 +75,7 @@ const ManageUser = () => {
             </Container>
 
             <Container fluid className=' mb-7'>
-                <div className={isInfoClicked ? 'd-none' : ''}>
+                <div className={isInfoClicked ? '' : 'd-none'}>
                     <Row className="container-fluid mb-3">
                         <Col lg="12" xl="12" className=" mt--7">
                             <Card className="bg-secondary shadow border-0">
@@ -87,7 +88,7 @@ const ManageUser = () => {
                                                     <InputGroup className="input-group-alternative">
                                                         <InputGroupAddon addonType="prepend">
                                                             <InputGroupText>
-                                                                <i class="fa-solid fa-globe"></i>
+                                                                <i class="fa-solid fa-user"></i>
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
@@ -105,7 +106,7 @@ const ManageUser = () => {
                                                     <InputGroup className="input-group-alternative">
                                                         <InputGroupAddon addonType="prepend">
                                                             <InputGroupText>
-                                                                <i class="fa-solid fa-globe"></i>
+                                                                <i class="fa-solid fa-user"></i>
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
@@ -125,7 +126,7 @@ const ManageUser = () => {
                                                     <InputGroup className="input-group-alternative">
                                                         <InputGroupAddon addonType="prepend">
                                                             <InputGroupText>
-                                                                <i class="fa-solid fa-globe"></i>
+                                                                <i class="fa-solid fa-dollar"></i>
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
@@ -162,7 +163,7 @@ const ManageUser = () => {
                                                     <InputGroup className="input-group-alternative">
                                                         <InputGroupAddon addonType="prepend">
                                                             <InputGroupText>
-                                                                <i class="fa-solid fa-globe"></i>
+                                                                <i class="fa-solid fa-envelope"></i>
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
@@ -180,7 +181,7 @@ const ManageUser = () => {
                                                     <InputGroup className="input-group-alternative">
                                                         <InputGroupAddon addonType="prepend">
                                                             <InputGroupText>
-                                                                <i class="fa-solid fa-globe"></i>
+                                                                <i class="fa-solid fa-qrcode"></i>
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
@@ -204,20 +205,102 @@ const ManageUser = () => {
                         </Col>
                     </Row>
                 </div>
-                <div className={isAddClicked ? 'd-none' : ''}>
-                    <Card className="card-stats bg mb-4 mb-xl-0 text-center mt--7">
-                        <CardBody className=''>
-                            {/* <div className="icon icon-shape bg-primary text-white rounded-circle shadow mb-2">
-                                            <i className="fa-solid fa-download" />
-                                        </div> */}
-                            <CardTitle
-                                tag="h4"
-                                className="text-uppercase mb-0"
-                            >
-                                Add Money
-                            </CardTitle>
-                        </CardBody>
-                    </Card>
+                <div className={isAddClicked ? '' : 'd-none'}>
+                    <Row className="container-fluid mb-3">
+                        <Col lg="12" xl="12" className=" mt--7">
+                            <Card className="bg-secondary shadow border-0">
+                                <CardBody className="px-lg-5 py-lg-5">
+                                    <Form role="form">
+                                        <Row>
+                                            <Col lg="12" xl="6" className=" mt-3">
+                                                <FormGroup className="mb-3">
+                                                    <Label>Email</Label>
+                                                    <InputGroup className="input-group-alternative">
+                                                        <InputGroupAddon addonType="prepend">
+                                                            <InputGroupText>
+                                                                <i class="fa-solid fa-envelope"></i>
+                                                            </InputGroupText>
+                                                        </InputGroupAddon>
+                                                        <Input
+                                                            // onChange={(e) => setPlanName(e.target.value)}
+                                                            placeholder={user.email}
+                                                            type="text"
+                                                        />
+                                                    </InputGroup>
+                                                </FormGroup>
+                                            </Col>
+
+                                            <Col lg="12" xl="6" className=" mt-3">
+                                                <FormGroup className="mb-3">
+                                                    <Label>User ID</Label>
+                                                    <InputGroup className="input-group-alternative">
+                                                        <InputGroupAddon addonType="prepend">
+                                                            <InputGroupText>
+                                                                <i className="fa-solid fa-id-card"></i>
+                                                            </InputGroupText>
+                                                        </InputGroupAddon>
+                                                        <Input
+                                                            // onChange={(e) => setPlanName(e.target.value)}
+                                                            placeholder={user.id}
+                                                            type="text"
+                                                        />
+                                                    </InputGroup>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col lg="12" xl="6" className=" mt-3">
+                                                <FormGroup className="mb-3">
+                                                    <Label>Ammount</Label>
+                                                    <InputGroup className="input-group-alternative">
+                                                        <InputGroupAddon addonType="prepend">
+                                                            <InputGroupText>
+                                                                <i class="fa-solid fa-dollar"></i>
+                                                            </InputGroupText>
+                                                        </InputGroupAddon>
+                                                        <Input
+                                                            // onChange={(e) => setPlanName(e.target.value)}
+                                                            placeholder="Enter the ammount"
+                                                            type="text"
+                                                        />
+                                                    </InputGroup>
+                                                </FormGroup>
+                                            </Col>
+
+                                            <Col lg="12" xl="6" className=" mt-3">
+                                                <FormGroup className="mb-3">
+                                                    <Label>Payment Type</Label>
+                                                    <InputGroup className="input-group-alternative">
+                                                        <InputGroupAddon addonType="prepend">
+                                                            <InputGroupText>
+                                                                <i class="fa-solid fa-rectangle-list"></i>
+                                                            </InputGroupText>
+                                                        </InputGroupAddon>
+                                                        <Input
+                                                            id="exampleSelect"
+                                                            name="select"
+                                                            type="select"
+                                                        // onChange={(e) => setPlanType(e.target.value)}
+                                                        >
+                                                            <option>CARD</option>
+                                                            <option>CASH</option>
+                                                            <option>MOBILE PAY</option>
+                                                        </Input>
+                                                    </InputGroup>
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+
+                                        <div className="text-center mt-5">
+                                            <button className="btn btn-primary w-50" type="submit">
+                                                Add Money
+                                            </button>
+                                        </div>
+                                    </Form>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
                 </div>
             </Container>
 
