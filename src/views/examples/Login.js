@@ -71,11 +71,13 @@ const Login = () => {
     providerLogin(googleProvider)
       .then(result => {
         const user = result.user;
+        setUser(user)
         console.log(user);
         navigate(from, { replace: true });
         uploadUserInfoToDatabase(user);
         window.localStorage.setItem('user-log', true)
         loginAlert();
+
 
 
       })
