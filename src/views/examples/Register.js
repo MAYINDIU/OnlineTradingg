@@ -70,6 +70,7 @@ const Register = () => {
       .then(result => {
         const user = result.user;
         console.log(user);
+        window.localStorage.setItem('user-loggedIn', true)
         navigate(from, { replace: true });
         uploadUserInfoToDatabase(user);
         loginAlert();
@@ -205,21 +206,21 @@ const Register = () => {
                 </Col>
               </Row>
               <div className="text-center">
-              <div className="text-center">
-                <Button className="my-4 w-100" color="primary" type="submit">
-                  CREATE AN ACCOUNT
-                </Button>
-              </div>
-              <Col className="text-center" xs="12">
-                    <small>If you already registered</small>
-          </Col>
-              <div className="text-center">
-              <Link className='text-primary text-decoration-none' to={`/auth/login`}>
-                <Button className="my-2 w-100" color="default" type="submit">
-                 LOG IN
-                </Button>
-                </Link>
-              </div>
+                <div className="text-center">
+                  <Button className="my-4 w-100" color="primary" type="submit">
+                    CREATE AN ACCOUNT
+                  </Button>
+                </div>
+                <Col className="text-center" xs="12">
+                  <small>If you already registered</small>
+                </Col>
+                <div className="text-center">
+                  <Link className='text-primary text-decoration-none' to={`/auth/login`}>
+                    <Button className="my-2 w-100" color="default" type="submit">
+                      LOG IN
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </Form>
           </CardBody>

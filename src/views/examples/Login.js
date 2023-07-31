@@ -75,7 +75,7 @@ const Login = () => {
         console.log(user);
         navigate(from, { replace: true });
         uploadUserInfoToDatabase(user);
-        window.localStorage.setItem('user-log', true)
+        window.localStorage.setItem('user-loggedIn', true)
         loginAlert();
 
 
@@ -168,13 +168,15 @@ const Login = () => {
 
     axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
       .then((response) => {
-        window.localStorage.setItem('user-log', true)
+        // window.localStorage.setItem('user-loggedIn', true)
         setUser(response.data);
         console.log(response);
         if (email === "admin@gmail.com" && password === '123456') {
           navigate("/admin/index");
+          window.localStorage.setItem('admin-loggedIn', true)
         }
         else if (response.data.status === '1') {
+          window.localStorage.setItem('user-loggedIn', true)
           // Successful login
           navigate(from, { replace: true });
           // <Navigate to={'/admin/index'} state={{ from: location }} replace />

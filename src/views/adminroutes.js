@@ -14,6 +14,7 @@ import PackageList from "views/examples/Package/PackageList";
 import UpdatePackages from "views/examples/Package/UpdatePackages";
 import Adminindex from "views/examples/Adminindex";
 import Purchaselist from "./examples/Purchase/Purchaselist";
+import ManageUser from "./examples/User/ManageUser";
 var adminroutes = [
   {
     path: "/index",
@@ -36,6 +37,11 @@ var adminroutes = [
     component: <AllUser />,
     layout: "/admin"
   },
+  // {
+  //   path: "/user/:id",
+  //   component: <ManageUser />,
+  //   layout: "/admin"
+  // },
 
   {
     path: "/packages",
@@ -53,7 +59,6 @@ var adminroutes = [
   },
   {
     path: "/updatepackages/:id",
-
     component: <UpdatePackages />,
     layout: "/admin"
   },

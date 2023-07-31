@@ -6,21 +6,17 @@ import { Container } from "reactstrap";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import DepositHistory from "views/examples/TransactionsHistory/DepositHistory";
-import WithdrawalHistory from "views/examples/TransactionsHistory/WithdrawalHistory";
-import OthersHistory from "views/examples/TransactionsHistory/OthersHistory";
-import Transactions from "views/examples/Transactions";
 import Adminsidebar from "components/Sidebar/Adminsidebar";
 import adminroutes from "views/adminroutes";
 import { AuthContext } from "Context/AuthProvider";
+import ManageUser from "views/examples/User/ManageUser";
 
 const Admin = (props) => {
   const { user } = useContext(AuthContext);
-  console.log(user);
   const mainContent = React.useRef(null);
   const location = useLocation();
-
-  const isLogedIn = window.localStorage.getItem('user-log')
+  const isLoggedIn = window.localStorage.getItem('user-loggedIn')
+  const isAdminLoggedIn = window.localStorage.getItem('admin-loggedIn')
 
 
   React.useEffect(() => {
@@ -31,7 +27,13 @@ const Admin = (props) => {
 
   const getRoutes = (adminroutes) => {
     return adminroutes.map((prop, key) => {
-      if (!isLogedIn) {
+      // if (!user) {
+      //   return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
+      // }
+      if (isLoggedIn) {
+        return <Route path="*" element={<Navigate to="/user/index" state={{ from: location }} replace />} />;
+      }
+      if (!isAdminLoggedIn) {
         return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
       }
       if (prop.layout === "/admin") {
@@ -77,6 +79,9 @@ const Admin = (props) => {
           {getRoutes(adminroutes)}
 
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
+          <Route path="user/:id" element={<ManageUser />}>
+          </Route>
+
 
         </Routes>
         {/* <Container fluid>

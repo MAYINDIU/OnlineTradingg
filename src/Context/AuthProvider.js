@@ -8,7 +8,7 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
 
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState('');
     const [loading, setLoading] = useState(true);
 
     const providerLogin = (provider) => {
@@ -18,7 +18,8 @@ const AuthProvider = ({ children }) => {
 
     const logOut = () => {
         setLoading(true);
-        window.localStorage.removeItem('user-log')
+        window.localStorage.removeItem('user-loggedIn')
+        window.localStorage.removeItem('admin-loggedIn')
         return signOut(auth);
     }
 

@@ -15,21 +15,14 @@ const Purchaselist = () => {
  //******Handle post data in database********
  const handlePurchase = (id) => {
 
-    const userId=id;
-    console.log(userId);
-    const status="update";
-
-    const data = {
-        status
-    };
-    // console.log(data);
-    const url = `https://indian.munihaelectronics.com/public/api/update_purchase/${userId}`;
+    const ID=id;
+    console.log(ID);
+    const url = `https://indian.munihaelectronics.com/public/api/updatep/${ID}`;
     fetch(url, {
-        method: "POST",
+        method: "GET",
         headers: {
             "content-type": "application/json"
         },
-        body: JSON.stringify(data)
     })
         .then(res => res.json())
         .then(data=>console.log(data));
@@ -49,8 +42,6 @@ const Purchaselist = () => {
             // Navigate('/purchaselist');
         // })
 }
-
-
 
 
   return (
@@ -80,12 +71,12 @@ const Purchaselist = () => {
                 <td className="text-center">{purchase?.purchase_date}</td>
                 <td className="text-center">
                   {
-                    purchase?.status != "Pending"  ? <Button size="sm" className="btn btn-success border-none">
+                    purchase?.status != "Pending"  ? <Button onClick={() => handlePurchase(purchase?.id)} size="sm" className="btn btn-success border-none">
                     Update
                   </Button> :<Button onClick={() => handlePurchase(purchase?.id)}  size="sm"  className="btn btn-danger h-12 border-none">
                    Pending
                  </Button>
-                
+    
                   }
                 </td>
               </tr>
