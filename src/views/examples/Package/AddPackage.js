@@ -1,5 +1,4 @@
 import axios from "axios";
-import Toast from "components/ToastContainer/Toast";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import {
@@ -76,9 +75,9 @@ const AddPackage = () => {
   return (
     <div>
       <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
-        <h2 className="text-white font-weight-bold">Add Packages</h2>
+        <h2 className="text-white text-center font-weight-bold">ADD PACKAGE</h2>
       </div>
-      <Row className="container-fluid">
+      <Row className="container-fluid mb-3">
         <Col lg="12" xl="12" className=" mt--7">
           <Card className="bg-secondary shadow border-0">
             <CardBody className="px-lg-5 py-lg-5">
@@ -265,8 +264,8 @@ const AddPackage = () => {
                   </InputGroup>
                 </FormGroup>
                 <div className="text-center">
-                  <button className="btn btn-info" type="submit">
-                    Save
+                  <button className="btn btn-primary w-50" type="submit">
+                    ADD PACKAGE
                   </button>
                 </div>
               </Form>

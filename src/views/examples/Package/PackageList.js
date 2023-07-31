@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Table } from "reactstrap";
+import { Card, Col, Row, Table } from "reactstrap";
 
 const PackageList = () => {
   const [packages, setPackages] = useState([]);
@@ -30,13 +30,14 @@ const PackageList = () => {
 
   return (
     <div>
-      <div className="container-fluid header bg-gradient-info pb-2 pt-5 pt-md-8">
-        <h2 className="text-white text-center mb-4">All Package</h2>
+      <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
+        <h2 className="text-white text-center mb-2 ">All PACKAGES</h2>
       </div>
-      <div className="container mx-auto">
-        <Table hover>
+      <div className=" mx-auto mt--7 container-fluid mb-4">       
+      <Card className="shadow-lg">
+        <Table hover bordered responsive>
           <thead>
-            <tr className="text-md">
+            <tr className="text-lg text-white bg-gradient-info">
               <th>Sl No</th>
               <th>Plan Name</th>
               <th>Plan Type</th>
@@ -52,7 +53,7 @@ const PackageList = () => {
           <tbody>
             {packages.map((pkg, index) => (
               <tr>
-                <th scope="row">{index + 1}</th>
+                <th className="text-center" scope="row">{index + 1}</th>
                 <td>{pkg?.planName}</td>
                 <td>{pkg?.planType}</td>
                 <td>{pkg?.profitShare}</td>
@@ -81,6 +82,7 @@ const PackageList = () => {
             ))}
           </tbody>
         </Table>
+        </Card>
       </div>
     </div>
   );

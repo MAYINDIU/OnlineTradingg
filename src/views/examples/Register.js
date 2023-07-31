@@ -1,7 +1,7 @@
 import { AuthContext } from "Context/AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useContext } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -53,9 +53,9 @@ const Register = () => {
 
   return (
     <>
-      <Col lg="6" md="8">
+      <Col lg="6" md="8" className='mt--7'>
         <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
+          <CardHeader className="bg-transparent pb-2">
             <div className="text-muted text-center mt-2 mb-4">
               <small>Sign up with</small>
             </div>
@@ -178,9 +178,21 @@ const Register = () => {
                 </Col>
               </Row>
               <div className="text-center">
-                <Button className="mt-4" color="primary" type="button">
-                  Create account
+              <div className="text-center">
+                <Button className="my-4 w-100" color="primary" type="submit">
+                  CREATE AN ACCOUNT
                 </Button>
+              </div>
+              <Col className="text-center" xs="12">
+                    <small>If you already registered</small>
+          </Col>
+              <div className="text-center">
+              <Link className='text-primary text-decoration-none' to={`/auth/login`}>
+                <Button className="my-2 w-100" color="default" type="submit">
+                 LOG IN
+                </Button>
+                </Link>
+              </div>
               </div>
             </Form>
           </CardBody>

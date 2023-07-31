@@ -13,7 +13,6 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Label,
   Row,
 } from "reactstrap";
 
@@ -205,11 +204,11 @@ const UpdatePackages = () => {
             </FormGroup>
             <div className="text-center">
               <button
-                className="btn btn-info"
+                className="btn btn-default w-100"
                 type="submit"
                 onClick={updatePackageById}
               >
-                Save
+                Update Package
               </button>
             </div>
           </Form>
