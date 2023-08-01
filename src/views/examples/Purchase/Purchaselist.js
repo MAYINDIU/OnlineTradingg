@@ -6,15 +6,34 @@ const Purchaselist = () => {
     const navigate = useNavigate();
   const [allpurchase, allPurchase] = useState([]);
 //   console.log(allpurchase);
+  // useEffect(() => {
+  //   fetch("https://indian.munihaelectronics.com/public/api/show_purchase")
+  //     .then((res) => res.json())
+  //     .then((data) => allPurchase(data));
+  // }, []);
+
   useEffect(() => {
-    fetch("https://indian.munihaelectronics.com/public/api/show_purchase")
-      .then((res) => res.json())
-      .then((data) => allPurchase(data));
+    // fetch data
+    const dataFetch = async () => {
+      const data = await (
+        await fetch(
+          "https://indian.munihaelectronics.com/public/api/show_purchase"
+        )
+      ).json();
+
+      // set state when the data received
+      allPurchase(data);
+    };
+
+    dataFetch();
   }, []);
 
  //******Handle post data in database********
  const handlePurchase = (id) => {
+  const confirm = window.confirm("Are You Sure?");
+    if(confirm){
 
+  
     const ID=id;
     console.log(ID);
     const url = `https://indian.munihaelectronics.com/public/api/updatep/${ID}`;
@@ -41,6 +60,7 @@ const Purchaselist = () => {
 
             // Navigate('/purchaselist');
         // })
+      }
 }
 
 
@@ -66,7 +86,7 @@ const Purchaselist = () => {
             {allpurchase.map((purchase, index) => (
               <tr>
                 <th className="text-center" scope="row">{index + 1}</th>
-                <td className="text-center">{purchase?.userId}</td>
+            <td className="text-center">{purchase?.userId}</td>
                 <td className="text-center">{purchase?.planId}</td>
                 <td className="text-center">{purchase?.purchase_date}</td>
                 <td className="text-center">

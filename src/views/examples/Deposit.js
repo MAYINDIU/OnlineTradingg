@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Button,
   Card,
@@ -22,9 +22,19 @@ const Deposit = () => {
   const { user } = useContext(AuthContext);
   const wallet=user?.wallet;
   console.log(wallet);
-
   const [paytype, setPayType] = useState("");
-  console.log(paytype);
+  const [transactioninfo, setTransactioninfo] = useState([]);
+  console.log(transactioninfo);
+
+  const userid=user?.id;
+  useEffect(() => {
+    fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${userid}`)
+      .then((res) => res.json())
+      .then((data) => setTransactioninfo(data));
+  }, []);
+
+
+
     return (
         <div >
         <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
@@ -156,60 +166,30 @@ const Deposit = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
+              <Table className="" hover bordered responsive>
+                <thead className="text-white bg-gradient-info">
+               
                   <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Bounce rate</th>
+                    <th className="text-center" scope="col ">Sl No.</th>
+                    <th className="text-center"  scope="col">Date</th>
+                    <th className="text-center" scope="col">User ID</th>
+                    <th className="text-center" scope="col">Amount</th>
+                    <th className="text-center" scope="col">Tnx_Type</th>
+                    <th className="text-center" scope="col">Method Type</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                </tbody>
+            {transactioninfo.map((tnx, index) => (
+              <tr>
+                <th className="text-center" scope="row">{index + 1}</th>
+                <td className="text-center">{tnx?.created_at}</td>
+                <td className="text-center">{tnx?.userid}</td>
+                <td className="text-center">{tnx?.amount}</td>
+                <td className="text-center">{tnx?.tnx_type}</td>
+                <td className="text-center">{tnx?.method_type}</td>
+              </tr>
+            ))}
+          </tbody>
               </Table>
             </Card>
           </Col>

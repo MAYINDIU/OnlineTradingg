@@ -278,7 +278,7 @@ const UpdatePackages = () => {
                 </FormGroup>
                 <div className="text-center">
                   <button
-                    className="btn btn-default w-100"
+                    className="btn btn-primary w-25"
                     type="submit"
                     onClick={updatePackageById}
                   >

@@ -14,6 +14,7 @@ import PackageList from "views/examples/Package/PackageList";
 import UpdatePackages from "views/examples/Package/UpdatePackages";
 import Adminindex from "views/examples/Adminindex";
 import Purchaselist from "./examples/Purchase/Purchaselist";
+import All_transactions from "./examples/Transactions/All_transactions";
 var adminroutes = [
   {
     path: "/index",
@@ -23,20 +24,20 @@ var adminroutes = [
     layout: "/admin",
   },
   {
-    path: "/addpackage",
-    name: "Add Package",
-    icon: "fa-solid fa-box-open text-primary",
-    component: <AddPackage />,
-    layout: "/admin",
-  },
-  {
     path: "/alluser",
     name: "All User",
     icon: "fa-solid fa-users text-primary",
     component: <AllUser />,
     layout: "/admin"
   },
-
+  {
+    path: "/addpackage",
+    name: "Add Package",
+    icon: "fa-solid fa-box-open text-primary",
+    component: <AddPackage />,
+    layout: "/admin",
+  },
+ 
   {
     path: "/packages",
     name: "Package List",
@@ -52,8 +53,14 @@ var adminroutes = [
     layout: "/admin"
   },
   {
+    path: "/transactionlist",
+    name: "Transaction list",
+    icon: "fa-solid fa-money-bill-transfer text-primary",
+    component: <All_transactions />,
+    layout: "/admin"
+  },
+  {
     path: "/updatepackages/:id",
-
     component: <UpdatePackages />,
     layout: "/admin"
   },
