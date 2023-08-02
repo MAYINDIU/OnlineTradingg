@@ -1,4 +1,6 @@
 import React, { useState,useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import {
   Button,
   Card,
@@ -23,10 +25,13 @@ const Deposit = () => {
   const wallet=user?.wallet;
   console.log(wallet);
   const [paytype, setPayType] = useState("");
+  console.log(paytype);
   const [transactioninfo, setTransactioninfo] = useState([]);
-  console.log(transactioninfo);
+  const [amount, setAmount] = useState("");
+  console.log(amount);
 
   const userid=user?.id;
+  console.log(userid);
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${userid}`)
       .then((res) => res.json())
@@ -34,6 +39,43 @@ const Deposit = () => {
   }, []);
 
 
+      //Deposit amount
+      const handleDeposit = async (e) => {
+        console.log(e);
+        e.preventDefault();
+        const description="Deposited";
+        const method_type=paytype;
+
+        const data = {
+            userid,
+            amount,
+            method_type,
+            description
+
+        };
+        console.log(data);
+        try {
+          const response = await axios.post(
+            "https://indian.munihaelectronics.com/public/api/deposit",
+            data,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log(response);
+    
+          // Reset the form inputs
+          
+          // setPayType("");
+          // setAmount("");
+    
+          alert(response?.data?.message)
+        } catch (error) {
+          toast.error(error?.response?.data?.error);
+        }
+      };
 
     return (
         <div >
@@ -42,10 +84,11 @@ const Deposit = () => {
         </div>
  
             <Row className='container-fluid'>
-                
+       
               <Col lg="12" xl="8" className=' mt--7'>
                 <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
                   <CardBody>
+                  <Form role="form" onSubmit={handleDeposit}>
                   <Label for="exampleEmail">
                    Enter Deposit Amount*
                   </Label>
@@ -54,7 +97,9 @@ const Deposit = () => {
                     name="amount"
                     placeholder="Enter Amount"
                     type='number'
-                    min='5'
+                    required
+                    onChange={(e) => setAmount(e.target.value)}
+
                     />
   
                    {/* <Label className='mt-3' for="exampleEmail">
@@ -115,18 +160,18 @@ const Deposit = () => {
                         </CardBody>
                         </Card>
                     </Col> */}
-                 
-                      <div className="text-center col mt-2">
-                        <Button className="my-2" color="primary" type="button">
-                        Procced to Deposit
-                        </Button>
+                    <div className=" mt-2 text-center col">
+                        <button className="btn btn-primary" type="submit">
+                          Add Deposit
+                        </button>
                       </div>
 
                    </Row>
-           
+                   </Form>
                   </CardBody>
                 </Card>
               </Col>
+             
               <Col lg="12" xl="4" className=' mt--7 '>
                 <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4 mb-xl-0 ">
                   <CardBody>
@@ -174,7 +219,7 @@ const Deposit = () => {
                     <th className="text-center"  scope="col">Date</th>
                     <th className="text-center" scope="col">User ID</th>
                     <th className="text-center" scope="col">Amount</th>
-                    <th className="text-center" scope="col">Tnx_Type</th>
+                    <th className="text-center" scope="col">Description</th>
                     <th className="text-center" scope="col">Method Type</th>
                   </tr>
                 </thead>
@@ -185,7 +230,7 @@ const Deposit = () => {
                 <td className="text-center">{tnx?.created_at}</td>
                 <td className="text-center">{tnx?.userid}</td>
                 <td className="text-center">{tnx?.amount}</td>
-                <td className="text-center">{tnx?.tnx_type}</td>
+                <td className="text-center">{tnx?.description}</td>
                 <td className="text-center">{tnx?.method_type}</td>
               </tr>
             ))}

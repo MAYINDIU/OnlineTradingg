@@ -6,12 +6,16 @@ const AllUser = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
 
+
+
+
   useEffect(() => {
     fetch("https://indian.munihaelectronics.com/public/api/users")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
   console.log(users)
+
 
  //******Handle post data in database********
  const handleUpdate = (id) => {
@@ -94,9 +98,9 @@ const AllUser = () => {
                  <td className="text-center  justify-content-between">
                
                {
-                 user?.status != "0"  ? <Button onClick={() => handleUpdate(user?.id)} size="sm" className="btn btn-success w-25 border-none">
+                 user?.status != "0"  ? <Button onClick={() => handleUpdate(user?.id)} size="sm" className="btn btn-success w-50 lg:w-25 border-none">
                  Active
-               </Button> :    <Button onClick={() => handleUpdate(user?.id)} size="sm"  className="btn btn-danger w-25 h-12 border-none">
+               </Button> :    <Button onClick={() => handleUpdate(user?.id)} size="sm"  className="btn btn-danger w-50 lg:w-25 h-12 border-none">
                  Diactive
                  </Button>
              

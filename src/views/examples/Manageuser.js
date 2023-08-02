@@ -13,9 +13,43 @@ const Manageuser = () => {
     const [wallet, setWallet] = useState("");
     const [amount, setAmount] = useState("");
     const [method_type, setPlanType] = useState("");
-    console.log(method_type,amount,wallet,id);
+    const [deductamount, setDeductAmount] = useState("");
+    
+    // console.log(method_type,amount,wallet,id);
+    const handleDeductamount = async (e) => {
+        console.log(e);
+        e.preventDefault();
+        const userid=id;
+        const amount=deductamount;
+        const data = {
+            userid,
+            amount
 
+        };
+        console.log(data);
+        try {
+          const response = await axios.post(
+            "https://indian.munihaelectronics.com/public/api/deduct",
+            data,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log(response);
+    
+          // Reset the form inputs
+          
+          setDeductAmount("");
+      
+          alert(response?.data?.message)
+        } catch (error) {
+          toast.error(error?.response?.data?.error);
+        }
+      };
 
+      //Deposit amount
     const handleDeposit = async (e) => {
         console.log(e);
         e.preventDefault();
@@ -262,7 +296,7 @@ const Manageuser = () => {
                                         </Row>
 
                                         <div className="text-center">
-                                            <button className="btn btn-primary w-25" type="submit">
+                                            <button className="btn btn-primary " type="submit">
                                                 Update
                                             </button>
                                         </div>
@@ -344,7 +378,7 @@ const Manageuser = () => {
                                         </Row>
 
                                         <div className="text-center mt-5">
-                                            <button className="btn btn-primary w-25" type="submit">
+                                            <button className="btn btn-primary " type="submit">
                                                 Add Deposit
                                             </button>
                                         </div>
@@ -361,11 +395,11 @@ const Manageuser = () => {
                         <Col lg="12" xl="12" className=" mt--7">
                             <Card className="bg-secondary shadow border-0">
                                 <CardBody className="px-lg-5 py-lg-5">
-                                    <Form role="form" onSubmit={handledeductClick}>
+                                    <Form role="form" onSubmit={handleDeductamount}>
                                         <Row>
                                             <Col lg="12" xl="6" className=" mt-3">
                                                 <FormGroup className="mb-3">
-                                                    <Label>Wallet(D)</Label>
+                                                    <Label>Wallet</Label>
                                                     <InputGroup className="input-group-alternative">
                                                         <InputGroupAddon addonType="prepend">
                                                             <InputGroupText>
@@ -373,9 +407,10 @@ const Manageuser = () => {
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
-                                                         onChange={(e) => setWallet(e.target.value)}
+                                                        //  onChange={(e) => setWallet(e.target.value)}
                                                             placeholder={user.wallet}
                                                             type="number"
+                                                            disabled
                                                         />
                                                     </InputGroup>
                                                 </FormGroup>
@@ -391,8 +426,8 @@ const Manageuser = () => {
                                                             </InputGroupText>
                                                         </InputGroupAddon>
                                                         <Input
-                                                            onChange={(e) => setAmount(e.target.value)}
-                                                            placeholder="Type Deposit Amount"
+                                                            onChange={(e) => setDeductAmount(e.target.value)}
+                                                            placeholder="Type Deduct Amount"
                                                             type="text"
                                                         />
                                                     </InputGroup>
@@ -415,10 +450,10 @@ const Manageuser = () => {
                                                             id="exampleSelect"
                                                             name="select"
                                                             type="select"
-                                                        onChange={(e) => setPlanType(e.target.value)}
+                                                        // onChange={(e) => setPlanType(e.target.value)}
                                                         >
                                                             <option>OFFICE CASH</option>
-                                                            <option>OFFICE CASH</option>
+                                                            {/* <option>OFFICE CASH</option> */}
                                                         </Input>
                                                     </InputGroup>
                                                 </FormGroup>
@@ -426,8 +461,8 @@ const Manageuser = () => {
                                         </Row>
 
                                         <div className="text-center mt-5">
-                                            <button className="btn btn-primary w-25" type="submit">
-                                                Add Deposit
+                                            <button className="btn btn-primary " type="submit">
+                                               Deduct Amount
                                             </button>
                                         </div>
                                     </Form>
