@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import { FaAngleRight } from "react-icons/fa";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
@@ -53,6 +54,28 @@ const Sidebar = (props) => {
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
+      if (prop.subMenu) {
+        return (
+          <>
+            <div>
+              <div className="d-flex">
+                <NavItem key={key}>
+                  <NavLink
+                    to={prop.layout + prop.path}
+                    tag={NavLinkRRD}
+                    onClick={closeCollapse}
+                  >
+                    <i className={prop.icon} />
+                    {prop.name}
+                  </NavLink>
+                </NavItem>
+                <FaAngleRight></FaAngleRight>
+              </div>
+
+            </div>
+          </>
+        )
+      }
       return (
         <NavItem key={key}>
           <NavLink
@@ -212,11 +235,11 @@ const Sidebar = (props) => {
           {/* Navigation */}
           <Nav navbar>{createLinks(routes)}</Nav>
           {/* Divider */}
- 
+
           {/* Heading */}
 
           {/* Navigation */}
-   
+
         </Collapse>
       </Container>
     </Navbar>

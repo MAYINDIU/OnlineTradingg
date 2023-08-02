@@ -41,6 +41,19 @@ var routes = [
     icon: "fa-solid fa-money-bill-transfer text-primary",
     component: <Transactions />,
     layout: "/user",
+
+    subMenu: [
+      {
+        title: 'Users',
+        path: '/transactions/users',
+        // icon: <IoIcons.IoIosPaper />
+      },
+      {
+        title: 'Revenue',
+        path: '/transactions/revenue',
+        // icon: <IoIcons.IoIosPaper />
+      }
+    ]
   },
   {
     path: "/user-profile",
