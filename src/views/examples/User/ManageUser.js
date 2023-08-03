@@ -11,7 +11,7 @@ const ManageUser = () => {
 
     const [user, setUser] = useState([]);
 
-    // Fetch Packages
+    // Fetch user
     useEffect(() => {
         const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${id}`;
         console.log(url);
@@ -251,7 +251,7 @@ const ManageUser = () => {
                                         <Row>
                                             <Col lg="12" xl="6" className=" mt-3">
                                                 <FormGroup className="mb-3">
-                                                    <Label>Ammount</Label>
+                                                    <Label>Account</Label>
                                                     <InputGroup className="input-group-alternative">
                                                         <InputGroupAddon addonType="prepend">
                                                             <InputGroupText>
@@ -260,7 +260,7 @@ const ManageUser = () => {
                                                         </InputGroupAddon>
                                                         <Input
                                                             // onChange={(e) => setPlanName(e.target.value)}
-                                                            placeholder="Enter the ammount"
+                                                            placeholder="Enter the amount"
                                                             type="text"
                                                         />
                                                     </InputGroup>
