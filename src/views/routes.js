@@ -2,14 +2,12 @@ import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
 import Deposit from "views/examples/Deposit";
 import Withdraw from "views/examples/Withdraw";
 import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
-import AllUser from "views/examples/AllUser";
-import AddPackage from "views/examples/Package/AddPackage";
+
 
 var routes = [
 
@@ -41,6 +39,24 @@ var routes = [
     icon: "fa-solid fa-money-bill-transfer text-primary",
     component: <Transactions />,
     layout: "/user",
+
+    subMenu: [
+      {
+        name: 'Deposit',
+        path: '/user/transactions/deposit',
+        icon: "fa-solid fa-download text-blue",
+      },
+      {
+        name: 'Withdarw',
+        path: '/user/transactions/withdrawal',
+        icon: "fa-solid fa-upload text-primary",
+      },
+      {
+        name: 'Others',
+        path: '/user/transactions/others',
+        icon: "fa-solid fa-arrow-right-to-bracket text-primary",
+      }
+    ]
   },
   {
     path: "/user-profile",
@@ -55,41 +71,21 @@ var routes = [
     icon: "fa-solid fa-spa text-primary",
     component: <TradingPlan />,
     layout: "/user",
+
+
   },
   {
     path: "/myplan",
     name: "My Plan",
     icon: "fa-solid fa-hand-holding-heart text-primary",
     component: <MyPlan />,
-    layout: "/admin",
-  },
-  {
-    path: "/tables",
-    name: "Tables",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: <Tables />,
-    layout: "/admin",
-  },
-
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: <Login />,
-    layout: "/auth",
+    layout: "/user",
   },
   {
     path: "/register",
     component: <Register />,
     layout: "/auth",
   },
-  // {
-  //   path: "/tables",
-  //   name: "Tables",
-  //   icon: "ni ni-bullet-list-67 text-red",
-  //   component: <Tables />,
-  //   layout: "/user",
-  // },
   {
     path: "/login",
     component: <Login />,
