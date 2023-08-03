@@ -34,6 +34,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import SidebarMenu from "./SidebarMenu";
 
 var ps;
 
@@ -57,25 +58,15 @@ const Sidebar = (props) => {
       if (prop.subMenu) {
         return (
           <>
-            <div>
-              <div className="d-flex">
-                <NavItem key={key}>
-                  <NavLink
-                    to={prop.layout + prop.path}
-                    tag={NavLinkRRD}
-                    onClick={closeCollapse}
-                  >
-                    <i className={prop.icon} />
-                    {prop.name}
-                  </NavLink>
-                </NavItem>
-                <FaAngleRight></FaAngleRight>
-              </div>
-
-            </div>
+            <SidebarMenu
+              key={key}
+              prop={prop}
+              closeCollapse={closeCollapse}
+            ></SidebarMenu>
           </>
         )
       }
+
       return (
         <NavItem key={key}>
           <NavLink
