@@ -1,6 +1,7 @@
 
 import { AuthContext } from "Context/AuthProvider";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FaBell } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
@@ -18,6 +19,11 @@ import {
   Nav,
   Container,
   Media,
+  Modal,
+  ModalHeader,
+  Button,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 
 const UserNavbar = (props) => {
@@ -36,6 +42,19 @@ const UserNavbar = (props) => {
 
     });
   }
+
+  const [modal, setModal] = useState(false);
+
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    fetch("https://indian.munihaelectronics.com/public/api/show_userNotification/79")
+      .then((res) => res.json())
+      .then((data) => setNotifications(data));
+  }, []);
+
+
+  const toggle = () => setModal(!modal);
 
 
 
@@ -61,6 +80,28 @@ const UserNavbar = (props) => {
               </InputGroup>
             </FormGroup>
           </Form>
+
+          <div>
+            <FaBell className="text-xl text-white" onClick={toggle}></FaBell>
+            <Modal isOpen={modal} toggle={toggle}>
+              <ModalHeader className='text-xl' toggle={toggle}>Notifications</ModalHeader>
+              <ModalBody>
+                {
+                  notifications.map((n, i) => (
+                    <p>{n.text}</p>
+                  ))
+                }
+              </ModalBody>
+              <ModalFooter>
+                <hr />
+                <Button color="secondary" className="text-center" >
+                  See All Notification
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </div>
+
+
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>

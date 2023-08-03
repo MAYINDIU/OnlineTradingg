@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
-import { FaAngleDown, FaAngleRight, FaAngleUp } from "react-icons/fa";
+import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { NavItem, NavLink } from 'reactstrap';
 
 const SidebarMenu = ({ key, prop, closeCollapse }) => {
