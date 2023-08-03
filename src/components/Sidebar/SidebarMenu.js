@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
-import { FaAngleDown, FaAngleRight } from "react-icons/fa";
+import { FaAngleDown, FaAngleRight, FaAngleUp } from "react-icons/fa";
 import { NavItem, NavLink } from 'reactstrap';
 
 const SidebarMenu = ({ key, prop, closeCollapse }) => {
@@ -26,7 +26,7 @@ const SidebarMenu = ({ key, prop, closeCollapse }) => {
                             {prop.name}
                         </NavLink>
                     </NavItem>
-                    {!isMenuOpen ? <FaAngleRight className='mr-4' /> : <FaAngleDown className='mr-4' />}
+                    {!isMenuOpen ? <FaAngleDown className='mr-4' /> : <FaAngleUp className='mr-4' />}
                 </div>
                 {
                     isMenuOpen && <div className='px-3'>
