@@ -84,16 +84,17 @@ const UserNavbar = (props) => {
           <div>
             <FaBell className="text-xl text-white" onClick={toggle}></FaBell>
             <Modal isOpen={modal} toggle={toggle}>
-              <ModalHeader className='text-xl' toggle={toggle}>Notifications</ModalHeader>
-              <ModalBody>
+              <ModalHeader className='border-bottom' toggle={toggle}>Notifications</ModalHeader>
+              <ModalBody >
                 {
                   notifications.map((n, i) => (
-                    <p>{n.text}</p>
+                    <h5 className="">{n.text}</h5>
                   ))
                 }
+
+
               </ModalBody>
-              <ModalFooter>
-                <hr />
+              <ModalFooter className='border-top' >
                 <Button color="secondary" className="text-center" >
                   See All Notification
                 </Button>
