@@ -12,36 +12,40 @@ const All_transactions = () => {
       .then((data) => setallTransaction(data));
   }, []);
 
- //******Handle post data in database********
-//  const handlePurchase = (id) => {
+ //***Handle post data in database***
+ const handleUpdate = (id) => {
+  const confirm = window.confirm("Are You Sure?");
+    if(confirm){
 
-//     const ID=id;
-//     console.log(ID);
-//     const url = `https://indian.munihaelectronics.com/public/api/updatep/${ID}`;
-//     fetch(url, {
-//         method: "GET",
-//         headers: {
-//             "content-type": "application/json"
-//         },
-//     })
-//         .then(res => res.json())
-//         .then(data=>console.log(data));
-//         // .then(result => {
+  
+    const ID=id;
+    console.log(ID);
+    const url = `https://indian.munihaelectronics.com/public/api/update_depositstatus/${ID}`;
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json"
+        },
+    })
+        .then(res => res.json())
+        .then(data=>console.log(data));
+        // .then(result => {
 
-//         //     if (result.status = true) {
+        //     if (result.status = true) {
 
-//         //         toast(`${NAME} Successfully Saved Your Application`);
-//         //     }
-//         //     else {
-//         //         toast.error(`${NAME} Don,t Saved Your Application`)
-//         //     }
+        //         toast(`${NAME} Successfully Saved Your Application`);
+        //     }
+        //     else {
+        //         toast.error(`${NAME} Don,t Saved Your Application`)
+        //     }
 
-//         //     console.log(result);
-//             // event.target.reset()
+        //     console.log(result);
+            // event.target.reset()
 
-//             // Navigate('/purchaselist');
-//         // })
-// }
+            // Navigate('/purchaselist');
+        // })
+      }
+}
 
 
   return (
@@ -76,10 +80,10 @@ const All_transactions = () => {
                 {/* <td className="text-center">{transactions?.status}</td> */}
                 <td className="text-center">
                   {
-                    transactions?.status != "0"  ? <Button size="sm" className="btn w-75 btn-danger border-none">
-                     Pending
-                  </Button> :<Button   size="sm"  className="btn w-75 btn-success h-12 border-none">
-                  Active
+                    transactions?.status != "0"  ? <Button onClick={() => handleUpdate(transactions?.id)}  size="sm" className="btn w-75 btn-success border-none">
+                     Approved
+                  </Button> :<Button onClick={() => handleUpdate(transactions?.id)}    size="sm"  className="btn w-75 btn-danger h-12 border-none">
+                  Pending
                  </Button>
     
                   }

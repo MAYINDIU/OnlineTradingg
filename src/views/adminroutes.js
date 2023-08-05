@@ -15,6 +15,7 @@ import UpdatePackages from "views/examples/Package/UpdatePackages";
 import Adminindex from "views/examples/Adminindex";
 import Purchaselist from "./examples/Purchase/Purchaselist";
 import All_transactions from "./examples/Transactions/All_transactions";
+import Adminnotification from "./examples/Notification/Adminnotification";
 var adminroutes = [
   {
     path: "/index",
@@ -57,6 +58,13 @@ var adminroutes = [
     name: "Transaction list",
     icon: "fa-solid fa-money-bill-transfer text-primary",
     component: <All_transactions />,
+    layout: "/admin"
+  },
+  {
+    path: "/allnotification",
+    name: "Notifications list",
+    icon: "fa-solid fa-bell text-primary",
+    component: <Adminnotification />,
     layout: "/admin"
   },
   {

@@ -20,7 +20,6 @@ const Purchaselist = () => {
           "https://indian.munihaelectronics.com/public/api/show_purchase"
         )
       ).json();
-
       // set state when the data received
       allPurchase(data);
     };
@@ -32,8 +31,6 @@ const Purchaselist = () => {
  const handlePurchase = (id) => {
   const confirm = window.confirm("Are You Sure?");
     if(confirm){
-
-  
     const ID=id;
     console.log(ID);
     const url = `https://indian.munihaelectronics.com/public/api/updatep/${ID}`;
@@ -86,7 +83,7 @@ const Purchaselist = () => {
             {allpurchase.map((purchase, index) => (
               <tr>
                 <th className="text-center" scope="row">{index + 1}</th>
-            <td className="text-center">{purchase?.userId}</td>
+                <td className="text-center">{purchase?.userId}</td>
                 <td className="text-center">{purchase?.planId}</td>
                 <td className="text-center">{purchase?.purchase_date}</td>
                 <td className="text-center">

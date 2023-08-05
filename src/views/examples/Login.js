@@ -28,8 +28,8 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState(null);
-  const [data, setuserdata] = useState(['']);
-  console.log(data);
+  // const [data, setuserdata] = useState(['']);
+  // console.log(data);
 
   const from = location.state?.from?.pathname || '/'
 
@@ -58,7 +58,11 @@ const Login = () => {
 
     axios.post('https://indian.munihaelectronics.com/public/api/create-user', formdata)
       .then((response) => {
-        console.log(response.data);
+        const user = response.data;
+        setUser(user);
+        window.localStorage.setItem('userInfo', user.id)
+        console.log(response);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -75,90 +79,18 @@ const Login = () => {
         navigate(from, { replace: true });
         uploadUserInfoToDatabase(user);
         window.localStorage.setItem('user-loggedIn', true)
+        // window.localStorage.setItem('userInfo', user.id)
         loginAlert();
-
 
       })
       .catch(error => console.error(error))
   }
-
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   const form = event.target;
-  //   const email = form.email.value
-  //   const password = form.password.value
-
-  //   console.log(email)
-  //   console.log(password)
-
-  //   const formdata = new FormData();
-  //   formdata.append('email', email);
-  //   formdata.append('password', password);
-
-  //   axios.post('https://indian.munihaelectronics.com/public/api/login?email', formdata)
-  //     .then((response) => {
-  //       setUser(response.data);
-  //       console.log(response.data);
-  //       if (response.data) {
-  //         // Successful login
-  //         navigate(from, { replace: true });
-  //         // <Navigate to={'/admin/index'} state={{ from: location }} replace />
-  //         loginAlert();
-  //       }
-
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //       setError('Email or Password is wrong, Please Enter Correct email or password !')
-  //     });
-
-  // }
-
-  // const handleSubmitt = (event) => {
-  //   event.preventDefault();
-  //   const form = event.target;
-  //   const email = form.email.value
-  //   const password = form.password.value
-
-  //   // console.log(email)
-  //   // console.log(password)
-
-  //   if(email==="admin@gmail.com" && password==='123456'){
-  //     navigate("/admin/index");
-  //    }else{
-  //     const formdata = new FormData();
-  //     formdata.append('email', email);
-  //     formdata.append('password', password);
-
-  //     axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
-  //       .then((response) => {
-  //         setuserdata(response.data)
-
-  //       if(response.data.status==='0'){
-  //         console.error(error);
-  //         setError('You are not active user')
-  //       }else{
-  //         navigate("/admin/index");
-  //       }
-
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //         setError('You are not active user')
-  //       });
-  //    }
-
-  // }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value
     const password = form.password.value
-
-    // console.log(email)
-    // console.log(password)
-
 
     const formdata = new FormData();
     formdata.append('email', email);
@@ -167,7 +99,9 @@ const Login = () => {
     axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
       .then((response) => {
         // window.localStorage.setItem('user-loggedIn', true)
-        setUser(response.data);
+        const user = response.data;
+        setUser(user);
+        window.localStorage.setItem('userInfo', user.id)
         console.log(response);
         if (email === "admin@gmail.com" && password === '123456') {
           navigate("/admin/index");
