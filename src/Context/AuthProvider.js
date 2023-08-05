@@ -7,21 +7,17 @@ export const AuthContext = createContext()
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState('');
+    const [loading, setLoading] = useState(true);
     const userId = window.localStorage.getItem('userInfo')
-    const [userInfo, setUserInfo] = useState('');
 
     useEffect(() => {
         const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${userId}`;
         console.log(url);
         fetch(url)
             .then((res) => res.json())
-            .then((data) => setUserInfo(data));
-    }, []);
-
-    console.log(userInfo.name)
-
-    const [user, setUser] = useState(userInfo);
-    const [loading, setLoading] = useState(true);
+            .then((data) => setUser(data));
+    }, [userId]);
 
     console.log(user)
 
