@@ -43,7 +43,6 @@ const UserNavbar = (props) => {
   }
 
   const [modal, setModal] = useState(false);
-
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {

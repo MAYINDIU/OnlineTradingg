@@ -33,19 +33,25 @@ var adminroutes = [
   },
   {
     path: "/addpackage",
-    name: "Add Package",
-    icon: "fa-solid fa-box-open text-primary",
+    name: "Investment Plans",
+    icon: "fa-solid fa-warehouse text-primary",
     component: <AddPackage />,
     layout: "/admin",
+
+    subMenu: [
+      {
+        name: 'Create Plan',
+        path: '/admin/addpackage',
+        icon: "fa-solid fa-box-open text-blue",
+      },
+      {
+        name: 'Plan List',
+        path: '/admin/packages',
+        icon: "fa-solid fa-list text-primary",
+      }
+    ]
   },
- 
-  {
-    path: "/packages",
-    name: "Package List",
-    icon: "fa-solid fa-list text-primary",
-    component: <PackageList />,
-    layout: "/admin"
-  },
+
   {
     path: "/purchaselist",
     name: "Purchase list",
@@ -67,9 +73,25 @@ var adminroutes = [
     component: <Adminnotification />,
     layout: "/admin"
   },
+
   {
     path: "/updatepackages/:id",
     component: <UpdatePackages />,
+    layout: "/admin"
+  },
+  {
+    path: "/addpackage",
+    // name: "Add Package",
+    // icon: "fa-solid fa-box-open text-primary",
+    component: <AddPackage />,
+    layout: "/admin",
+  },
+ 
+  {
+    path: "/packages",
+    // name: "Package List",
+    // icon: "fa-solid fa-list text-primary",
+    component: <PackageList />,
     layout: "/admin"
   },
 
