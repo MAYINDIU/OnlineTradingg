@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState,useEffect } from 'react';
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -36,6 +36,8 @@ import AdminHeader from "components/Headers/AdminHeader";
 const Adminindex = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
+  const [transactioninfo, setTransactioninfo] = useState([]);
+
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
@@ -46,44 +48,29 @@ const Adminindex = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
+
+  useEffect(() => {
+    fetch(`https://indian.munihaelectronics.com/public/api/show_transaction`)
+      .then((res) => res.json())
+      .then((data) => setTransactioninfo(data));
+  }, []);
+
+
   return (
     <>
       <AdminHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
-         {/* <Row>
-              <Col lg="12" xl="12" className=' mb-5 mt-3'>
-                <Card className="card-stats   mb-4 mb-xl-0 ">
-                  <CardBody>
-                    <h2>Your Active Plans admin (0)</h2>
-                    <Row>
-                      <div className="col text-center">
-                        <p>You do not have an active investment plan at the moment.</p>
-                     
-                        
-                        <div className="text-center">
-                        <Button className="my-4" color="primary" type="button">
-                        Click for Buy a new Plan
-                        </Button>
-                      </div>
-                     
-                      </div>
-                     
-                    </Row>
-               
-                  </CardBody>
-                </Card>
-              </Col>
-             </Row>
-        */}
 
-        <Row className="mt-2 mb-3">
+
+      <Row className="mt-5 mb-3 ">
           <Col className="mb-5 mb-xl-0" xl="12">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Recent transactions (5)</h3>
+                    <h3 className="mb-0">Recent Deposit History (5)</h3>
                   </div>
                   <div className="col text-right">
                     <Button
@@ -97,66 +84,37 @@ const Adminindex = (props) => {
                   </div>
                 </Row>
               </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
+              <Table className="" hover bordered responsive>
+                <thead className="text-white bg-gradient-info">
+               
                   <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Bounce rate</th>
+                    <th className="text-center" scope="col ">Sl No.</th>
+                    <th className="text-center"  scope="col">Date</th>
+                    <th className="text-center" scope="col">User ID</th>
+                    <th className="text-center" scope="col">Amount</th>
+                    <th className="text-center" scope="col">Tnx_Type</th>
+                    <th className="text-center" scope="col">Method Type</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                </tbody>
+            {transactioninfo.map((tnx, index) => (
+              <tr>
+                <th className="text-center" scope="row">{index + 1}</th>
+                <td className="text-center">{tnx?.created_at}</td>
+                <td className="text-center">{tnx?.userid}</td>
+                <td className="text-center">{tnx?.amount}</td>
+                <td className="text-center">{tnx?.tnx_type}</td>
+                <td className="text-center">{tnx?.method_type}</td>
+              </tr>
+            ))}
+          </tbody>
               </Table>
             </Card>
           </Col>
 
 
         </Row>
+      
       </Container>
     </>
   );

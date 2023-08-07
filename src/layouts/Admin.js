@@ -14,11 +14,13 @@ import Adminsidebar from "components/Sidebar/Adminsidebar";
 import adminroutes from "views/adminroutes";
 import { useContext, useState } from "react";
 import { AuthContext } from "Context/AuthProvider";
+import Manageuser from "views/examples/Manageuser";
 const Admin = (props) => {
   const { user } = useContext(AuthContext);
-  console.log(user);
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const isLoggedIn = window.localStorage.getItem('user-loggedIn')
+  const isAdminLoggedIn = window.localStorage.getItem('admin-loggedIn')
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -28,7 +30,13 @@ const Admin = (props) => {
 
   const getRoutes = (adminroutes) => {
     return adminroutes.map((prop, key) => {
-      if (!user) {
+      // if (!user) {
+      //   return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
+      // }
+      if (isLoggedIn) {
+        return <Route path="*" element={<Navigate to="/user/index" state={{ from: location }} replace />} />;
+      }
+      if (!isAdminLoggedIn) {
         return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
       }
       if (prop.layout === "/admin") {
@@ -61,7 +69,7 @@ const Admin = (props) => {
         adminroutes={adminroutes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/argon-react.png"),
+          imgSrc: require("../assets/img/brand/trading.png"),
           imgAlt: "...",
         }}
       />
@@ -74,7 +82,8 @@ const Admin = (props) => {
           {getRoutes(adminroutes)}
 
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
-    
+          <Route path="user/:id" element={<Manageuser />}>
+          </Route>
         </Routes>
         {/* <Container fluid>
           <AdminFooter />

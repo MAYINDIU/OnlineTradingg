@@ -1,6 +1,6 @@
-
 import { AuthContext } from "Context/AuthProvider";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
@@ -18,6 +18,11 @@ import {
   Nav,
   Container,
   Media,
+  Modal,
+  ModalHeader,
+  Button,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
 
 const UserNavbar = (props) => {
@@ -37,7 +42,17 @@ const UserNavbar = (props) => {
     });
   }
 
+  const [modal, setModal] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
+  useEffect(() => {
+    fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
+      .then((res) => res.json())
+      .then((data) => setNotifications(data));
+  }, []);
+
+
+  const toggle = () => setModal(!modal);
 
   return (
     <>
@@ -61,6 +76,32 @@ const UserNavbar = (props) => {
               </InputGroup>
             </FormGroup>
           </Form>
+
+          <div>
+          <div className="icon icon-shape bg-primary text-white rounded-circle shadow-xl ml-2">
+              <i class="fa-solid fa-bell text-white" onClick={toggle}></i>
+              </div>
+        
+            <Modal isOpen={modal} toggle={toggle}>
+              <ModalHeader className='border-bottom' toggle={toggle}>Notifications</ModalHeader>
+              <ModalBody className='bg-primary'>
+                {
+                  notifications.map((n, i) => (
+                    <h5 className="bg-primary p-2 text-white">{n.text}</h5>
+                  ))
+                }
+
+
+              </ModalBody>
+              <ModalFooter className='border-top bg-primary text-center' >
+                <Button color="secondary" >
+                  See All Notification
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </div>
+
+
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
@@ -85,7 +126,7 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        Jessica Jones
+                        {user?.name}
                       </span>
                     }
 

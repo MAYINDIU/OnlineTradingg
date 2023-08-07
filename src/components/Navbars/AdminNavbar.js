@@ -60,6 +60,12 @@ const AdminNavbar = (props) => {
                 <Input placeholder="Search" type="text" />
               </InputGroup>
             </FormGroup>
+            <Link className='text-primary text-decoration-none' to={`/admin/allnotification`}>
+              <div className="icon icon-shape bg-primary text-white rounded-circle shadow-xl ml-2">
+              <i class="fa-solid fa-bell text-white"></i>
+              </div>
+            </Link>
+                  
           </Form>
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
