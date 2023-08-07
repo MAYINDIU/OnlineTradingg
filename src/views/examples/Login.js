@@ -98,10 +98,9 @@ const Login = () => {
 
     axios.post('https://indian.munihaelectronics.com/public/api/login', formdata)
       .then((response) => {
-        // window.localStorage.setItem('user-loggedIn', true)
         const user = response.data;
         setUser(user);
-        window.localStorage.setItem('userInfo', user.id)
+        window.localStorage.setItem('userInfo', JSON.stringify(user))
         console.log(response);
         if (email === "admin@gmail.com" && password === '123456') {
           navigate("/admin/index");

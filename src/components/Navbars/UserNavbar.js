@@ -29,6 +29,7 @@ import {
 const UserNavbar = (props) => {
 
   const { user, logOut } = useContext(AuthContext);
+  const userId = window.localStorage.getItem('userInfo')
 
   const navigate = useNavigate();
   const location = useLocation();
