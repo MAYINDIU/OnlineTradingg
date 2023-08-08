@@ -33,6 +33,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import SidebarMenu from "./SidebarMenu";
 
 
 var ps;
@@ -54,6 +55,21 @@ const Adminsidebar = (props) => {
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (adminroutes) => {
     return adminroutes.map((prop, key) => {
+
+      if (prop.subMenu) {
+        return (
+          <>
+            <SidebarMenu
+              key={key}
+              prop={prop}
+              closeCollapse={closeCollapse}
+            ></SidebarMenu>
+          </>
+        )
+      }
+
+
+
       return (
         <NavItem key={key}>
           <NavLink
@@ -82,6 +98,9 @@ const Adminsidebar = (props) => {
       target: "_blank",
     };
   }
+
+
+
 
   return (
     <Navbar

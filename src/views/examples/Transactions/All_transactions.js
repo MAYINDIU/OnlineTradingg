@@ -2,40 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, Table } from "reactstrap";
 
-const Purchaselist = () => {
+const All_transactions = () => {
     const navigate = useNavigate();
-  const [allpurchase, allPurchase] = useState([]);
+  const [alltransactions, setallTransaction] = useState([]);
 //   console.log(allpurchase);
-  // useEffect(() => {
-  //   fetch("https://indian.munihaelectronics.com/public/api/show_purchase")
-  //     .then((res) => res.json())
-  //     .then((data) => allPurchase(data));
-  // }, []);
-
   useEffect(() => {
-    // fetch data
-    const dataFetch = async () => {
-      const data = await (
-        await fetch(
-          "https://indian.munihaelectronics.com/public/api/show_purchase"
-        )
-      ).json();
-      // set state when the data received
-      allPurchase(data);
-    };
-
-    dataFetch();
+    fetch("https://indian.munihaelectronics.com/public/api/show_transaction")
+      .then((res) => res.json())
+      .then((data) => setallTransaction(data));
   }, []);
 
- //******Handle post data in database********
- const handlePurchase = (id) => {
+ //***Handle post data in database***
+ const handleUpdate = (id) => {
   const confirm = window.confirm("Are You Sure?");
     if(confirm){
+
+  
     const ID=id;
     console.log(ID);
-    const url = `https://indian.munihaelectronics.com/public/api/updatep/${ID}`;
+    const url = `https://indian.munihaelectronics.com/public/api/update_depositstatus/${ID}`;
     fetch(url, {
-        method: "GET",
+        method: "POST",
         headers: {
             "content-type": "application/json"
         },
@@ -64,7 +51,7 @@ const Purchaselist = () => {
   return (
     <div>
       <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
-        <h2 className="text-white text-center mb-2">PURCHASE LIST</h2>
+        <h2 className="text-white text-center mb-2">TRANSACTIONS LIST</h2>
       </div>
       <div className="container-fluid  mb-2 mx-auto mt--7">
       <Card  className="shadow-lg  ">
@@ -73,25 +60,30 @@ const Purchaselist = () => {
             <tr className="text-md text-center">
               <th>Sl No</th>
               <th>User ID</th>
-              <th>Plan ID</th>
-              <th>Purchase Date</th>
+              <th>Amount</th>
+              <th>TNX Type</th>
+              <th>Method Type</th>
+              <th>Description</th>
               <th>Status</th>
               
             </tr>
           </thead>
           <tbody>
-            {allpurchase.map((purchase, index) => (
+            {alltransactions.map((transactions, index) => (
               <tr>
                 <th className="text-center" scope="row">{index + 1}</th>
-                <td className="text-center">{purchase?.userId}</td>
-                <td className="text-center">{purchase?.planId}</td>
-                <td className="text-center">{purchase?.purchase_date}</td>
+            <td className="text-center">{transactions?.userid}</td>
+                <td className="text-center">{transactions?.amount}</td>
+                <td className="text-center">{transactions?.tnx_type}</td>
+                <td className="text-center">{transactions?.method_type}</td>
+                <td className="text-center">{transactions?.description}</td>
+                {/* <td className="text-center">{transactions?.status}</td> */}
                 <td className="text-center">
                   {
-                    purchase?.status != "Pending"  ? <Button onClick={() => handlePurchase(purchase?.id)} size="sm" className="btn btn-success border-none">
-                    Update
-                  </Button> :<Button onClick={() => handlePurchase(purchase?.id)}  size="sm"  className="btn btn-danger h-12 border-none">
-                   Pending
+                    transactions?.status != "0"  ? <Button onClick={() => handleUpdate(transactions?.id)}  size="sm" className="btn w-75 btn-success border-none">
+                     Approved
+                  </Button> :<Button onClick={() => handleUpdate(transactions?.id)}    size="sm"  className="btn w-75 btn-danger h-12 border-none">
+                  Pending
                  </Button>
     
                   }
@@ -106,4 +98,4 @@ const Purchaselist = () => {
   );
 };
 
-export default Purchaselist;
+export default All_transactions;

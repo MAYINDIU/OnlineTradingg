@@ -6,12 +6,51 @@ const AllUser = () => {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
 
+
+
+
   useEffect(() => {
     fetch("https://indian.munihaelectronics.com/public/api/users")
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
   console.log(users)
+
+
+  //******Handle post data in database********
+  const handleUpdate = (id) => {
+    const confirm = window.confirm("Are You Sure?");
+    if (confirm) {
+      const ID = id;
+      console.log(ID);
+      const url = `https://indian.munihaelectronics.com/public/api/update_status/${ID}`;
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json"
+        },
+      })
+        .then(res => res.json())
+        .then(data => console.log(data));
+      // .then(result => {
+
+      //     if (result.status = true) {
+
+      //         toast(`${NAME} Successfully Saved Your Application`);
+      //     }
+      //     else {
+      //         toast.error(`${NAME} Don,t Saved Your Application`)
+      //     }
+
+      //     console.log(result);
+      // event.target.reset()
+
+      // Navigate('/purchaselist');
+      // })
+    }
+  }
+
+
   return (
     <div>
 
@@ -56,23 +95,21 @@ const AllUser = () => {
                     <td className="text-center">{user?.name}</td>
                     <td className="text-center">{user?.email}</td>
                     <td className="text-center">{user?.id}</td>
-                    <td className="text-center d-flex justify-content-between">
-
-                      <Link to={`/admin/user/${user?.id}`}>
-                        <Button size="sm" className="btn btn-info border-none">
-                          Manage
-                        </Button>
-                      </Link>
-
+                    <td className="text-center  justify-content-between">
 
                       {
-                        user?.status != "0" ? <Button size="sm" className="btn btn-success border-none">
+                        user?.status != "0" ? <Button onClick={() => handleUpdate(user?.id)} size="sm" className="btn btn-success w-50 lg:w-25 border-none">
                           Active
-                        </Button> : <Button size="sm" className="btn btn-danger h-12 border-none">
+                        </Button> : <Button onClick={() => handleUpdate(user?.id)} size="sm" className="btn btn-danger w-50 lg:w-25 h-12 border-none">
                           Diactive
                         </Button>
 
                       }
+                      <Link to={`/admin/user/${user?.id}`}>
+                        <Button size="sm" className="btn btn-info border-none ml-2">
+                          Manage
+                        </Button>
+                      </Link>
                     </td>
                   </tr>
                 ))}

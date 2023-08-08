@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import {
   Button,
   Card,
@@ -22,9 +24,59 @@ const Deposit = () => {
   const { user } = useContext(AuthContext);
   const wallet=user?.wallet;
   console.log(wallet);
-
   const [paytype, setPayType] = useState("");
   console.log(paytype);
+  const [transactioninfo, setTransactioninfo] = useState([]);
+  const [amount, setAmount] = useState("");
+  console.log(amount);
+
+  const userid=user?.id;
+  console.log(userid);
+  useEffect(() => {
+    fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${userid}`)
+      .then((res) => res.json())
+      .then((data) => setTransactioninfo(data));
+  }, []);
+
+
+      //Deposit amount
+      const handleDeposit = async (e) => {
+        console.log(e);
+        e.preventDefault();
+        const description="Deposited";
+        const method_type=paytype;
+
+        const data = {
+            userid,
+            amount,
+            method_type,
+            description
+
+        };
+        console.log(data);
+        try {
+          const response = await axios.post(
+            "https://indian.munihaelectronics.com/public/api/deposit",
+            data,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          console.log(response);
+    
+          // Reset the form inputs
+          
+          // setPayType("");
+          // setAmount("");
+    
+          alert(response?.data?.message)
+        } catch (error) {
+          toast.error(error?.response?.data?.error);
+        }
+      };
+
     return (
         <div >
         <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
@@ -32,10 +84,11 @@ const Deposit = () => {
         </div>
  
             <Row className='container-fluid'>
-                
+       
               <Col lg="12" xl="8" className=' mt--7'>
                 <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
                   <CardBody>
+                  <Form role="form" onSubmit={handleDeposit}>
                   <Label for="exampleEmail">
                    Enter Deposit Amount*
                   </Label>
@@ -44,7 +97,9 @@ const Deposit = () => {
                     name="amount"
                     placeholder="Enter Amount"
                     type='number'
-                    min='5'
+                    required
+                    onChange={(e) => setAmount(e.target.value)}
+
                     />
   
                    {/* <Label className='mt-3' for="exampleEmail">
@@ -105,18 +160,18 @@ const Deposit = () => {
                         </CardBody>
                         </Card>
                     </Col> */}
-                 
-                      <div className="text-center col mt-2">
-                        <Button className="my-2" color="primary" type="button">
-                        Procced to Deposit
-                        </Button>
+                    <div className=" mt-2 text-center col">
+                        <button className="btn btn-primary" type="submit">
+                          Add Deposit
+                        </button>
                       </div>
 
                    </Row>
-           
+                   </Form>
                   </CardBody>
                 </Card>
               </Col>
+             
               <Col lg="12" xl="4" className=' mt--7 '>
                 <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4 mb-xl-0 ">
                   <CardBody>
@@ -156,60 +211,30 @@ const Deposit = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
+              <Table className="" hover bordered responsive>
+                <thead className="text-white bg-gradient-info">
+               
                   <tr>
-                    <th scope="col">Date</th>
-                    <th scope="col">Time</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Bounce rate</th>
+                    <th className="text-center" scope="col ">Sl No.</th>
+                    <th className="text-center"  scope="col">Date</th>
+                    <th className="text-center" scope="col">User ID</th>
+                    <th className="text-center" scope="col">Amount</th>
+                    <th className="text-center" scope="col">Description</th>
+                    <th className="text-center" scope="col">Method Type</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Tue, Jul 4, 2023 10:43 PM</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                </tbody>
+            {transactioninfo.map((tnx, index) => (
+              <tr>
+                <th className="text-center" scope="row">{index + 1}</th>
+                <td className="text-center">{tnx?.created_at}</td>
+                <td className="text-center">{tnx?.userid}</td>
+                <td className="text-center">{tnx?.amount}</td>
+                <td className="text-center">{tnx?.description}</td>
+                <td className="text-center">{tnx?.method_type}</td>
+              </tr>
+            ))}
+          </tbody>
               </Table>
             </Card>
           </Col>

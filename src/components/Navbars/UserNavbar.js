@@ -1,7 +1,5 @@
-
 import { AuthContext } from "Context/AuthProvider";
 import { useContext, useEffect, useState } from "react";
-import { FaBell } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
@@ -42,9 +40,6 @@ const UserNavbar = (props) => {
 
     });
   }
-
-  const [modal, setModal] = useState(false);
-
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
@@ -52,10 +47,6 @@ const UserNavbar = (props) => {
       .then((res) => res.json())
       .then((data) => setNotifications(data));
   }, []);
-
-
-  const toggle = () => setModal(!modal);
-
 
 
   return (
@@ -81,7 +72,32 @@ const UserNavbar = (props) => {
             </FormGroup>
           </Form>
 
-          <div>
+          <UncontrolledDropdown nav>
+            <DropdownToggle className="px-0" nav>
+              <Media className="icon icon-shape bg-primary text-white rounded-circle shadow-xl">
+                <i class="fa-solid fa-bell "></i>
+              </Media>
+            </DropdownToggle>
+            <DropdownMenu className="dropdown-menu-arrow" right>
+              <DropdownItem className="noti-title border-bottom" header tag="div">
+                <h5 className="m-0 ">Notification</h5>
+              </DropdownItem>
+
+              {
+                notifications.slice(0, 5).map((n, i) => (
+                  <DropdownItem className="border-bottom" >
+                    <span className="" >{n.text}</span>
+                  </DropdownItem>
+
+                ))
+              }
+              <DropdownItem className='text-center'>
+                <span>See All Notification</span>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+
+          {/* <div>
             <FaBell className="text-xl text-white" onClick={toggle}></FaBell>
             <Modal isOpen={modal} toggle={toggle}>
               <ModalHeader className='border-bottom' toggle={toggle}>Notifications</ModalHeader>
@@ -100,7 +116,7 @@ const UserNavbar = (props) => {
                 </Button>
               </ModalFooter>
             </Modal>
-          </div>
+          </div> */}
 
 
           <Nav className="align-items-center d-none d-md-flex" navbar>

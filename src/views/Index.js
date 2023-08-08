@@ -29,14 +29,15 @@ import {
   chartExample1,
   chartExample2,
 } from "variables/charts.js";
-import { useContext} from "react";
+import { useContext } from "react";
 import { AuthContext } from "Context/AuthProvider";
 
 import Header from "components/Headers/Header.js";
+import { Link } from "react-router-dom";
 
 const Index = (props) => {
   const { user } = useContext(AuthContext);
-  const wallet=user?.wallet;
+  const wallet = user?.wallet;
   // console.log(wallet);
 
   const [activeNav, setActiveNav] = useState(1);
@@ -56,193 +57,199 @@ const Index = (props) => {
       {/* <Header /> */}
       <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
 
-<Container fluid>
-  <h2 class='text-white'>Your Account Summary</h2>
-  <div className="header-body">
-    {/* Card stats */}
-    <Row>
-      <Col lg="6" xl="4">
-        <Card className="card-stats bg mb-4 mb-xl-0">
-          <CardBody>
+        <Container fluid>
+          <h2 class='text-white'>Your Account Summary</h2>
+          <div className="header-body">
+            {/* Card stats */}
             <Row>
-              <div className="col">
-                <CardTitle
-                  tag="h4"
-                  className="text-uppercase text-primary mb-0"
-                >
-                  Account balance
-                </CardTitle>
-                <span className="h2 font-weight-bold mb-0">
-                 {wallet}
-                </span>
-              </div>
-              <Col className="col-auto">
-                <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
-                  <i className="fa-solid fa-sack-dollar" />
-                </div>
-              </Col>
-            </Row>
-
-          </CardBody>
-        </Card>
-      </Col>
-      <Col lg="6" xl="4">
-        <Card className="card-stats mb-4 mb-xl-0">
-          <CardBody>
-            <Row>
-              <div className="col">
-                <CardTitle
-                  tag="h4"
-                  className="text-uppercase text-primary mb-0"
-                >
-                  Total Profit
-                </CardTitle>
-                <span className="h2 font-weight-bold mb-0">
-                  $350,897
-                </span>
-              </div>
-              <Col className="col-auto">
-                <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
-                  <i className="fa-solid fa-coins" />
-
-                </div>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col lg="6" xl="4">
-        <Card className="card-stats mb-4 mb-xl-0">
-          <CardBody>
-            <Row>
-              <div className="col">
-                <CardTitle
-                  tag="h4"
-                  className="text-uppercase text-primary mb-0"
-                >
-                 TOTAL WITHDRAW
-                </CardTitle>
-                <span className="h2 font-weight-bold mb-0">
-                  $350,897
-                </span>
-              </div>
-              <Col className="col-auto">
-                <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
-                  <i className="fa-solid fa-gift" />
-
-                </div>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col className='mt-3' lg="6" xl="4">
-        <Card className="card-stats mb-4 mb-xl-0">
-          <CardBody>
-            <Row>
-              <div className="col">
-                <CardTitle
-                  tag="h4"
-                  className="text-uppercase text-primary mb-0"
-                >
-                  Trading Accounts
-                </CardTitle>
-                <span className="h2 font-weight-bold mb-0">
-                  $3504
-                </span>
-              </div>
-              <Col className="col-auto">
-                <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
-                  <i className="fa-regular fa-address-card" />
-
-                </div>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col className='mt-3' lg="6" xl="4">
-        <Card className="card-stats mb-4 mb-xl-0">
-          <CardBody>
-            <Row>
-              <div className="col">
-                <CardTitle
-                  tag="h4"
-                  className="text-uppercase text-primary mb-0"
-                >
-                  Referral Bonus
-                </CardTitle>
-                <span className="h2 font-weight-bold mb-0">
-                  $350
-                </span>
-              </div>
-              <Col className="col-auto">
-                <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
-                  <i className="fa-solid fa-gifts" />
-
-                </div>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-      </Col>
-
-      <Col className='mt-3' lg="6" xl="4">
-        <Card className="card-stats mb-4 mb-xl-0">
-          <CardBody>
-            <Row>
-              <div className="col">
-                <CardTitle
-                  tag="h4"
-                  className="text-uppercase text-primary mb-0"
-                >
-                  Total Deposit
-                </CardTitle>
-                <span className="h2 font-weight-bold mb-0">
-                 {wallet}
-                </span>
-              </div>
-              <Col className="col-auto">
-                <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
-                  <i className="fa-solid fa-circle-arrow-down" />
-
-                </div>
-              </Col>
-            </Row>
-          </CardBody>
-        </Card>
-      </Col>
-    </Row>
-  </div>
-</Container>
-</div>
-      {/* Page content */}
-      <Container className="mt--7" fluid>
-         <Row>
-              <Col lg="12" xl="12" className=' mb-5 mt-3'>
-                <Card className="card-stats   mb-4 mb-xl-0 ">
+              <Col lg="6" xl="4">
+                <Card className="card-stats bg mb-4 mb-xl-0">
                   <CardBody>
-                    <h2>Your Active Plans (0)</h2>
                     <Row>
-                      <div className="col text-center">
-                        <p>You do not have an active investment plan at the moment.</p>
-                     
-                        
-                        <div className="text-center">
-                        <Button className="my-4" color="primary" type="button">
-                        Click for Buy a new Plan
-                        </Button>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-primary mb-0"
+                        >
+                          Account balance
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">
+                          ${wallet}
+                        </span>
                       </div>
-                     
-                      </div>
-                     
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+                          <i className="fa-solid fa-sack-dollar" />
+                        </div>
+                      </Col>
                     </Row>
-               
+
                   </CardBody>
                 </Card>
               </Col>
-             </Row>
-       
+              <Col lg="6" xl="4">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-primary mb-0"
+                        >
+                          Total Profit
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">
+                          $000
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+                          <i className="fa-solid fa-coins" />
+
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col lg="6" xl="4">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-primary mb-0"
+                        >
+                          TOTAL WITHDRAW
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">
+                          $000
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+                          <i className="fa-solid fa-gift" />
+
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col className='mt-3' lg="6" xl="4">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-primary mb-0"
+                        >
+                          Trading Accounts
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">
+                          $000
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+                          <i className="fa-regular fa-address-card" />
+
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col className='mt-3' lg="6" xl="4">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-primary mb-0"
+                        >
+                          Referral Bonus
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">
+                          $000
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+                          <i className="fa-solid fa-gifts" />
+
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+
+              <Col className='mt-3' lg="6" xl="4">
+                <Card className="card-stats mb-4 mb-xl-0">
+                  <CardBody>
+                    <Row>
+                      <div className="col">
+                        <CardTitle
+                          tag="h4"
+                          className="text-uppercase text-primary mb-0"
+                        >
+                          Total Deposit
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">
+                          ${wallet}
+                        </span>
+                      </div>
+                      <Col className="col-auto">
+                        <div className="icon icon-shape bg-primary text-white rounded-circle shadow">
+                          <i className="fa-solid fa-circle-arrow-down" />
+
+                        </div>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        </Container>
+      </div>
+      {/* Page content */}
+      <Container className="mt--7" fluid>
+        <Row>
+          <Col lg="12" xl="12" className=' mb-5 mt-3'>
+            <Card className="card-stats   mb-4 mb-xl-0 ">
+              <CardBody>
+                <h2>Your Active Plans (0)</h2>
+                <Row>
+                  <div className="col text-center">
+                    <p>You do not have an active investment plan at the moment.</p>
+
+                    {/* change by khorshed start */}
+
+                    <div className="text-center">
+                      <Link to={`/user/myplan`}>
+                        <Button className="my-4" color="primary" type="button">
+                          Click for Buy a new Plan
+                        </Button>
+                      </Link>
+
+                    </div>
+
+                    {/* change by khorshed end */}
+
+                  </div>
+
+                </Row>
+
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+
 
         <Row className="mt-2 mb-3">
           <Col className="mb-5 mb-xl-0" xl="12">
