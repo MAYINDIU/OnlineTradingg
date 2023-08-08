@@ -175,6 +175,7 @@ const Register = () => {
             <div className="text-center text-muted mb-4">
               <small>Or sign up with credentials</small>
             </div>
+
             <Form role="form" onSubmit={handleSubmit}>
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
@@ -268,7 +269,6 @@ const Register = () => {
                 </div>
               </div>
             </Form>
-
 
             <div>
               <Col className="text-center" xs="12">
