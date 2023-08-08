@@ -9,8 +9,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import Adminsidebar from "components/Sidebar/Adminsidebar";
 import adminroutes from "views/adminroutes";
 import { AuthContext } from "Context/AuthProvider";
-import ManageUser from "views/examples/User/ManageUser";
-
+import Manageuser from "views/examples/Manageuser";
 const Admin = (props) => {
   const { user } = useContext(AuthContext);
   const mainContent = React.useRef(null);
@@ -66,7 +65,7 @@ const Admin = (props) => {
         adminroutes={adminroutes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/argon-react.png"),
+          imgSrc: require("../assets/img/brand/trading.png"),
           imgAlt: "...",
         }}
       />
@@ -79,10 +78,8 @@ const Admin = (props) => {
           {getRoutes(adminroutes)}
 
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
-          <Route path="user/:id" element={<ManageUser />}>
+          <Route path="user/:id" element={<Manageuser />}>
           </Route>
-
-
         </Routes>
         {/* <Container fluid>
           <AdminFooter />

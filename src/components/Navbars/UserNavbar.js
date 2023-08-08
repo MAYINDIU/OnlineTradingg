@@ -1,4 +1,3 @@
-
 import { AuthContext } from "Context/AuthProvider";
 import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -28,7 +27,6 @@ import {
 const UserNavbar = (props) => {
 
   const { user, logOut } = useContext(AuthContext);
-  const userId = window.localStorage.getItem('userInfo')
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,9 +40,6 @@ const UserNavbar = (props) => {
 
     });
   }
-
-  const [modal, setModal] = useState(false);
-
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
@@ -52,10 +47,6 @@ const UserNavbar = (props) => {
       .then((res) => res.json())
       .then((data) => setNotifications(data));
   }, []);
-
-
-  const toggle = () => setModal(!modal);
-
 
 
   return (
