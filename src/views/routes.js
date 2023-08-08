@@ -64,6 +64,7 @@ var routes = [
     icon: "fa-solid fa-user text-primary",
     component: <Profile />,
     layout: "/user",
+
   },
   {
     path: "/tradingplan",
