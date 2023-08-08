@@ -28,8 +28,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState(null);
-  // const [data, setuserdata] = useState(['']);
-  // console.log(data);
 
   const from = location.state?.from?.pathname || '/'
 
@@ -60,7 +58,7 @@ const Login = () => {
       .then((response) => {
         const user = response.data;
         setUser(user);
-        window.localStorage.setItem('userInfo', user.id)
+        // window.localStorage.setItem('userInfo', user.id)
         console.log(response);
         // console.log(response.data);
       })
