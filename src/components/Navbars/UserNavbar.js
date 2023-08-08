@@ -77,29 +77,51 @@ const UserNavbar = (props) => {
             </FormGroup>
           </Form>
 
-          <div>
-          <div className="icon icon-shape bg-primary text-white rounded-circle shadow-xl ml-2">
-              <i class="fa-solid fa-bell text-white" onClick={toggle}></i>
-              </div>
-        
+          <UncontrolledDropdown nav>
+            <DropdownToggle className="px-0" nav>
+              <Media className="icon icon-shape bg-primary text-white rounded-circle shadow-xl">
+                <i class="fa-solid fa-bell "></i>
+              </Media>
+            </DropdownToggle>
+            <DropdownMenu className="dropdown-menu-arrow" right>
+              <DropdownItem className="noti-title border-bottom" header tag="div">
+                <h5 className="m-0 ">Notification</h5>
+              </DropdownItem>
+
+              {
+                notifications.slice(0, 5).map((n, i) => (
+                  <DropdownItem className="border-bottom" >
+                    <span className="" >{n.text}</span>
+                  </DropdownItem>
+
+                ))
+              }
+              <DropdownItem className='text-center'>
+                <span>See All Notification</span>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+
+          {/* <div>
+            <FaBell className="text-xl text-white" onClick={toggle}></FaBell>
             <Modal isOpen={modal} toggle={toggle}>
               <ModalHeader className='border-bottom' toggle={toggle}>Notifications</ModalHeader>
-              <ModalBody className='bg-primary'>
+              <ModalBody >
                 {
                   notifications.map((n, i) => (
-                    <h5 className="bg-primary p-2 text-white">{n.text}</h5>
+                    <h5 className="">{n.text}</h5>
                   ))
                 }
 
 
               </ModalBody>
-              <ModalFooter className='border-top bg-primary text-center' >
-                <Button color="secondary" >
+              <ModalFooter className='border-top' >
+                <Button color="secondary" className="text-center" >
                   See All Notification
                 </Button>
               </ModalFooter>
             </Modal>
-          </div>
+          </div> */}
 
 
           <Nav className="align-items-center d-none d-md-flex" navbar>

@@ -8,6 +8,7 @@ import Withdraw from "views/examples/Withdraw";
 import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
+import Tradehistory from "./examples/TradeHistory/Tradehistory";
 var routes = [
   
   {
@@ -37,6 +38,13 @@ var routes = [
     name: "My Plan",
     icon: "fa-solid fa-hand-holding-heart text-primary",
     component: <MyPlan />,
+    layout: "/user"
+  },
+  {
+    path: "/tradehistory",
+    name: "Trade History",
+    icon: "fa-solid fa-hand-holding-heart text-primary",
+    component: <Tradehistory />,
     layout: "/user"
   },
 
