@@ -211,7 +211,7 @@ const Deposit = () => {
                   </div>
                 </Row>
               </CardHeader>
-              <Table className="" hover bordered responsive>
+              <Table className=" hover bordered responsive">
                 <thead className="text-white bg-gradient-info">
                
                   <tr>

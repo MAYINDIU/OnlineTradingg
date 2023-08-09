@@ -19,16 +19,14 @@ import {
 } from "reactstrap";
 import swal from "sweetalert";
 
-
 const Register = () => {
-
   const { providerLogin, setUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState(null);
 
-  const from = location.state?.from?.pathname || '/'
+  const from = location.state?.from?.pathname || "/";
 
   const loginAlert = () => {
     swal({
@@ -36,7 +34,7 @@ const Register = () => {
       icon: "success",
       button: "Done",
     });
-  }
+  };
 
   const uploadUserInfoToDatabase = (user) => {
 
@@ -66,7 +64,7 @@ const Register = () => {
   const googleProvider = new GoogleAuthProvider();
   const handleGoogleSignIn = () => {
     providerLogin(googleProvider)
-      .then(result => {
+      .then((result) => {
         const user = result.user;
         console.log(user);
         window.localStorage.setItem('user-loggedIn', true)
@@ -75,10 +73,8 @@ const Register = () => {
         loginAlert();
         uploadUserInfoToDatabase();
       })
-      .catch(error => console.error(error))
-  }
-
-
+      .catch((error) => console.error(error));
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -128,7 +124,7 @@ const Register = () => {
   }
   return (
     <>
-      <Col lg="6" md="8" className='mt--7'>
+      <Col lg="6" md="8" className="mt--7">
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-2">
             <div className="text-muted text-center mt-2 mb-4">
@@ -155,8 +151,8 @@ const Register = () => {
               <Button
                 className="btn-neutral btn-icon"
                 color="default"
-
-                onClick={handleGoogleSignIn}
+                href="#pablo"
+                onClick={(e) => e.preventDefault()}
               >
                 <span className="btn-inner--icon">
                   <img
@@ -188,8 +184,8 @@ const Register = () => {
                     placeholder="Name"
                     type="text"
                     name='name' />
-                </InputGroup>
-              </FormGroup>
+                </InputGroup >
+              </FormGroup >
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
@@ -256,11 +252,11 @@ const Register = () => {
                         <a href="#pablo">
                           Privacy Policy
                         </a>
-                      </span>
-                    </label>
-                  </div>
-                </Col>
-              </Row>
+                      </span >
+                    </label >
+                  </div >
+                </Col >
+              </Row >
               <div className="text-center">
                 <div className="text-center">
                   <Button className="my-4 w-100" color="primary" type="submit">
@@ -268,7 +264,7 @@ const Register = () => {
                   </Button>
                 </div>
               </div>
-            </Form>
+            </Form >
 
             <div>
               <Col className="text-center" xs="12">
@@ -281,10 +277,10 @@ const Register = () => {
                   </Button>
                 </Link>
               </div>
-            </div>
-          </CardBody>
-        </Card>
-      </Col>
+            </div >
+          </CardBody >
+        </Card >
+      </Col >
     </>
   );
 };

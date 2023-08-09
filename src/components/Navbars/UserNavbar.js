@@ -27,7 +27,7 @@ import {
 const UserNavbar = (props) => {
 
   const { user, logOut } = useContext(AuthContext);
-
+  const wallet = user?.wallet;
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -57,7 +57,7 @@ const UserNavbar = (props) => {
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
           >
-            {props.brandText}
+            {props.brandText} 
           </Link>
           <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
@@ -143,7 +143,7 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name}
+                        {user?.name} (${wallet}) 
                       </span>
                     }
 

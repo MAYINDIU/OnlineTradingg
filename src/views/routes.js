@@ -7,8 +7,8 @@ import Withdraw from "views/examples/Withdraw";
 import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
-
-
+import PlanDetails from "./examples/MyPlan/PlanDetails";
+import Tradehistory from "./examples/TradeHistory/Tradehistory";
 var routes = [
 
   {
@@ -27,6 +27,13 @@ var routes = [
     layout: "/user",
 
   },
+  {
+    path: "/trade-history",
+    name: "Trade History",
+    icon: "fa-solid fa-user text-primary",
+    component: <Tradehistory />,
+    layout: "/user",
+  },
   // {
   //   path: "/tradingplan",
   //   name: "Trading Plan",
@@ -39,8 +46,9 @@ var routes = [
     name: "My Plan",
     icon: "fa-solid fa-hand-holding-heart text-primary",
     component: <MyPlan />,
-    layout: "/user"
+    layout: "/user",
   },
+
 
   {
     name: "Finance",
@@ -90,6 +98,11 @@ var routes = [
     ]
   },
   {
+    path: "/plandetails/:id",
+    component: <PlanDetails />,
+    layout: "/user",
+  },
+  {
     path: "/register",
     component: <Register />,
     layout: "/auth",
@@ -127,6 +140,5 @@ var routes = [
     component: <Login />,
     layout: "/auth",
   },
-
 ];
 export default routes;

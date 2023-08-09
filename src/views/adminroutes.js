@@ -1,13 +1,3 @@
-import Index from "views/Index.js";
-import Profile from "views/examples/Profile.js";
-import Register from "views/examples/Register.js";
-import Login from "views/examples/Login.js";
-import Tables from "views/examples/Tables.js";
-import Deposit from "views/examples/Deposit";
-import Withdraw from "views/examples/Withdraw";
-import Transactions from "views/examples/Transactions";
-import TradingPlan from "views/examples/TradingPlan/TradingPlan";
-import MyPlan from "views/examples/MyPlan/MyPlan";
 import AllUser from "views/examples/AllUser";
 import AddPackage from "views/examples/Package/AddPackage";
 import PackageList from "views/examples/Package/PackageList";
@@ -29,7 +19,7 @@ var adminroutes = [
     name: "All User",
     icon: "fa-solid fa-users text-primary",
     component: <AllUser />,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
     path: "/addpackage",
@@ -57,7 +47,7 @@ var adminroutes = [
     name: "Purchase list",
     icon: "fa-solid fa-cart-shopping text-primary",
     component: <Purchaselist />,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
     path: "/transactionlist",
@@ -77,7 +67,7 @@ var adminroutes = [
   {
     path: "/updatepackages/:id",
     component: <UpdatePackages />,
-    layout: "/admin"
+    layout: "/admin",
   },
   {
     path: "/addpackage",

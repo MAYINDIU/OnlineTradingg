@@ -25,6 +25,8 @@ const UpdatePackages = () => {
   const [profitShare, setProfitShare] = useState("");
   const [settelementTime, setSettelementTime] = useState("");
   const [lockinPeriod, setLockinPeriod] = useState("");
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
   const [locking_no, setLokinNo] = useState("");
   const [compoundLevel, setCompoundLevel] = useState("");
   const [available, setAvailable] = useState("");
@@ -53,6 +55,8 @@ const UpdatePackages = () => {
       profitShare: profitShare ? profitShare : pkg?.profitShare,
       settelementTime: settelementTime ? settelementTime : pkg?.settelementTime,
       lockinPeriod: lockinPeriod ? lockinPeriod : pkg?.lockinPeriod,
+      min: min ? min : pkg?.min,
+      max: max ? max : pkg?.max,
       locking_no: locking_no ? locking_no : pkg?.locklocking_noinPeriod,
       compoundLevel: compoundLevel ? compoundLevel : pkg?.compoundLevel,
       available: available ? available : pkg?.available,
@@ -119,8 +123,8 @@ const UpdatePackages = () => {
                           onChange={(e) => setPlanType(e.target.value)}
                         >
                           <option>{pkg?.planType}</option>
-                          <option>Minimum amount for investment</option>
-                          <option>Maximum amount for investment</option>
+                          <option>Dynamic</option>
+                          <option>Flat</option>
                         </Input>
                       </InputGroup>
                     </FormGroup>
@@ -167,6 +171,56 @@ const UpdatePackages = () => {
                           <option>Quarterly</option>
                           <option>Yearly</option>
                         </Input>
+                      </InputGroup>
+                    </FormGroup>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg="12" xl="6" className=" mt-3">
+                    <FormGroup>
+                      <Label>Min Value</Label>
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                          <i class="fa-solid fa-hashtag"></i>
+                            
+                          </InputGroupText>
+                        </InputGroupAddon>
+
+                        <Input
+                          id="exampleSelect"
+                          name="select"
+                          defaultValue={pkg?.min}
+                          type="number"
+                          min={1}
+                          onChange={(e) => setMin(e.target.value)}
+                        >
+                        </Input>
+                        {/* </select> */}
+                      </InputGroup>
+                    </FormGroup>
+                  </Col>
+                  <Col lg="12" xl="6" className=" mt-3">
+                    <FormGroup>
+                      <Label>Max Value</Label>
+                      <InputGroup className="input-group-alternative">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                          <i class="fa-solid fa-hashtag"></i>
+                            
+                          </InputGroupText>
+                        </InputGroupAddon>
+
+                        <Input
+                          id="exampleSelect"
+                          name="select"
+                          type="number"
+                          defaultValue={pkg?.max}
+                          min={1}
+                          onChange={(e) => setMax(e.target.value)}
+                        >
+                        </Input>
+                        {/* </select> */}
                       </InputGroup>
                     </FormGroup>
                   </Col>
