@@ -236,7 +236,6 @@ const Index = (props) => {
                           Click for Buy a new Plan
                         </Button>
                       </Link>
-
                     </div>
 
                     {/* change by khorshed end */}
