@@ -1,7 +1,7 @@
 import { AuthContext } from "Context/AuthProvider";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -26,12 +26,12 @@ const PlanDetails = () => {
   const { id } = useParams();
   const { user } = useContext(AuthContext);
   const wallet = user?.wallet;
-
+  const navigate = useNavigate()
   //  Sweet Alert
   const warningAlert = () => {
     swal({
-      title: "Opps!",
-      text: "Insuffucient Balance!",
+      title: "Insuffucient Balance!",
+      text: "Please add money to your wallet by deposit",
       icon: "warning",
     });
   };
@@ -88,13 +88,14 @@ const PlanDetails = () => {
           text: response?.data?.message,
           icon: "success",
         });
-        
+
         // cear input 
         setInputAmount("");
         // alert(response?.data?.message);
       }
     } else {
       warningAlert();
+      navigate('/user/deposit')
     }
   };
 

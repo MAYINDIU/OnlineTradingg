@@ -9,6 +9,7 @@ import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
 import PlanDetails from "./examples/MyPlan/PlanDetails";
+import Request from "./examples/CashFree/Request";
 var routes = [
   
   {
@@ -96,6 +97,11 @@ var routes = [
   {
     path: "/plandetails/:id",
     component: <PlanDetails />,
+    layout: "/user",
+  },
+  {
+    path: "/paymentmethod",
+    component: <Request />,
     layout: "/user",
   },
   {
