@@ -155,7 +155,8 @@ const Register = () => {
               <Button
                 className="btn-neutral btn-icon"
                 color="default"
-                onClick={handleGoogleSignIn}
+                href="#pablo"
+                onClick={(e) => e.preventDefault()}
               >
                 <span className="btn-inner--icon">
                   <img

@@ -116,8 +116,8 @@ const AddPackage = () => {
                           type="select"
                           onChange={(e) => setPlanType(e.target.value)}
                         >
-                          <option>Minimum amount for investment</option>
-                          <option>Maximum amount for investment</option>
+                          <option>Dynamic</option>
+                          <option>Flat</option>
                         </Input>
                       </InputGroup>
                     </FormGroup>
