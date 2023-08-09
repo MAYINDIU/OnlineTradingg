@@ -15,28 +15,6 @@ const AllUser = () => {
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
-<<<<<<< HEAD
-  // console.log(users)
- 
-  const handleActive = async (id)=>{
-    console.log(id)
-
-    
-    try {
-      const response = await axios.put(
-        `https://indian.munihaelectronics.com/public/api/update_status/${id}`,
-        
-      );
-        console.log(response?.data?.message)
-      setMessage(response?.data?.message)
-      
-    } catch (error) {
-      console.log(error?.response);
-      toast.error(error.response?.data?.error);
-    }
-  };
-  
-=======
   console.log(users)
 
 
@@ -74,7 +52,6 @@ const AllUser = () => {
 }
 
 
->>>>>>> 1df695b074d20194c14fa35867a78e7f1997851d
   return (
     <div>
 

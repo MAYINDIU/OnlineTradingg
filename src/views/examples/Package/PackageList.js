@@ -42,6 +42,7 @@ const PackageList = () => {
               <th>Plan Name</th>
               <th>Plan Type</th>
               <th>Profit Share</th>
+              <th>Min & Max Value</th>
               <th>Settelement Time</th>
               <th>Lockin Period</th>
               <th>Compound Level</th>
@@ -56,7 +57,8 @@ const PackageList = () => {
                 <th className="text-center" scope="row">{index + 1}</th>
                 <td>{pkg?.planName}</td>
                 <td>{pkg?.planType}</td>
-                <td>{pkg?.profitShare}</td>
+                <td>{pkg?.planType} Profit {pkg?.profitShare}%</td>
+                <td>${pkg?.min}-${pkg?.max}</td>
                 <td>{pkg?.settelementTime}</td>
                 <td>{pkg?.locking_no} {pkg?.lockinPeriod}</td>
                 <td>{pkg?.compoundLevel}</td>
