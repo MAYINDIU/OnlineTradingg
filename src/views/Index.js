@@ -33,6 +33,7 @@ import { useContext} from "react";
 import { AuthContext } from "Context/AuthProvider";
 
 import Header from "components/Headers/Header.js";
+import { Link } from "react-router-dom";
 
 const Index = (props) => {
   const { user } = useContext(AuthContext);
@@ -73,7 +74,7 @@ const Index = (props) => {
                   Account balance
                 </CardTitle>
                 <span className="h2 font-weight-bold mb-0">
-                 {wallet}
+                 ${wallet}
                 </span>
               </div>
               <Col className="col-auto">
@@ -98,7 +99,7 @@ const Index = (props) => {
                   Total Profit
                 </CardTitle>
                 <span className="h2 font-weight-bold mb-0">
-                  $350,897
+                  $0
                 </span>
               </div>
               <Col className="col-auto">
@@ -123,7 +124,7 @@ const Index = (props) => {
                  TOTAL WITHDRAW
                 </CardTitle>
                 <span className="h2 font-weight-bold mb-0">
-                  $350,897
+                  $0
                 </span>
               </div>
               <Col className="col-auto">
@@ -148,7 +149,7 @@ const Index = (props) => {
                   Trading Accounts
                 </CardTitle>
                 <span className="h2 font-weight-bold mb-0">
-                  $3504
+                  $0
                 </span>
               </div>
               <Col className="col-auto">
@@ -173,7 +174,7 @@ const Index = (props) => {
                   Referral Bonus
                 </CardTitle>
                 <span className="h2 font-weight-bold mb-0">
-                  $350
+                  $0
                 </span>
               </div>
               <Col className="col-auto">
@@ -199,7 +200,7 @@ const Index = (props) => {
                   Total Deposit
                 </CardTitle>
                 <span className="h2 font-weight-bold mb-0">
-                 {wallet}
+                 ${wallet}
                 </span>
               </div>
               <Col className="col-auto">
@@ -227,12 +228,13 @@ const Index = (props) => {
                       <div className="col text-center">
                         <p>You do not have an active investment plan at the moment.</p>
                      
-                        
                         <div className="text-center">
+                      <Link to={`/user/myplan`}>
                         <Button className="my-4" color="primary" type="button">
-                        Click for Buy a new Plan
+                          Click for Buy a new Plan
                         </Button>
-                      </div>
+                      </Link>
+                    </div>
                      
                       </div>
                      

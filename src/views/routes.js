@@ -10,6 +10,7 @@ import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
 import PlanDetails from "./examples/MyPlan/PlanDetails";
 import Request from "./examples/CashFree/Request";
+import Tradehistory from "./examples/TradeHistory/Tradehistory";
 var routes = [
   
   {
@@ -25,6 +26,13 @@ var routes = [
     name: "User Profile",
     icon: "fa-solid fa-user text-primary",
     component: <Profile />,
+    layout: "/user",
+  },
+  {
+    path: "/trade-history",
+    name: "Trade History",
+    icon: "fa-solid fa-user text-primary",
+    component: <Tradehistory />,
     layout: "/user",
   },
   // {

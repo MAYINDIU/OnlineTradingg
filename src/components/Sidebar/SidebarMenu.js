@@ -18,8 +18,8 @@ const SidebarMenu = ({ key, prop, closeCollapse }) => {
                 <div className="d-flex justify-content-between align-items-center" onClick={toggleMenu}>
                     <NavItem key={key}>
                         <NavLink
-                            to={prop.layout + prop.path}
-                            tag={NavLinkRRD}
+                            // to={prop.layout + prop.path}
+                            // tag={NavLinkRRD}
                             onClick={closeCollapse}
                         >
                             <i className={prop.icon} />

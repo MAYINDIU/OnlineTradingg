@@ -7,18 +7,14 @@ export const AuthContext = createContext()
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState('');
-    const [loading, setLoading] = useState(true);
-    const userId = window.localStorage.getItem('userInfo')
+    // const [user, setUser] = useState('');
 
- 
-    useEffect(() => {
-        const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${userId}`;
-        // console.log(url);
-        fetch(url)
-            .then((res) => res.json())
-            .then((data) => setUser(data));
-    }, [userId]);
+    // const userId = window.localStorage.getItem('userInfo')
+    const userInfo = window.localStorage.getItem('userInfo')
+    const loginUser = JSON.parse(userInfo)
+    const [user, setUser] = useState(loginUser || {});
+    const [loading, setLoading] = useState(true);
+
 
     // console.log(user)
 
@@ -38,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
+            // setUser(currentUser);
             setLoading(false);
         });
         return () => {
