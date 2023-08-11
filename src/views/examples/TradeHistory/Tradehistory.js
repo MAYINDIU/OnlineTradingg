@@ -15,18 +15,10 @@ import {
 } from "reactstrap";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
-<<<<<<< HEAD
-
-const Tradehistory = () => {
-
-  const [sort, setSort] = useState({ keyToSort: 'openPrice', direction: 'asc' })
-
-=======
 import DataTable from "react-data-table-component";
 
 const Tradehistory = () => {
 
->>>>>>> ed76eecc31681ca681c25bea3986510876202177
   const [sessionToken, setSessionToken] = useState('');
   const [historyData, setHistoryData] = useState(['']);
   const history = historyData;
