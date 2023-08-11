@@ -15,11 +15,18 @@ import {
 } from "reactstrap";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
+<<<<<<< HEAD
 
 const Tradehistory = () => {
 
   const [sort, setSort] = useState({ keyToSort: 'openPrice', direction: 'asc' })
 
+=======
+import DataTable from "react-data-table-component";
+
+const Tradehistory = () => {
+
+>>>>>>> ed76eecc31681ca681c25bea3986510876202177
   const [sessionToken, setSessionToken] = useState('');
   const [historyData, setHistoryData] = useState(['']);
   const history = historyData;
@@ -72,20 +79,38 @@ const Tradehistory = () => {
 
   fetchHistoryData();
 
-  const handelHeaderClick = (kTs) => {
-    setSort({
-      keyToSort: kTs,
-      direction: kTs === sort.keyToSort ? sort.direction === 'asc' ? 'desc' : 'asc' : 'desc',
-    })
+  const columns = [
+    {
+      name: 'ID',
+      selector: row => row.id,
+      sortable: true,
+    },
+    {
+      name: 'Name',
+      selector: row => row.name,
+      sortable: true,
+    },
+    {
+      name: 'Email',
+      selector: row => row.email,
+      sortable: true,
+    },
+    {
+      name: 'Phone Number',
+      selector: row => row.phone,
+      sortable: true,
+    },
+  ];
 
-  };
-  const getSortedArray = (arrayToSort) => {
-    if (sort.direction === 'asc') {
-      return arrayToSort.sort((a, b) => (a[sort.keyToSort] > (b[sort.keyToSort]) ? 1 : -1));
-    }
-    return arrayToSort.sort((a, b) => (a[sort.keyToSort] > (b[sort.keyToSort]) ? -1 : 1));
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(json => SetData(json))
+  }, []);
 
-  };
+  const [data, SetData] = useState('');
+
+
 
   return (
 
@@ -98,6 +123,8 @@ const Tradehistory = () => {
         <Col className="mb-5 mb-xl-0" xl="12">
           <Card className="shadow border-0">
 
+            <DataTable columns={columns} data={data} pagination />
+
             <Table className="align-items-center  " hover responsive>
               <thead className="bg-primary text-white">
                 <tr>
@@ -107,16 +134,16 @@ const Tradehistory = () => {
                   <th scope="col">Symbol</th>
                   <th scope="col">Action</th>
                   <th scope="col">Lots</th>
-                  <th scope="col" onClick={() => handelHeaderClick('openPrice')}>Open Price</th>
-                  <th scope="col" onClick={() => handelHeaderClick('closePrice')}>Close Price </th>
-                  <th scope="col" onClick={() => handelHeaderClick('pips')}>Pips </th>
-                  <th scope="col" onClick={() => handelHeaderClick('profit')}>Net Profit</th>
+                  <th scope="col">Open Price</th>
+                  <th scope="col">Close Price</th>
+                  <th scope="col">Pips</th>
+                  <th scope="col">Net Profit</th>
                   <th scope="col">Duration</th>
                   {/* <th scope="col">Draw Down</th> */}
                 </tr>
               </thead>
               <tbody>
-                {getSortedArray(history).map((historyData, index) => (
+                {history.map((historyData, index) => (
                   <tr>
                     <th scope="row">{index + 1}</th>
                     <td >{historyData?.openTime}</td>
