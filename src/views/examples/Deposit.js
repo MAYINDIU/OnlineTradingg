@@ -21,78 +21,141 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "Context/AuthProvider";
 import cashfree from "../../../src/assets/img/icons/common/cashfree.png";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import swal from "sweetalert";
+
 const Deposit = () => {
   const { user } = useContext(AuthContext);
   const wallet = user?.wallet;
-  console.log(wallet);
-  const [paytype, setPayType] = useState("");
-  console.log(paytype);
+  const typeOfPayment=["Cashfree","HandCash"]
+  const [paytype, setPayType] = useState(null);
+  const [successText, setSuccessText] = useState('');
+ 
+
   const [transactioninfo, setTransactioninfo] = useState([]);
-  const [amount, setAmount] = useState("");
-  console.log(amount);
+  const [depositAmount, setDepositAmount] = useState("");
+  const navigate = useNavigate();
 
   const userid = user?.id;
-  console.log(userid);
-
-  // const orderAmount = amount;
-  // const orderNote = "Deposit";
-  // const customerName = user?.name;
-  // const customerEmail = user?.email;
-
-  const datas = 
-    {
-      orderAmount : amount,
-      orderNote : "Test",
-      customerName : user?.name,
-      customerEmail : user?.email,
-    }
-  console.log(datas)
+  
+  //  success payment 
+  
+  // const location = useLocation();
+  //   const query = new URLSearchParams(location.search);
+  
+  const [transactionDetails, setTransactionDetails] = useState({});
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const orderId = queryParams.get("order_id");
+  const orderToken = queryParams.get("order_token");
+  console.log('Show', orderId,orderToken)
 
   useEffect(() => {
     fetch(
-      `https://indian.munihaelectronics.com/public/api/show_usertransaction/${userid}`
+      `https://indian.munihaelectronics.com/public/api/cashfree/payments/success?order_id=${orderId}&order_token=${orderToken}`
     )
       .then((res) => res.json())
-      .then((data) => setTransactioninfo(data));
+      .then((data) => setTransactionDetails(data));
   }, []);
+console.log(transactionDetails)
 
-  //Deposit amount
+  
+ 
   const handleDeposit = async (e) => {
     console.log(e);
     e.preventDefault();
-    const description = "Deposited";
-    const method_type = paytype;
 
-    const data = {
-      userid,
-      amount,
-      method_type,
-      description,
+    const formData = {
+      name: user?.name,
+      email: user?.email,
+      mobile: "0178978161",
+      amount: depositAmount,
     };
-    console.log(data);
-    try {
+    const depositData = {
+      userid: user?.id,
+      amount: depositAmount,
+      method_type: "CashFree",
+      description: 'Payment deposited by Cashfreee',
+    };
+console.log('Deposit Amount',depositData)
+    if(paytype=='Cashfree' || paytype=='Handcash'){
+      try {
+        if (paytype === 'Cashfree') {
+          const response = await axios.post(
+            "https://indian.munihaelectronics.com/public/api/create-payment",
+            formData
+          );
+          const paymentLink = response.data.payment_link;
+          window.location.href = paymentLink;
+        } else {
+          navigate("/user/index");
+        }
+      } catch (error) {
+        console.error("Error creating payment:", error);
+        // Handle error here
+      }
+
+    }
+    //Post Deposit 
+    try{
       const response = await axios.post(
-        "https://indian.munihaelectronics.com/public/api/deposit",
-        data,
+        "https://indian.munihaelectronics.com/public/api/deposit",depositData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
       );
-      console.log(response);
-
-      // Reset the form inputs
-
-      // setPayType("");
-      // setAmount("");
-
-      alert(response?.data?.message);
-    } catch (error) {
-      toast.error(error?.response?.data?.error);
-    }
+      window.localStorage.setItem('userInfo',JSON.stringify({...user, wallet:wallet + depositAmount}))
+      window.location.reload()
+     
+        setSuccessText( response)
+     
+      }
+      catch (error) {
+        console.error("Error creating payment:", error);
+        
+      }
   };
+if(transactionDetails.order_amount > 0){
+  swal({
+    title: "Deposited Successflly",
+    text: 'Success',
+    icon: "success",
+  });
+ 
+  navigate('/user/index')
+}
+
+// Add Wallet 
+// const handlePackages = async (e) => {
+//   console.log(e);
+//   e.preventDefault();
+
+//   const data = {
+  
+//   };
+//   console.log(data);
+//   try {
+//     const response = await axios.post(
+//       "https://indian.munihaelectronics.com/public/api/package-add",
+//       data,
+//       {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       }
+//     );
+//     console.log(response);
+
+//     // Reset the form inputs
+    
+    
+//     alert(response?.data?.message)
+//   } catch (error) {
+//     toast.error(error?.response?.data?.error);
+//   }
+// };
 
   return (
     <div>
@@ -112,7 +175,7 @@ const Deposit = () => {
                   placeholder="Enter Amount"
                   type="number"
                   required
-                  onChange={(e) => setAmount(e.target.value)}
+                  onChange={(e) => setDepositAmount(+e.target.value)}
                 />
 
                 {/* <Label className='mt-3' for="exampleEmail">
@@ -124,69 +187,33 @@ const Deposit = () => {
                     <FormGroup className="mb-3">
                       <Label>Select Payment Method*</Label>
                       <InputGroup className="input-group-alternative">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            {/* <i class="fa-solid fa-money-bill text-blue"></i> */}
-                            <img
-                              src={cashfree}
-                              style={{ width: "20px", height: "16px" }}
-                              alt="cashfree"
-                            />
-                          </InputGroupText>
-                        </InputGroupAddon>
+                        
                         <Input
                           id="exampleSelect"
                           name="select"
                           type="select"
                           onChange={(e) => setPayType(e.target.value)}
                         >
-                          <option className="p-5">Cashfree</option>
+                        
+                            <option className="p-5">--select--</option>
+                            {typeOfPayment?.map(typ=><option value={typ} className="p-5">{typ}</option>)}
+                          
                         </Input>
                       </InputGroup>
                     </FormGroup>
                   </Col>
-                  {/* <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>BUSD</p>
-                        </CardBody>
-                        </Card>
-                    </Col>
-                    <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg  mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>USDT</p>
-                        </CardBody>
-                        </Card>
-                    </Col> */}
-                </Row>
-                <Row>
-                  {/* <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>Bank Transfer</p>
-                        </CardBody>
-                        </Card>
-                    </Col>
-                    <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p> Paypal</p>
-                        </CardBody>
-                        </Card>
-                    </Col> */}
+
                   <div className=" mt-2 text-center col">
-                    <Link  to='/user/paymentmethod' state={datas}>
-                    <button className="btn btn-primary" type="submit"  >
+                    <button className="btn btn-primary" type="submit" disabled={depositAmount== "" && paytype == null }>
                       Add Deposit
                     </button>
-                    </Link>
                   </div>
                 </Row>
               </Form>
             </CardBody>
           </Card>
         </Col>
+        
 
         <Col lg="12" xl="4" className=" mt--7 ">
           <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4 mb-xl-0 ">
@@ -204,7 +231,9 @@ const Deposit = () => {
           </Card>
         </Col>
       </Row>
-
+      {
+          <h2 className="text-center">{transactionDetails?.order_amount}</h2>
+        }
       <Row className="mt-5 mb-3 container-fluid">
         <Col className="mb-5 mb-xl-0" xl="12">
           <Card className="shadow">

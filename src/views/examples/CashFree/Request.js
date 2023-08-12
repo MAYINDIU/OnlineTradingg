@@ -1,70 +1,87 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 const Request = () => {
-  const [loading, setLoading] = useState(true);
-  const location = useLocation();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    mobile: '',
+    amount: '',
+  });
+ const location = useLocation()
+ console.log(location.state)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post('https://indian.munihaelectronics.com/public/api/initiate-payment', {
-         // Change to "TEST" for test server, "PROD" for production
-          appId: "TEST4390043c4b669779b747e49764400934",
-          orderId: "DP00564",
-          orderAmount: '5000',
-          orderCurrency: "INR",
-          orderNote: location?.state?.orderNote || "",
-          customerName: location?.state?.customerName || "",
-          customerPhone: "0178965248",
-          customerEmail: location?.state?.customerEmail || "",
-          returnUrl: "http://localhost:3000/user/deposit",
-          notifyUrl: "http://localhost:3000/user/deposit",
-        });
+  const [paymentLink, setPaymentLink] = useState('');
 
-        if (response.data) {
-          const { cashfreeUrl, postData, signature } = response.data;
-          const form = document.createElement('form');
-          form.setAttribute('action', cashfreeUrl);
-          form.setAttribute('method', 'post');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-          // Add hidden fields
-          for (const [fieldName, fieldValue] of Object.entries(postData)) {
-            const input = document.createElement('input');
-            input.setAttribute('type', 'hidden');
-            input.setAttribute('name', fieldName);
-            input.setAttribute('value', fieldValue);
-            form.appendChild(input);
-          }
+  const handlePayment = async () => {
+    try {
+      const response = await axios.post('https://indian.munihaelectronics.com/public/api/create-payment', formData);
+      const paymentLink = response.data.payment_link;
+      window.location.href = paymentLink;
+    } catch (error) {
+      console.error('Error creating payment:', error);
+      // Handle error here
+    }
+  };
 
-          // Add the signature field
-          const signatureInput = document.createElement('input');
-          signatureInput.setAttribute('type', 'hidden');
-          signatureInput.setAttribute('name', 'signature');
-          signatureInput.setAttribute('value', signature);
-          form.appendChild(signatureInput);
+  return (
+    <div>
+       <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
+        <h2 className="text-white mb-0">My Plan</h2>
+      </div>
+      <form>
+      <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Name"
+        />
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email"
+        />
+        <input
+          type="tel"
+          name="mobile"
+          value={formData.mobile}
+          onChange={handleChange}
+          placeholder="Mobile"
+        />
+        <input
+          type="number"
+          name="amount"
+          value={formData.amount}
+          onChange={handleChange}
+          placeholder="Amount"
+        />
+        <button type="button" onClick={handlePayment}>
+          Pay Now
+        </button>
+      </form>
 
-          document.body.appendChild(form);
-
-          // Submit the form
-          form.submit();
-
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error initiating payment:", error);
-      }
-    };
-
-    fetchData();
-  }, [location]);
-
-  if (loading) {
-    return <p>Please wait.......</p>;
-  }
-
-  return null;
+      {paymentLink && (
+        <div>
+          <h2>Payment Link</h2>
+          <a href={paymentLink} target="_blank" rel="noopener noreferrer">
+            {paymentLink}
+          </a>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Request;

@@ -25,6 +25,7 @@ const PlanDetails = () => {
   const [p, setPackage] = useState({});
   const { id } = useParams();
   const { user } = useContext(AuthContext);
+  console.log(user)
   const wallet = user?.wallet;
   const navigate = useNavigate()
   //  Sweet Alert
@@ -45,8 +46,9 @@ const PlanDetails = () => {
       .then((data) => setPackage(data));
   }, [id]);
 
-  const [inputAmount, setInputAmount] = useState("");
+  const [inputAmount, setInputAmount] = useState(p?.min);
   const [isOutOfRange, setIsOutOfRange] = useState(false);
+  
 
   const handleAmountChange = (e) => {
     const newValue = +e.target.value;
@@ -80,7 +82,11 @@ const PlanDetails = () => {
               "Content-Type": "multipart/form-data",
             },
           }
-        );
+          );
+         window.localStorage.setItem('userInfo',JSON.stringify({...user, wallet:wallet-inputAmount}))
+         window.location.reload()
+        // const remaining = wallet - inputAmount;
+        // setPackages(remaining)
         console.log(response);
 
         swal({
@@ -196,7 +202,7 @@ const PlanDetails = () => {
                    Choose Payment Method from the list below
                   </Label> */}
                 <div className=" mt-2 text-right col">
-                  <button className="btn btn-primary" type="submit">
+                  <button className="btn btn-primary" type="submit" disabled={isOutOfRange}>
                     Pay Now
                   </button>
                 </div>

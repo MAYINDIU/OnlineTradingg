@@ -29,6 +29,7 @@ const Manageuser = () => {
   const [method_type, setPlanType] = useState("");
   const [deductamount, setDeductAmount] = useState("");
 
+  // const newWallet = user?.wallet;
   // console.log(method_type,amount,wallet,id);
   const handleDeductamount = async (e) => {
     console.log(e);
@@ -51,12 +52,15 @@ const Manageuser = () => {
         }
       );
       console.log(response);
-
+        
       // Reset the form inputs
 
       setDeductAmount("");
 
       alert(response?.data?.message);
+      // const remaining = newWallet - deductamount
+      //   user?.wallet(remaining)
+        window.location.reload()
     } catch (error) {
       toast.error(error?.response?.data?.error);
     }

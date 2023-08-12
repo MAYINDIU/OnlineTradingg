@@ -15,12 +15,14 @@ import {
   } from "reactstrap";
 import { useContext, useState,useEffect } from "react";
 import axios from "axios";
+import { AuthContext } from "Context/AuthProvider";
   
   const Tradehistory = () => {
 
     const [sessionToken, setSessionToken] = useState('');
     const [historyData, setHistoryData] = useState(['']);
     const history=historyData;
+    const {user} = useContext(AuthContext)
     // console.log(history);
 
     const duration=(std,ed)=>{
@@ -48,7 +50,7 @@ import axios from "axios";
     useEffect(() => {
       fetchSessionToken();
     }, []);
-  
+
     const fetchSessionToken = async () => {
       try {
         const response = await fetch(loginApiUrl);

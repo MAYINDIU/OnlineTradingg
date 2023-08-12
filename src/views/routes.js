@@ -11,6 +11,7 @@ import MyPlan from "views/examples/MyPlan/MyPlan";
 import PlanDetails from "./examples/MyPlan/PlanDetails";
 import Request from "./examples/CashFree/Request";
 import Tradehistory from "./examples/TradeHistory/Tradehistory";
+import PaymentSuccessComponent from "./examples/PaymentSuccessComponent/PaymentSuccessComponent";
 var routes = [
   
   {
@@ -110,6 +111,11 @@ var routes = [
   {
     path: "/paymentmethod",
     component: <Request />,
+    layout: "/user",
+  },
+  {
+    path: "/paymentsuccess",
+    component: <PaymentSuccessComponent />,
     layout: "/user",
   },
   {

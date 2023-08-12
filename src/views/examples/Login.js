@@ -64,7 +64,7 @@ const Login = () => {
 
   const [sessionToken, setSessionToken] = useState('');
   const [historyData, setHistoryData] = useState(null);
-  console.log(historyData);
+  // console.log(historyData);
 
   // Login API parameters
   const email ='tanmoysom@gmail.com';
@@ -121,7 +121,9 @@ const Login = () => {
     axios.post('https://indian.munihaelectronics.com/public/api/create-user', formdata)
       .then((response) => {
         const user = response.data;
+        console.log(user?.id)
         setUser(user);
+        
         window.localStorage.setItem('userInfo', user.id)
         // window.localStorage.setItem('session', Session)
         console.log(response);
@@ -163,8 +165,10 @@ const Login = () => {
       .then((response) => {
         // window.localStorage.setItem('user-loggedIn', true)
         const user = response.data;
+        console.log(user)
         setUser(user);
         window.localStorage.setItem('userInfo', JSON.stringify(user))
+        
         console.log(response);
         if (email === "admin@gmail.com" && password === '123456') {
           navigate("/admin/index");

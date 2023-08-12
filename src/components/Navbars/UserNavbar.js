@@ -1,4 +1,5 @@
 import { AuthContext } from "Context/AuthProvider";
+import useAlluser from "components/CustomHook/useAlluser";
 import { useContext, useEffect, useState } from "react";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -26,7 +27,7 @@ import {
 } from "reactstrap";
 
 const UserNavbar = (props) => {
-
+// const [user] = useAlluser()
   const { user, logOut } = useContext(AuthContext);
   const wallet = user?.wallet;
   const navigate = useNavigate();
@@ -44,6 +45,15 @@ const UserNavbar = (props) => {
 
   const [modal, setModal] = useState(false);
   const [notifications, setNotifications] = useState([]);
+
+   // Fetch User
+  //  useEffect(() => {
+  //   const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
+  //   console.log(url);
+  //   fetch(url)
+  //     .then((res) => res.json())
+  //     .then((data) =>  window.localStorage.setItem('userInfo', JSON.stringify(data)));
+  // }, []);
 
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
@@ -148,7 +158,7 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name} (${wallet}) 
+                        {user?.name} (INR {wallet}) 
                       </span>
                     }
 
