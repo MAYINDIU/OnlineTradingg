@@ -46,10 +46,11 @@ const Deposit = () => {
   const [transactioninfo, setTransactioninfo] = useState([]);
   const [depositAmount, setDepositAmount] = useState("");
   const navigate = useNavigate();
-  var d = depositAmount;
-  var w = wallet ;
-  var final = d+w
-  // const newWallet = parseInt(wallet) + parseInt(depositAmount)
+  // var d = depositAmount;
+  // var w = wallet ;
+  // var final = d+w
+  const w=parseInt(wallet);
+  const newWallet = w +(depositAmount+0);
  
   
   //  success payment 
@@ -241,7 +242,7 @@ if(transactionDetails.order_amount > 0){
               <Row className="container-fluid">
                 <h4> Total Deposit: </h4>
 
-                <h4 className="ml-3">{final}</h4>
+                <h4 className="ml-3">{newWallet}</h4>
               </Row>
 
               <hr />
