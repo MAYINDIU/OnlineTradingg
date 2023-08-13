@@ -94,28 +94,29 @@ console.log('Deposit Amount',depositData)
         console.error("Error creating payment:", error);
         // Handle error here
       }
+      try{
+        const response = await axios.post(
+          "https://indian.munihaelectronics.com/public/api/deposit",depositData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        window.localStorage.setItem('userInfo',JSON.stringify({...user, wallet:wallet + depositAmount}))
+        window.location.reload()
+       
+          setSuccessText( response)
+       
+        }
+        catch (error) {
+          console.error("Error creating payment:", error);
+          
+        }
 
     }
     //Post Deposit 
-    try{
-      const response = await axios.post(
-        "https://indian.munihaelectronics.com/public/api/deposit",depositData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      window.localStorage.setItem('userInfo',JSON.stringify({...user, wallet:wallet + depositAmount}))
-      window.location.reload()
-     
-        setSuccessText( response)
-     
-      }
-      catch (error) {
-        console.error("Error creating payment:", error);
-        
-      }
+   
   };
 if(transactionDetails.order_amount > 0){
   swal({
@@ -204,7 +205,7 @@ if(transactionDetails.order_amount > 0){
                   </Col>
 
                   <div className=" mt-2 text-center col">
-                    <button className="btn btn-primary" type="submit" disabled={depositAmount== "" && paytype == null }>
+                    <button className="btn btn-primary" type="submit" disabled={depositAmount== "" || paytype == null }>
                       Add Deposit
                     </button>
                   </div>

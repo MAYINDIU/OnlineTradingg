@@ -17,6 +17,7 @@ import {
   Label,
   Row,
 } from "reactstrap";
+import swal from "sweetalert";
 
 const Manageuser = () => {
   const { id } = useParams();
@@ -28,6 +29,9 @@ const Manageuser = () => {
   const [amount, setAmount] = useState("");
   const [method_type, setPlanType] = useState("");
   const [deductamount, setDeductAmount] = useState("");
+  const [name,setFirstName] = useState('')
+  const [email,setEmail] = useState('')
+  const [referal_code,setReferalCode] = useState('')
 
   // const newWallet = user?.wallet;
   // console.log(method_type,amount,wallet,id);
@@ -111,6 +115,32 @@ const Manageuser = () => {
       .then((res) => res.json())
       .then((data) => setUser(data));
   }, [id]);
+
+  const handleUpdateUser = async (e)=>{
+    e.preventDefault()
+
+    const data = {
+      name: name ? name : user?.name,
+      email: email ? email : user?.email,
+      referal_code: referal_code ? referal_code : user?.referal_code,
+    };
+    try {
+      const response = await axios.put(
+        `https://indian.munihaelectronics.com/public/api/update_user/${user?.id}`,
+        data
+      );
+        console.log(response)
+      swal({
+        title: "Successflly Updated!",
+        text: response?.data?.message,
+        icon: "success",
+      });
+    } catch (error) {
+      console.log(error?.response);
+      toast.error(error.response?.data?.error);
+    }
+  
+  }
 
   const handleInfoClick = () => {
     setIsInfoClicked(true);
@@ -228,11 +258,11 @@ const Manageuser = () => {
             <Col lg="12" xl="12" className=" mt--7">
               <Card className="bg-secondary shadow border-0">
                 <CardBody className="px-lg-5 py-lg-5">
-                  <Form role="form">
+                  <Form role="form" onSubmit={handleUpdateUser}>
                     <Row>
                       <Col lg="12" xl="6" className=" mt-3">
                         <FormGroup className="mb-3">
-                          <Label>First Name</Label>
+                          <Label>Name</Label>
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
@@ -240,7 +270,8 @@ const Manageuser = () => {
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                              // onChange={(e) => setPlanName(e.target.value)}
+                            defaultValue={user?.name}
+                              onChange={(e) => setFirstName(e.target.value)}
                               placeholder={user?.name}
                               type="text"
                             />
@@ -249,17 +280,18 @@ const Manageuser = () => {
                       </Col>
 
                       <Col lg="12" xl="6" className=" mt-3">
-                        <FormGroup className="mb-3">
-                          <Label>Last Name</Label>
+                        <FormGroup>
+                          <Label>Email</Label>
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-user"></i>
+                                <i class="fa-solid fa-envelope"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                              // onChange={(e) => setPlanName(e.target.value)}
-                              placeholder={user?.last_name}
+                            defaultValue={user?.email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder={user?.email}
                               type="text"
                             />
                           </InputGroup>
@@ -305,19 +337,20 @@ const Manageuser = () => {
                       </Col>
                     </Row>
                     <Row>
+                      
                       <Col lg="12" xl="6" className=" mt-3">
-                        <FormGroup>
-                          <Label>Email</Label>
+                        <FormGroup className="mb-3">
+                          <Label>Address</Label>
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-envelope"></i>
+                              <i class="fa-regular fa-address-card"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
                               // onChange={(e) => setPlanName(e.target.value)}
-                              placeholder={user?.email}
-                              type="text"
+                              placeholder={user?.address}
+                              type="textarea"
                             />
                           </InputGroup>
                         </FormGroup>
@@ -333,7 +366,8 @@ const Manageuser = () => {
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                              // onChange={(e) => setPlanName(e.target.value)}
+                            defaultValue={user?.referal_code}
+                              onChange={(e) => setReferalCode(e.target.value)}
                               placeholder={user?.referal_code}
                               type="text"
                             />
