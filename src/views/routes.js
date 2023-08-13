@@ -9,6 +9,7 @@ import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
 import PlanDetails from "./examples/MyPlan/PlanDetails";
 import Tradehistory from "./examples/TradeHistory/Tradehistory";
+import UserNotifications from "./examples/Notification/UserNotifications";
 var routes = [
 
   {
@@ -97,6 +98,7 @@ var routes = [
       }
     ]
   },
+
   {
     path: "/plandetails/:id",
     component: <PlanDetails />,
@@ -126,7 +128,14 @@ var routes = [
     // name: "Transactions",
     // icon: "fa-solid fa-money-bill-transfer text-primary",
     component: <Transactions />,
-    layout: "/user",
+    // layout: "/user",
+  },
+  {
+    path: "/notification",
+    name: "Notifications",
+    icon: "fa-solid fa-bell text-primary",
+    component: <UserNotifications />,
+    layout: "/user"
   },
   // {
   //   path: "/tables",

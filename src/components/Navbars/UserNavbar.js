@@ -1,6 +1,6 @@
 import { AuthContext } from "Context/AuthProvider";
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -57,7 +57,7 @@ const UserNavbar = (props) => {
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
           >
-            {props.brandText} 
+            {props.brandText}
           </Link>
           <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
@@ -91,33 +91,13 @@ const UserNavbar = (props) => {
 
                 ))
               }
-              <DropdownItem className='text-center'>
-                <span>See All Notification</span>
-              </DropdownItem>
+              <Link to='/user/notifications'>
+                <DropdownItem className='text-center m-0' tag="div">
+                  <span >See All Notification</span>
+                </DropdownItem>
+              </Link>
             </DropdownMenu>
           </UncontrolledDropdown>
-
-          {/* <div>
-            <FaBell className="text-xl text-white" onClick={toggle}></FaBell>
-            <Modal isOpen={modal} toggle={toggle}>
-              <ModalHeader className='border-bottom' toggle={toggle}>Notifications</ModalHeader>
-              <ModalBody >
-                {
-                  notifications.map((n, i) => (
-                    <h5 className="">{n.text}</h5>
-                  ))
-                }
-
-
-              </ModalBody>
-              <ModalFooter className='border-top' >
-                <Button color="secondary" className="text-center" >
-                  See All Notification
-                </Button>
-              </ModalFooter>
-            </Modal>
-          </div> */}
-
 
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
@@ -143,7 +123,7 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name} (${wallet}) 
+                        {user?.name} (${wallet})
                       </span>
                     }
 
