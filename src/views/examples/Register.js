@@ -25,6 +25,7 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState(null);
+  const [agree,setAgree] = useState(false)
 
   const from = location.state?.from?.pathname || "/";
 
@@ -237,7 +238,7 @@ const Register = () => {
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-hat-3" />
+                    <i class="fa-solid fa-hand-holding"></i>
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
@@ -260,6 +261,7 @@ const Register = () => {
                       className="custom-control-input"
                       id="customCheckRegister"
                       type="checkbox"
+                     onClick={()=>setAgree(!agree)} 
                     />
                     <label
                       className="custom-control-label"
@@ -274,7 +276,7 @@ const Register = () => {
               </Row>
               <div className="text-center">
                 <div className="text-center">
-                  <Button className="my-4 w-100" color="primary" type="submit">
+                  <Button className="my-4 w-100" color="primary" type="submit" disabled={!agree}>
                     CREATE AN ACCOUNT
                   </Button>
                 </div>
@@ -290,7 +292,7 @@ const Register = () => {
                   className="text-primary text-decoration-none"
                   to={`/auth/login`}
                 >
-                  <Button className="my-2 w-100" color="default" type="submit">
+                  <Button className="my-2 w-100" color="default" type="submit" >
                     LOG IN
                   </Button>
                 </Link>

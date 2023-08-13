@@ -207,7 +207,7 @@ const Profile = () => {
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="ni ni-hat-3" />
+                              <i class="fa-solid fa-user"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -279,7 +279,7 @@ const Profile = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-qrcode"></i>
+                              <i class="fa-solid fa-hand-holding"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input

@@ -21,8 +21,9 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "Context/AuthProvider";
 import cashfree from "../../../src/assets/img/icons/common/cashfree.png";
-import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import swal from "sweetalert";
+import Transactions from "./Transactions";
 
 const Deposit = () => {
   const { user } = useContext(AuthContext);
@@ -46,16 +47,9 @@ const Deposit = () => {
   const [transactioninfo, setTransactioninfo] = useState([]);
   const [depositAmount, setDepositAmount] = useState("");
   const navigate = useNavigate();
-  var d = depositAmount;
-  var w = wallet ;
-  var final = d+w
-  // const newWallet = parseInt(wallet) + parseInt(depositAmount)
- 
+  const w=parseInt(wallet);
+  const newWallet = w +(depositAmount);
   
-  //  success payment 
-  
-  // const location = useLocation();
-  //   const query = new URLSearchParams(location.search);
   
   const [transactionDetails, setTransactionDetails] = useState({});
   const location = useLocation();
@@ -65,7 +59,12 @@ const Deposit = () => {
   console.log('Show', orderId,orderToken)
 
  
-
+// Show Recent 5 Transactions 
+useEffect(() => {
+  fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`)
+    .then((res) => res.json())
+    .then((data) => setTransactioninfo(data));
+}, []);
   
  
   const handleDeposit = async (e) => {
@@ -241,7 +240,7 @@ if(transactionDetails.order_amount > 0){
               <Row className="container-fluid">
                 <h4> Total Deposit: </h4>
 
-                <h4 className="ml-3">{final}</h4>
+                <h4 className="ml-3">{newWallet}</h4>
               </Row>
 
               <hr />
@@ -263,51 +262,39 @@ if(transactionDetails.order_amount > 0){
                   <h3 className="mb-0">Recent Deposit History (5)</h3>
                 </div>
                 <div className="col text-right">
+                  <Link to='/user/transactions/deposit'>
                   <Button
                     color="primary"
                     href="#pablo"
-                    onClick={(e) => e.preventDefault()}
                     size="sm"
                   >
                     See all
                   </Button>
+                  </Link>
                 </div>
               </Row>
             </CardHeader>
             <Table className="" hover bordered responsive>
               <thead className="text-white bg-gradient-info">
                 <tr>
-                  <th className="text-center" scope="col ">
-                    Sl No.
-                  </th>
-                  <th className="text-center" scope="col">
-                    Date
-                  </th>
-                  <th className="text-center" scope="col">
-                    User ID
-                  </th>
-                  <th className="text-center" scope="col">
-                    Amount
-                  </th>
-                  <th className="text-center" scope="col">
-                    Description
-                  </th>
-                  <th className="text-center" scope="col">
-                    Method Type
-                  </th>
+                <th>Sl No</th>
+              <th>Amount</th>
+              <th>Transiction Type</th>
+              <th>Method Type</th>
+              <th>Description</th>
                 </tr>
               </thead>
               <tbody>
-                {transactioninfo.map((tnx, index) => (
+                {transactioninfo.slice(-2).map((tnx, index) => (
                   <tr>
                     <th className="text-center" scope="row">
                       {index + 1}
                     </th>
-                    <td className="text-center">{tnx?.created_at}</td>
-                    <td className="text-center">{tnx?.userid}</td>
                     <td className="text-center">{tnx?.amount}</td>
-                    <td className="text-center">{tnx?.description}</td>
+                    <td className="text-center">{tnx?.tnx_type}</td>
                     <td className="text-center">{tnx?.method_type}</td>
+                    <td className="text-center">{tnx?.description}</td>
+                    
                   </tr>
                 ))}
               </tbody>

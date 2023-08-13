@@ -102,19 +102,19 @@ const MyPlan = () => {
                   </h5>
 
                   <h5 className="text-white mt-3 text-center">
-                    <span className="ml-1">{p?.profitShare} </span>
+                    <span className="ml-1">{p?.profitShare}% </span>
                   </h5>
                   <h5 className="text-white mt-3 text-center">
-                    <span className="ml-1">Minimum Amount ${p?.min} </span>
+                    <span className="ml-1">Minimum Amount INR{p?.min} </span>
                   </h5>
                   <h5 className="text-white mt-3 text-center">
-                    <span className="ml-1">Maximum Amount ${p?.max} </span>
+                    <span className="ml-1">Maximum Amount INR{p?.max} </span>
                   </h5>
                   <h5 className="text-white mt-0 text-center">
                     <span className="ml-1">{p?.settelementTime} </span>
                   </h5>
                   <h5 className="text-white mt-3 text-center">
-                    <span className="ml-1">{p?.lockinPeriod}</span>
+                    <span className="ml-1">{p?.locking_no} {p?.lockinPeriod}</span>
                   </h5>
                   <h5 className="text-white mt-3 text-center">
                     <span className="ml-1">{p?.compoundLevel} </span>
