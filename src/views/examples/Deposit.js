@@ -26,7 +26,18 @@ import swal from "sweetalert";
 
 const Deposit = () => {
   const { user } = useContext(AuthContext);
-  const wallet = user?.wallet;
+  console.log(user)
+  const [userInfo,setUserInfo] = useState({})
+  useEffect(() => {
+    const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
+    console.log(url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setUserInfo(data));
+  }, []);
+  const wallet = userInfo?.wallet;
+
+  console.log(wallet)
   const typeOfPayment=["Cashfree","HandCash"]
   const [paytype, setPayType] = useState(null);
   const [successText, setSuccessText] = useState('');
@@ -35,8 +46,11 @@ const Deposit = () => {
   const [transactioninfo, setTransactioninfo] = useState([]);
   const [depositAmount, setDepositAmount] = useState("");
   const navigate = useNavigate();
-
-  const userid = user?.id;
+  var d = depositAmount;
+  var w = wallet ;
+  var final = d+w
+  // const newWallet = parseInt(wallet) + parseInt(depositAmount)
+ 
   
   //  success payment 
   
@@ -50,14 +64,7 @@ const Deposit = () => {
   const orderToken = queryParams.get("order_token");
   console.log('Show', orderId,orderToken)
 
-  useEffect(() => {
-    fetch(
-      `https://indian.munihaelectronics.com/public/api/cashfree/payments/success?order_id=${orderId}&order_token=${orderToken}`
-    )
-      .then((res) => res.json())
-      .then((data) => setTransactionDetails(data));
-  }, []);
-console.log(transactionDetails)
+ 
 
   
  
@@ -68,9 +75,10 @@ console.log(transactionDetails)
     const formData = {
       name: user?.name,
       email: user?.email,
-      mobile: "0178978161",
+      mobile: user?.mobile_no,
       amount: depositAmount,
     };
+    console.log(formData)
     const depositData = {
       userid: user?.id,
       amount: depositAmount,
@@ -87,7 +95,8 @@ console.log('Deposit Amount',depositData)
           );
           const paymentLink = response.data.payment_link;
           window.location.href = paymentLink;
-        } else {
+        } 
+        else {
           navigate("/user/index");
         }
       } catch (error) {
@@ -103,8 +112,8 @@ console.log('Deposit Amount',depositData)
             },
           }
         );
-        window.localStorage.setItem('userInfo',JSON.stringify({...user, wallet:wallet + depositAmount}))
-        window.location.reload()
+        // window.localStorage.setItem('userInfo',JSON.stringify({...user, wallet:wallet + depositAmount}))
+        // window.location.reload()
        
           setSuccessText( response)
        
@@ -118,6 +127,16 @@ console.log('Deposit Amount',depositData)
     //Post Deposit 
    
   };
+
+  useEffect(() => {
+    fetch(
+      `https://indian.munihaelectronics.com/public/api/cashfree/payments/success?order_id=${orderId}&order_token=${orderToken}`
+    )
+      .then((res) => res.json())
+      .then((data) => setTransactionDetails(data));
+  }, []);
+console.log(transactionDetails)
+
 if(transactionDetails.order_amount > 0){
   swal({
     title: "Deposited Successflly",
@@ -222,7 +241,7 @@ if(transactionDetails.order_amount > 0){
               <Row className="container-fluid">
                 <h4> Total Deposit: </h4>
 
-                <h4 className="ml-3">{wallet}</h4>
+                <h4 className="ml-3">{final}</h4>
               </Row>
 
               <hr />
@@ -232,9 +251,9 @@ if(transactionDetails.order_amount > 0){
           </Card>
         </Col>
       </Row>
-      {
+      {/* {
           <h2 className="text-center">{transactionDetails?.order_amount}</h2>
-        }
+        } */}
       <Row className="mt-5 mb-3 container-fluid">
         <Col className="mb-5 mb-xl-0" xl="12">
           <Card className="shadow">

@@ -29,7 +29,9 @@ import {
 const UserNavbar = (props) => {
 // const [user] = useAlluser()
   const { user, logOut } = useContext(AuthContext);
-  const wallet = user?.wallet;
+  const [userInfo,setUserInfo] = useState({})
+  console.log(userInfo)
+  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -46,14 +48,14 @@ const UserNavbar = (props) => {
   const [modal, setModal] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-   // Fetch User
-  //  useEffect(() => {
-  //   const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
-  //   console.log(url);
-  //   fetch(url)
-  //     .then((res) => res.json())
-  //     .then((data) =>  window.localStorage.setItem('userInfo', JSON.stringify(data)));
-  // }, []);
+   
+   useEffect(() => {
+    const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
+    console.log(url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setUserInfo(data));
+  }, []);
 
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
@@ -158,7 +160,7 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name} (INR {wallet}) 
+                        {user?.name} (INR {user?.wallet}) 
                       </span>
                     }
 

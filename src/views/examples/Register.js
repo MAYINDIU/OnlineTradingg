@@ -84,6 +84,7 @@ const Register = () => {
     const userName = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    const mobileNo = form.mobileNo.value;
     const referalCode = form.refferalCode.value || "NA";
     const status = "1";
 
@@ -92,6 +93,7 @@ const Register = () => {
     formdata.append("email", email);
     formdata.append("password", password);
     formdata.append("referal_code", referalCode);
+    formdata.append("mobile_no", mobileNo);
     formdata.append("status", status);
 
     axios
@@ -214,6 +216,20 @@ const Register = () => {
                     type="password"
                     autoComplete="new-password"
                     name="password"
+                  />
+                </InputGroup>
+              </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative mb-3">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                    <i class="fa-solid">+91</i>
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder={`Mobile Number`}
+                    type="number"
+                    name="mobileNo"
                   />
                 </InputGroup>
               </FormGroup>
