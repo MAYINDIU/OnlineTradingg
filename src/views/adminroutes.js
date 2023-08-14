@@ -42,13 +42,13 @@ var adminroutes = [
     ]
   },
 
-  {
-    path: "/purchaselist",
-    name: "Purchase list",
-    icon: "fa-solid fa-cart-shopping text-primary",
-    component: <Purchaselist />,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/purchaselist",
+  //   name: "Purchase list",
+  //   icon: "fa-solid fa-cart-shopping text-primary",
+  //   component: <Purchaselist />,
+  //   layout: "/admin",
+  // },
   {
     path: "/transactionlist",
     name: "Transaction list",

@@ -95,10 +95,11 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid fa-globe"></i>
+                          <i class="fa-solid fa-seedling text-info"></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
+                        className="text-dark"
                           onChange={(e) => setPlanName(e.target.value)}
                           placeholder="Plan Name"
                           type="text"
@@ -113,7 +114,7 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid fa-rectangle-list"></i>
+                            <i class="fa-solid text-info fa-rectangle-list"></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -137,7 +138,7 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid fa-square-share-nodes"></i>
+                            <i class="fa-solid text-info fa-share-nodes"></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -155,7 +156,7 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid fa-calendar-day"></i>
+                            <i class="fa-solid text-info fa-calendar-day"></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -179,7 +180,7 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid ">₹</i>
+                            <i class="fa-solid text-info ">₹</i>
                   
                           </InputGroupText>
                           
@@ -204,7 +205,7 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid ">₹</i>
+                            <i class="fa-solid text-info ">₹</i>
                   
                           </InputGroupText>
                           
@@ -231,7 +232,7 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid fa-business-time"></i>
+                            <i class="fa-solid text-info fa-business-time"></i>
                             <input 
                             type="number" 
                             min={3} className= "ml-2 "
@@ -243,6 +244,7 @@ const AddPackage = () => {
                         </InputGroupAddon>
 
                         <Input
+                        className="text-dark"
                           id="exampleSelect"
                           name="select"
                           type="select"
@@ -261,7 +263,7 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid fa-layer-group"></i>
+                            <i class="fa-solid text-info fa-layer-group"></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -281,7 +283,7 @@ const AddPackage = () => {
                       <InputGroup className="input-group-alternative">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i class="fa-solid fa-memory"></i>
+                            <i class="fa-solid text-info fa-memory"></i>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -310,11 +312,12 @@ const AddPackage = () => {
                   <InputGroup className="input-group-alternative">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i class="fa-regular fa-keyboard"></i>
+                        <i class="fa-regular text-info fa-keyboard"></i>
                       </InputGroupText>
                     </InputGroupAddon>
 
                     <Input
+                      className="text-dark"
                       id="exampleText"
                       name="text"
                       type="textarea"

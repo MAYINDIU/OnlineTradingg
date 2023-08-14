@@ -15,7 +15,7 @@ import { AuthContext } from "Context/AuthProvider";
 import axios from "axios";
 import swal from "sweetalert";
 import { Link } from "react-router-dom";
-const MyPlan = () => {
+const ChosePlan = () => {
   const { user } = useContext(AuthContext);
 
   const current = new Date();
@@ -31,8 +31,6 @@ const MyPlan = () => {
     });
   };
   const [packages, setPackages] = useState([]);
-  const [activePackages,setActivePackages] = useState([])
-  const [pkg,setPkg] = useState({})
   console.log(packages);
   const [purchase, setPurchase] = useState([]);
   if (purchase?.message === "Purchase Successfully") {
@@ -40,20 +38,10 @@ const MyPlan = () => {
   }
 
   const userid = user?.id;
- 
+  console.log(userid);
   useEffect(() => {
     fetch(
-      `https://indian.munihaelectronics.com/public/api/show_p_list/${userid}`
-    )
-      .then((res) => res.json())
-      .then((data) => setActivePackages(data));
-  }, []);
-
-console.log(pkg.status)
-  // Fetch All packages 
-  useEffect(() => {
-    fetch(
-      `https://indian.munihaelectronics.com/public/api/packages`
+      `https://indian.munihaelectronics.com/public/api/packages-with-status/${userid}`
     )
       .then((res) => res.json())
       .then((data) => setPackages(data));
@@ -88,7 +76,7 @@ console.log(pkg.status)
   return (
     <div>
       <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
-        <h2 className="text-white mb-0">My Plan</h2>
+        <h2 className="text-white mb-0">Choose Your Plan</h2>
       </div>
       <Row className="container-fluid mt--7">
         {packages.map((p) => {
@@ -154,7 +142,7 @@ console.log(pkg.status)
                     className="w-50 btn btn-info text-white"
                    
                     >
-                      Re-Invest
+                      Join Now
                     </Button>
                    </Link>
 
@@ -174,4 +162,4 @@ console.log(pkg.status)
   );
 };
 
-export default MyPlan;
+export default ChosePlan;

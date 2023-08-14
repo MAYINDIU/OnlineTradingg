@@ -12,6 +12,7 @@ import PlanDetails from "./examples/MyPlan/PlanDetails";
 import Request from "./examples/CashFree/Request";
 import Tradehistory from "./examples/TradeHistory/Tradehistory";
 import PaymentSuccessComponent from "./examples/PaymentSuccessComponent/PaymentSuccessComponent";
+import ChosePlan from "./examples/MyPlan/ChosePlan";
 var routes = [
   
   {
@@ -53,10 +54,9 @@ var routes = [
   
 
   {
-    // path: "/myplan",
+    
     name: "Finance",
     icon: "fa-solid fa-money-bill-wheat text-primary",
-    // component: <MyPlan />,
     layout: "/user",
 
     subMenu: [
@@ -79,26 +79,26 @@ var routes = [
   },
 
   {
-    // path: "/myplan",
+    
     name: "Investment Funding",
     icon: "fa-solid fa-money-bill-trend-up text-primary",
-    // component: <MyPlan />,
     layout: "/user",
 
     subMenu: [
       {
-        name: 'Choose Plan',
-        path: "/user/myplan",
+        name: "Choose Plan",
+        path: "/user/chooseplan",
         icon: "fa-solid fa-square-check text-primary",
+        // component: <ChosePlan/>,
       },
       {
         name: 'Upgrade Plan',
-        path: "/user/myplan",
+        // path: "/user/myplan",
         icon: "fa-solid fa-square-pen text-primary"
       },
       {
         name: 'Plan details',
-        path: "/user/myplan",
+        // path: "/user/myplan",
         icon: "fa-solid fa-circle-info text-primary",
       }
     ]
@@ -136,6 +136,13 @@ var routes = [
     // icon: "fa-solid fa-circle-arrow-up text-primary",
     component: <Withdraw />,
     layout: "/user",
+  },
+  {
+    path: "/chooseplan",
+    // name: 'Choose Plan',
+    // icon: "fa-solid fa-square-check text-primary",
+    component: <ChosePlan/>,
+    layout:"/user",
   },
   {
     path: "/transactions",

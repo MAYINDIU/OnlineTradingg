@@ -259,7 +259,7 @@ if(transactionDetails.order_amount > 0){
             <CardHeader className="border-0">
               <Row className="align-items-center">
                 <div className="col">
-                  <h3 className="mb-0">Recent Deposit History (5)</h3>
+                  <h3 className="mb-0">Recent Deposit History ({transactioninfo.length < 5 ? transactioninfo.length : '5'})</h3>
                 </div>
                 <div className="col text-right">
                   <Link to='/user/transactions/deposit'>
@@ -281,11 +281,11 @@ if(transactionDetails.order_amount > 0){
               <th>Amount</th>
               <th>Transiction Type</th>
               <th>Method Type</th>
-              <th>Description</th>
+              <th className="text-center">Description</th>
                 </tr>
               </thead>
               <tbody>
-                {transactioninfo.slice(-2).map((tnx, index) => (
+                {transactioninfo.slice(-5).map((tnx, index) => (
                   <tr>
                     <th className="text-center" scope="row">
                       {index + 1}

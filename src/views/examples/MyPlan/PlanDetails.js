@@ -25,9 +25,9 @@ const PlanDetails = () => {
   const [p, setPackage] = useState({});
   const { id } = useParams();
   const { user } = useContext(AuthContext);
-  console.log(user)
+  console.log(user);
   const wallet = user?.wallet;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   //  Sweet Alert
   const warningAlert = () => {
     swal({
@@ -48,7 +48,12 @@ const PlanDetails = () => {
 
   const [inputAmount, setInputAmount] = useState(p?.min);
   const [isOutOfRange, setIsOutOfRange] = useState(false);
-  
+
+  // For Date 
+  const current = new Date();
+  const purchase_dt = `${current.getDate()}/${
+    current.getMonth() + 1
+  }/${current.getFullYear()}`;
 
   const handleAmountChange = (e) => {
     const newValue = +e.target.value;
@@ -60,10 +65,22 @@ const PlanDetails = () => {
     }
   };
 
-  // Previous Code
-  const handleInvestmentAmount = (e) => {
+
+  const handleInvestmentAmount = async (e) => {
     e.preventDefault();
-    console.log(inputAmount);
+
+    // For Purchuse Plan
+    const purchase_date = purchase_dt;
+    const planId = id;
+    const status = "Active";
+    const purchaseData = {
+      userId:user?.id,
+      planId,
+      purchase_date,
+      status,
+    };
+    console.log(purchaseData);
+    // for deduct
     const userid = user?.id;
     const amount = inputAmount;
     const data = {
@@ -74,7 +91,28 @@ const PlanDetails = () => {
     if (wallet > inputAmount) {
       const proceed = window.confirm("Are You sure to pay for this ?");
       if (proceed) {
-        const response = axios.post(
+        
+        try{
+          const response = await axios.post(
+            "https://indian.munihaelectronics.com/public/api/purchase_pkg",purchaseData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+         
+            console.log(response)
+         
+          }
+          catch (error) {
+            console.error("Error creating payment:", error);
+            
+          }
+
+       
+
+        const response =await axios.post(
           "https://indian.munihaelectronics.com/public/api/deduct",
           data,
           {
@@ -82,9 +120,12 @@ const PlanDetails = () => {
               "Content-Type": "multipart/form-data",
             },
           }
-          );
-         window.localStorage.setItem('userInfo',JSON.stringify({...user, wallet:wallet-inputAmount}))
-         window.location.reload()
+        );
+        window.localStorage.setItem(
+          "userInfo",
+          JSON.stringify({ ...user, wallet: wallet - inputAmount })
+        );
+        // window.location.reload();
         // const remaining = wallet - inputAmount;
         // setPackages(remaining)
         console.log(response);
@@ -95,13 +136,13 @@ const PlanDetails = () => {
           icon: "success",
         });
 
-        // cear input 
+        // cear input
         setInputAmount("");
         // alert(response?.data?.message);
       }
     } else {
       warningAlert();
-      navigate('/user/deposit')
+      navigate("/user/deposit");
     }
   };
 
@@ -131,13 +172,13 @@ const PlanDetails = () => {
               </h5>
 
               <h5 className=" mt-3 text-center">
-                <span className="ml-1">{p?.profitShare} </span>
+                <span className="ml-1">{p?.profitShare}% </span>
               </h5>
               <h5 className=" mt-3 text-center">
-                <span className="ml-1">Minimum Amount ${p?.min} </span>
+                <span className="ml-1">Minimum Amount INR{p?.min} </span>
               </h5>
               <h5 className=" mt-3 text-center">
-                <span className="ml-1">Maximum Amount ${p?.max} </span>
+                <span className="ml-1">Maximum Amount INR{p?.max} </span>
               </h5>
               <h5 className=" mt-0 text-center">
                 <span className="ml-1">{p?.settelementTime} </span>
@@ -202,7 +243,11 @@ const PlanDetails = () => {
                    Choose Payment Method from the list below
                   </Label> */}
                 <div className=" mt-2 text-right col">
-                  <button className="btn btn-primary" type="submit" disabled={isOutOfRange}>
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    disabled={isOutOfRange}
+                  >
                     Pay Now
                   </button>
                 </div>

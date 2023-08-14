@@ -283,7 +283,7 @@ const Profile = () => {
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                              defaultValue={user?.referal_code}
+                              defaultValue={userInfo?.referal_code}
                               onChange={(e) => setReferalCode(e.target.value)}
                               placeholder={userInfo?.referal_code}
                               type="text"
