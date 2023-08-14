@@ -6,16 +6,21 @@ import { Container } from "reactstrap";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-
-import routes from "routes.js";
 import DepositHistory from "views/examples/TransactionsHistory/DepositHistory";
 import WithdrawalHistory from "views/examples/TransactionsHistory/WithdrawalHistory";
 import OthersHistory from "views/examples/TransactionsHistory/OthersHistory";
 import Transactions from "views/examples/Transactions";
-
+import Adminsidebar from "components/Sidebar/Adminsidebar";
+import adminroutes from "views/adminroutes";
+import { useContext, useState } from "react";
+import { AuthContext } from "Context/AuthProvider";
+import Manageuser from "views/examples/Manageuser";
 const Admin = (props) => {
+  const { user } = useContext(AuthContext);
   const mainContent = React.useRef(null);
   const location = useLocation();
+  const isLoggedIn = window.localStorage.getItem('user-loggedIn')
+  const isAdminLoggedIn = window.localStorage.getItem('admin-loggedIn')
 
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -23,25 +28,35 @@ const Admin = (props) => {
     mainContent.current.scrollTop = 0;
   }, [location]);
 
-  const getRoutes = (routes) => {
-    return routes.map((prop, key) => {
+  const getRoutes = (adminroutes) => {
+    return adminroutes.map((prop, key) => {
+      // if (!user) {
+      //   return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
+      // }
+      if (isLoggedIn) {
+        return <Route path="*" element={<Navigate to="/user/index" state={{ from: location }} replace />} />;
+      }
+      if (!isAdminLoggedIn) {
+        return <Route path="*" element={<Navigate to="/auth/login" state={{ from: location }} replace />} />;
+      }
       if (prop.layout === "/admin") {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />
         );
-      } else {
+      }
+      else {
         return null;
       }
     });
   };
 
   const getBrandText = (path) => {
-    for (let i = 0; i < routes.length; i++) {
+    for (let i = 0; i < adminroutes.length; i++) {
       if (
-        props?.location?.pathname.indexOf(routes[i].layout + routes[i].path) !==
+        props?.location?.pathname.indexOf(adminroutes[i].layout + adminroutes[i].path) !==
         -1
       ) {
-        return routes[i].name;
+        return adminroutes[i].name;
       }
     }
     return "Brand";
@@ -49,12 +64,12 @@ const Admin = (props) => {
 
   return (
     <>
-      <Sidebar
+      <Adminsidebar
         {...props}
-        routes={routes}
+        adminroutes={adminroutes}
         logo={{
           innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/argon-react.png"),
+          imgSrc: require("../assets/img/brand/trading.png"),
           imgAlt: "...",
         }}
       />
@@ -64,16 +79,11 @@ const Admin = (props) => {
           brandText={getBrandText(props?.location?.pathname)}
         />
         <Routes>
-          {getRoutes(routes)}
+          {getRoutes(adminroutes)}
 
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
-          <Route path="transactions" element={<Transactions />}>
-
-<Route path="deposit" element={<DepositHistory />} />
-<Route path="withdrawal" element={<WithdrawalHistory />} />
-<Route path="others" element={<OthersHistory />} />
-
-</Route>
+          <Route path="user/:id" element={<Manageuser />}>
+          </Route>
         </Routes>
         {/* <Container fluid>
           <AdminFooter />

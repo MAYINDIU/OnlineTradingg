@@ -6,8 +6,8 @@ import { Container, Row, Col } from "reactstrap";
 // core components
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
+import routes from "views/routes";
 
-import routes from "routes.js";
 
 const Auth = (props) => {
   const mainContent = React.useRef(null);
@@ -40,10 +40,10 @@ const Auth = (props) => {
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <AuthNavbar />
-        <div className="header bg-gradient-info py-3 py-lg-8">
+        {/* <AuthNavbar /> */}
+        <div className="header bg-gradient-info py-1 py-lg-8">
           <Container>
-            <div className="header-body text-center mb-2">
+            <div className="header-body text-center  mt--12">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
                   {/* <h1 className="text-white">Welcome!</h1> */}
@@ -78,6 +78,7 @@ const Auth = (props) => {
               {getRoutes(routes)}
               <Route path="*" element={<Navigate to="/auth/login" replace />} />
             </Routes>
+            
           </Row>
         </Container>
       </div>

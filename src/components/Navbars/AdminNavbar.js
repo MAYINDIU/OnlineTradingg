@@ -1,21 +1,7 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import { Link } from "react-router-dom";
+import { AuthContext } from "Context/AuthProvider";
+import { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -35,16 +21,34 @@ import {
 } from "reactstrap";
 
 const AdminNavbar = (props) => {
+
+  const { user, logOut } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/auth/login'
+
+  const handleSignOut = () => {
+    logOut().then(() => {
+      navigate(from, { replace: true });
+    }).catch((error) => {
+
+    });
+  }
+
+
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
         <Container fluid>
-          <Link
+          {/* <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
           >
             {props.brandText}
-          </Link>
+          </Link> */}
           <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
               <InputGroup className="input-group-alternative">
@@ -56,21 +60,41 @@ const AdminNavbar = (props) => {
                 <Input placeholder="Search" type="text" />
               </InputGroup>
             </FormGroup>
+            <Link className='text-primary text-decoration-none' to={`/admin/allnotification`}>
+              <div className="icon icon-shape bg-primary text-white rounded-circle shadow-xl ml-2">
+              <i class="fa-solid fa-bell text-white"></i>
+              </div>
+            </Link>
+                  
           </Form>
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <img
-                      alt="..."
-                      src={require("../../assets/img/theme/team-4-800x800.jpg")}
-                    />
+
+                    {user?.photoURL ?
+                      <img
+                        alt="..."
+                        src={user.photoURL}
+                      />
+                      : <img
+                        alt="..."
+                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                      />
+                    }
+
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
-                    </span>
+                    {user?.uid ?
+                      <span className="mb-0 text-sm font-weight-bold">
+                        {user.displayName}
+                      </span>
+                      : <span className="mb-0 text-sm font-weight-bold">
+                        Jessica Jones
+                      </span>
+                    }
+
                   </Media>
                 </Media>
               </DropdownToggle>
@@ -95,7 +119,7 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem onClick={handleSignOut}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

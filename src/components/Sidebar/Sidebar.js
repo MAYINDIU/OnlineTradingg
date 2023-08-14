@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.3
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
 // nodejs library to set properties for components
@@ -51,6 +33,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import SidebarMenu from "./SidebarMenu";
 
 var ps;
 
@@ -71,6 +54,18 @@ const Sidebar = (props) => {
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
+      if (prop.subMenu) {
+        return (
+          <>
+            <SidebarMenu
+              key={key}
+              prop={prop}
+              closeCollapse={closeCollapse}
+            ></SidebarMenu>
+          </>
+        )
+      }
+
       return (
         <NavItem key={key}>
           <NavLink
@@ -157,19 +152,19 @@ const Sidebar = (props) => {
               <DropdownItem className="noti-title" header tag="div">
                 <h6 className="text-overflow m-0">Welcome!</h6>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              <DropdownItem to="/user/user-profile" tag={Link}>
                 <i className="ni ni-single-02" />
                 <span>My profile</span>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              <DropdownItem to="/user/user-profile" tag={Link}>
                 <i className="ni ni-settings-gear-65" />
                 <span>Settings</span>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              <DropdownItem to="/user/user-profile" tag={Link}>
                 <i className="ni ni-calendar-grid-58" />
                 <span>Activity</span>
               </DropdownItem>
-              <DropdownItem to="/admin/user-profile" tag={Link}>
+              <DropdownItem to="/user/user-profile" tag={Link}>
                 <i className="ni ni-support-16" />
                 <span>Support</span>
               </DropdownItem>
@@ -230,11 +225,11 @@ const Sidebar = (props) => {
           {/* Navigation */}
           <Nav navbar>{createLinks(routes)}</Nav>
           {/* Divider */}
- 
+
           {/* Heading */}
 
           {/* Navigation */}
-   
+
         </Collapse>
       </Container>
     </Navbar>

@@ -1,3 +1,7 @@
+import { AuthContext } from "Context/AuthProvider";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -9,18 +13,62 @@ import {
   Container,
   Row,
   Col,
+  Label,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
 } from "reactstrap";
+import swal from "sweetalert";
 // core components
 
-
 const Profile = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
+  const id = user?.id;
+  const [userInfo, setUserInfo] = useState("");
+  const [name, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [mobile_no, setMobileNo] = useState("");
+  const [referal_code, setReferalCode] = useState("");
+  useEffect(() => {
+    const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${id}`;
+    console.log(url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setUserInfo(data));
+  }, [id]);
+
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+
+    const data = {
+      name: name ? name : userInfo?.name,
+      email: email ? email : userInfo?.email,
+      password: password ? password : userInfo?.password,
+      mobile_no: mobile_no ? mobile_no : userInfo?.mobile_no,
+      referal_code: referal_code ? referal_code : userInfo?.referal_code,
+    };
+    try {
+      const response = await axios.put(
+        `https://indian.munihaelectronics.com/public/api/update_user/${userInfo?.id}`,
+        data
+      );
+      console.log(response);
+      swal({
+        title: "Successflly Updated!",
+        text: response?.data?.message,
+        icon: "success",
+      });
+    } catch (error) {
+      console.log(error?.response);
+    }
+  };
   return (
     <>
-
-
-<div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
-                <h2 className='text-white mb-2'>Account Setting</h2>
-            </div>
+      <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
+        <h2 className="text-white mb-2">Account Setting</h2>
+      </div>
       {/* Page content */}
       <Container className="mt--7 mb-3" fluid>
         <Row>
@@ -30,11 +78,19 @@ const Profile = () => {
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <img
-                        alt="..."
-                        className="rounded-circle"
-                        src={require("../../assets/img/theme/profile.png")}
-                      />
+                      {user?.photoURL ? (
+                        <img
+                          alt="..."
+                          className="rounded-circle"
+                          src={user.photoURL}
+                        />
+                      ) : (
+                        <img
+                          alt="..."
+                          className="rounded-circle"
+                          src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                        />
+                      )}
                     </a>
                   </div>
                 </Col>
@@ -82,7 +138,11 @@ const Profile = () => {
                 </Row>
                 <div className="text-center">
                   <h3>
-                    Jessica Jones
+                    {user?.uid ? (
+                      <span>{user.displayName}</span>
+                    ) : (
+                      <span>Jessica Jones</span>
+                    )}
                     <span className="font-weight-light">, 27</span>
                   </h3>
                   <div className="h5 font-weight-300">
@@ -91,7 +151,7 @@ const Profile = () => {
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    Solution Manager - Creative Tim Officer
+                    Solution Manager - Dark tech Officer
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
@@ -130,7 +190,7 @@ const Profile = () => {
                 </Row>
               </CardHeader>
               <CardBody>
-                <Form>
+                <Form role="form" onSubmit={handleUpdateUser}>
                   <h6 className="heading-small text-muted mb-4">
                     User information
                   </h6>
@@ -142,15 +202,23 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-username"
                           >
-                            Username
+                            Name
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="mayin"
-                            id="input-username"
-                            placeholder="Username"
-                            type="text"
-                          />
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                              <i class="fa-solid fa-user"></i>
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              className="form-control-alternative"
+                              defaultValue={user?.name}
+                              id="input-username"
+                              placeholder={userInfo?.name}
+                              type="text"
+                              onChange={(e) => setFirstName(e.target.value)}
+                            />
+                          </InputGroup>
                         </FormGroup>
                       </Col>
                       <Col lg="6">
@@ -161,12 +229,21 @@ const Profile = () => {
                           >
                             Email address
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-email"
-                            placeholder="mayin@example.com"
-                            type="email"
-                          />
+                          <InputGroup className="input-group-alternative mb-3">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-email-83" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              readOnly
+                              className="form-control-alternative"
+                              id="input-email"
+                              placeholder={userInfo?.email}
+                              type="email"
+                              onChange={(e) => setEmail(e.target.value)}
+                            />
+                          </InputGroup>
                         </FormGroup>
                       </Col>
                     </Row>
@@ -177,32 +254,68 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-first-name"
                           >
-                            First name
+                            Password
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Mayin"
-                            id="input-first-name"
-                            placeholder="First name"
-                            type="text"
-                          />
+                          <InputGroup className="input-group-alternative">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i className="ni ni-lock-circle-open" />
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              className="form-control-alternative"
+                              defaultValue={userInfo?.password}
+                              id="input-first-name"
+                              placeholder="Password"
+                              type="text"
+                              onChange={(e) => setPassword(e.target.value)}
+                            />
+                          </InputGroup>
                         </FormGroup>
                       </Col>
                       <Col lg="6">
                         <FormGroup>
+                          <Label>Referral Code</Label>
+                          <InputGroup className="input-group-alternative">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                              <i class="fa-solid fa-hand-holding"></i>
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              defaultValue={userInfo?.referal_code}
+                              onChange={(e) => setReferalCode(e.target.value)}
+                              placeholder={userInfo?.referal_code}
+                              type="text"
+                            />
+                          </InputGroup>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="12">
+                        <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-last-name"
+                            htmlFor="input-first-name"
                           >
-                            Last name
+                            Mobile Number
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="uddin"
-                            id="input-last-name"
-                            placeholder="Last name"
-                            type="text"
-                          />
+                          <InputGroup className="input-group-alternative">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i class="fa-solid">+91</i>
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              className="form-control-alternative"
+                              defaultValue={userInfo?.mobile_no}
+                              id="input-first-name"
+                              placeholder="Mobile No"
+                              type="number"
+                              onChange={(e) => setMobileNo(e.target.value)}
+                            />
+                          </InputGroup>
                         </FormGroup>
                       </Col>
                     </Row>
@@ -215,20 +328,21 @@ const Profile = () => {
                   <div className="pl-lg-4">
                     <Row>
                       <Col md="12">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-address"
-                          >
-                            Address
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                            id="input-address"
-                            placeholder="Home Address"
-                            type="text"
-                          />
+                        <FormGroup className="mb-3">
+                          <Label>Address</Label>
+                          <InputGroup className="input-group-alternative">
+                            <InputGroupAddon addonType="prepend">
+                              <InputGroupText>
+                                <i class="fa-regular fa-address-card"></i>
+                              </InputGroupText>
+                            </InputGroupAddon>
+                            <Input
+                              // onChange={(e) => setPlanName(e.target.value)}
+                              placeholder={user?.address}
+                              type="textarea"
+                              defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            />
+                          </InputGroup>
                         </FormGroup>
                       </Col>
                     </Row>
@@ -285,12 +399,13 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
- 
-                          <div className="text-center col mt-1">
-                        <Button className="my-2" color="primary" type="button">
-                        <i className="mr-2 shadow fa-solid fa-user" /> Update Profile
-                        </Button>
-                      </div>
+
+                  <div className="text-center col mt-1">
+                    <Button className="my-2" color="primary" type="submit">
+                      <i className="mr-2 shadow fa-solid fa-user" /> Update
+                      Profile
+                    </Button>
+                  </div>
                 </Form>
               </CardBody>
             </Card>
