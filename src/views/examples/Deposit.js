@@ -24,11 +24,12 @@ import cashfree from "../../../src/assets/img/icons/common/cashfree.png";
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import swal from "sweetalert";
 import Transactions from "./Transactions";
+import { reload } from "firebase/auth";
 
 const Deposit = () => {
   const { user } = useContext(AuthContext);
   console.log(user)
-  const [userInfo,setUserInfo] = useState({})
+  const [userInfo, setUserInfo] = useState({})
   useEffect(() => {
     const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
     console.log(url);
@@ -36,37 +37,40 @@ const Deposit = () => {
       .then((res) => res.json())
       .then((data) => setUserInfo(data));
   }, []);
-  const wallet = userInfo?.wallet;
 
+
+
+  const wallet = userInfo?.wallet;
   console.log(wallet)
-  const typeOfPayment=["Cashfree","HandCash"]
+
+
+  const typeOfPayment = ["Cashfree", "HandCash"]
   const [paytype, setPayType] = useState(null);
   const [successText, setSuccessText] = useState('');
- 
+
 
   const [transactioninfo, setTransactioninfo] = useState([]);
   const [depositAmount, setDepositAmount] = useState("");
   const navigate = useNavigate();
-  const w=parseInt(wallet);
-  const newWallet = w +(depositAmount);
-  
-  
+  const w = parseInt(wallet);
+  const newWallet = w + (depositAmount);
+
   const [transactionDetails, setTransactionDetails] = useState({});
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("order_id");
   const orderToken = queryParams.get("order_token");
-  console.log('Show', orderId,orderToken)
+  console.log('Show', orderId, orderToken)
 
- 
-// Show Recent 5 Transactions 
-useEffect(() => {
-  fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`)
-    .then((res) => res.json())
-    .then((data) => setTransactioninfo(data));
-}, []);
-  
- 
+
+  // Show Recent 5 Transactions 
+  useEffect(() => {
+    fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`)
+      .then((res) => res.json())
+      .then((data) => setTransactioninfo(data));
+  }, []);
+
+
   const handleDeposit = async (e) => {
     console.log(e);
     e.preventDefault();
@@ -84,8 +88,8 @@ useEffect(() => {
       method_type: "CashFree",
       description: 'Payment deposited by Cashfreee',
     };
-console.log('Deposit Amount',depositData)
-    if(paytype=='Cashfree' || paytype=='Handcash'){
+    console.log('Deposit Amount', depositData)
+    if (paytype == 'Cashfree' || paytype == 'Handcash') {
       try {
         if (paytype === 'Cashfree') {
           const response = await axios.post(
@@ -94,7 +98,7 @@ console.log('Deposit Amount',depositData)
           );
           const paymentLink = response.data.payment_link;
           window.location.href = paymentLink;
-        } 
+        }
         else {
           navigate("/user/index");
         }
@@ -102,29 +106,29 @@ console.log('Deposit Amount',depositData)
         console.error("Error creating payment:", error);
         // Handle error here
       }
-      try{
+      try {
         const response = await axios.post(
-          "https://indian.munihaelectronics.com/public/api/deposit",depositData,
+          "https://indian.munihaelectronics.com/public/api/deposit", depositData,
+
           {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           }
         );
-        // window.localStorage.setItem('userInfo',JSON.stringify({...user, wallet:wallet + depositAmount}))
-        // window.location.reload()
-       
-          setSuccessText( response)
-       
-        }
-        catch (error) {
-          console.error("Error creating payment:", error);
-          
-        }
+
+
+        setSuccessText(response)
+
+      }
+      catch (error) {
+        console.error("Error creating payment:", error);
+
+      }
 
     }
-    //Post Deposit 
-   
+
+
   };
 
   useEffect(() => {
@@ -134,47 +138,36 @@ console.log('Deposit Amount',depositData)
       .then((res) => res.json())
       .then((data) => setTransactionDetails(data));
   }, []);
-console.log(transactionDetails)
+  console.log(transactionDetails)
 
-if(transactionDetails.order_amount > 0){
-  swal({
-    title: "Deposited Successflly",
-    text: 'Success',
-    icon: "success",
-  });
- 
-  navigate('/user/index')
-}
+  if (transactionDetails.order_amount > 0) {
 
-// Add Wallet 
-// const handlePackages = async (e) => {
-//   console.log(e);
-//   e.preventDefault();
+    const userDataString = localStorage.getItem('userInfo'); // Change 'userInfo' to your actual local storage key
+    let userData = {};
 
-//   const data = {
-  
-//   };
-//   console.log(data);
-//   try {
-//     const response = await axios.post(
-//       "https://indian.munihaelectronics.com/public/api/package-add",
-//       data,
-//       {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       }
-//     );
-//     console.log(response);
+    if (userDataString) {
+      try {
+        userData = JSON.parse(userDataString);
+      } catch (error) {
+        console.error('Error parsing userData from local storage', error);
+      }
+    }
 
-//     // Reset the form inputs
-    
-    
-//     alert(response?.data?.message)
-//   } catch (error) {
-//     toast.error(error?.response?.data?.error);
-//   }
-// };
+    // Step 2: Update wallet balance in userData object
+    const amountToAdd = transactionDetails.order_amount; // Example amount to add
+    const newWalletBalance = parseFloat(userData.wallet) + amountToAdd;
+
+    window.localStorage.setItem('userInfo', JSON.stringify({ ...user, wallet: newWalletBalance }));
+
+    swal({
+      title: "Deposited Successfully",
+      text: 'Success',
+      icon: "success",
+    });
+    navigate('/user/index')
+  }
+
+
 
   return (
     <div>
@@ -206,24 +199,24 @@ if(transactionDetails.order_amount > 0){
                     <FormGroup className="mb-3">
                       <Label>Select Payment Method*</Label>
                       <InputGroup className="input-group-alternative">
-                        
+
                         <Input
                           id="exampleSelect"
                           name="select"
                           type="select"
                           onChange={(e) => setPayType(e.target.value)}
                         >
-                        
-                            <option className="p-5">--select--</option>
-                            {typeOfPayment?.map(typ=><option value={typ} className="p-5">{typ}</option>)}
-                          
+
+                          <option className="p-5">--select--</option>
+                          {typeOfPayment?.map(typ => <option value={typ} className="p-5">{typ}</option>)}
+
                         </Input>
                       </InputGroup>
                     </FormGroup>
                   </Col>
 
                   <div className=" mt-2 text-center col">
-                    <button className="btn btn-primary" type="submit" disabled={depositAmount== "" || paytype == null }>
+                    <button className="btn btn-primary" type="submit" disabled={depositAmount == "" || paytype == null}>
                       Add Deposit
                     </button>
                   </div>
@@ -232,7 +225,7 @@ if(transactionDetails.order_amount > 0){
             </CardBody>
           </Card>
         </Col>
-        
+
 
         <Col lg="12" xl="4" className=" mt--7 ">
           <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4 mb-xl-0 ">
@@ -263,13 +256,13 @@ if(transactionDetails.order_amount > 0){
                 </div>
                 <div className="col text-right">
                   <Link to='/user/transactions/deposit'>
-                  <Button
-                    color="primary"
-                    href="#pablo"
-                    size="sm"
-                  >
-                    See all
-                  </Button>
+                    <Button
+                      color="primary"
+                      href="#pablo"
+                      size="sm"
+                    >
+                      See all
+                    </Button>
                   </Link>
                 </div>
               </Row>
@@ -277,25 +270,26 @@ if(transactionDetails.order_amount > 0){
             <Table className="" hover bordered responsive>
               <thead className="text-white bg-gradient-info">
                 <tr>
-                <th>Sl No</th>
-              <th>Amount</th>
-              <th>Transiction Type</th>
-              <th>Method Type</th>
-              <th className="text-center">Description</th>
+                  <th className="text-center">Sl No</th>
+                  <th className="text-center">Amount</th>
+                  {/* <th>Transiction Type</th> */}
+                  <th className="text-center">Method Type</th>
+                  <th className="text-center">Description</th>
                 </tr>
               </thead>
               <tbody>
                 {transactioninfo.slice(-5).map((tnx, index) => (
-                  <tr>
-                    <th className="text-center" scope="row">
-                      {index + 1}
-                    </th>
-                    <td className="text-center">{tnx?.amount}</td>
-                    <td className="text-center">{tnx?.tnx_type}</td>
-                    <td className="text-center">{tnx?.method_type}</td>
-                    <td className="text-center">{tnx?.description}</td>
-                    
-                  </tr>
+                  tnx.tnx_type === "DR" ? (
+                    <tr key={index}>
+                      <th className="text-center" scope="row">
+                        {index + 1}
+                      </th>
+                      <td className="text-center">{tnx?.amount}</td>
+                      {/* <td className="text-center">{tnx?.tnx_type}</td> */}
+                      <td className="text-center">{tnx?.method_type}</td>
+                      <td className="text-center">{tnx?.description}</td>
+                    </tr>
+                  ) : null
                 ))}
               </tbody>
             </Table>

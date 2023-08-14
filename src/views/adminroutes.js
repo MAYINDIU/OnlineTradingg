@@ -6,6 +6,7 @@ import Adminindex from "views/examples/Adminindex";
 import Purchaselist from "./examples/Purchase/Purchaselist";
 import All_transactions from "./examples/Transactions/All_transactions";
 import Adminnotification from "./examples/Notification/Adminnotification";
+import Tradehistory from "./examples/TradeHistory/Tradehistory";
 var adminroutes = [
   {
     path: "/index",
@@ -63,6 +64,13 @@ var adminroutes = [
     component: <Adminnotification />,
     layout: "/admin"
   },
+  {
+    path: "/trade-history",
+    name: "Trade History",
+    icon: "fa-solid fa-user text-primary",
+    component: <Tradehistory />,
+    layout: "/admin",
+  },
 
   {
     path: "/updatepackages/:id",
@@ -76,7 +84,7 @@ var adminroutes = [
     component: <AddPackage />,
     layout: "/admin",
   },
- 
+
   {
     path: "/packages",
     // name: "Package List",

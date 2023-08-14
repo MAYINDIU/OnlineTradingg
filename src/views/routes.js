@@ -14,7 +14,7 @@ import Tradehistory from "./examples/TradeHistory/Tradehistory";
 import PaymentSuccessComponent from "./examples/PaymentSuccessComponent/PaymentSuccessComponent";
 import ChosePlan from "./examples/MyPlan/ChosePlan";
 var routes = [
-  
+
   {
     path: "/index",
     name: "Home",
@@ -22,7 +22,7 @@ var routes = [
     component: <Index />,
     layout: "/user",
   },
-  
+
   {
     path: "/user-profile",
     name: "User Profile",
@@ -51,10 +51,10 @@ var routes = [
     component: <MyPlan />,
     layout: "/user",
   },
-  
+
 
   {
-    
+
     name: "Finance",
     icon: "fa-solid fa-money-bill-wheat text-primary",
     layout: "/user",
@@ -65,21 +65,21 @@ var routes = [
         path: "/user/deposit",
         icon: "fa-solid fa-circle-down text-primary",
       },
-      {
-        name: 'Withdraw',
-        path: "/user/withdraw",
-        icon: "fa-solid fa-circle-arrow-up text-primary"
-      },
+      // {
+      //   name: 'Withdraw',
+      //   path: "/user/withdraw",
+      //   icon: "fa-solid fa-circle-arrow-up text-primary"
+      // },
       {
         name: 'Transaction history',
-        path: "/user/transactions",
+        path: "/user/transactions/deposit",
         icon: "fa-solid fa-circle-info text-primary",
       }
     ]
   },
 
   {
-    
+
     name: "Investment Funding",
     icon: "fa-solid fa-money-bill-trend-up text-primary",
     layout: "/user",
@@ -96,11 +96,11 @@ var routes = [
         // path: "/user/myplan",
         icon: "fa-solid fa-square-pen text-primary"
       },
-      {
-        name: 'Plan details',
-        // path: "/user/myplan",
-        icon: "fa-solid fa-circle-info text-primary",
-      }
+      // {
+      //   name: 'Plan details',
+      //   // path: "/user/myplan",
+      //   icon: "fa-solid fa-circle-info text-primary",
+      // }
     ]
   },
   {
@@ -141,8 +141,8 @@ var routes = [
     path: "/chooseplan",
     // name: 'Choose Plan',
     // icon: "fa-solid fa-square-check text-primary",
-    component: <ChosePlan/>,
-    layout:"/user",
+    component: <ChosePlan />,
+    layout: "/user",
   },
   {
     path: "/transactions",

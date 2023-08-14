@@ -27,11 +27,11 @@ import {
 } from "reactstrap";
 
 const UserNavbar = (props) => {
-// const [user] = useAlluser()
+  // const [user] = useAlluser()
   const { user, logOut } = useContext(AuthContext);
-  const [userInfo,setUserInfo] = useState({})
-  console.log(userInfo)
-  
+  const [userInfo, setUserInfo] = useState({})
+  // console.log(userInfo)
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,6 +40,7 @@ const UserNavbar = (props) => {
   const handleSignOut = () => {
     logOut().then(() => {
       navigate(from, { replace: true });
+      localStorage.removeItem("token");
     }).catch((error) => {
 
     });
@@ -48,14 +49,18 @@ const UserNavbar = (props) => {
   const [modal, setModal] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-   
-   useEffect(() => {
+
+  useEffect(() => {
     const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
     console.log(url);
     fetch(url)
       .then((res) => res.json())
       .then((data) => setUserInfo(data));
   }, []);
+
+
+
+
 
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
@@ -74,7 +79,7 @@ const UserNavbar = (props) => {
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
           >
-            {props.brandText} 
+            {props.brandText}
           </Link>
           <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
@@ -160,7 +165,8 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name} (INR {user?.wallet}) 
+                        {user?.name} (INR {user?.wallet})
+
                       </span>
                     }
 

@@ -51,9 +51,8 @@ const PlanDetails = () => {
 
   // For Date 
   const current = new Date();
-  const purchase_dt = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`;
+  const purchase_dt = `${current.getDate()}/${current.getMonth() + 1
+    }/${current.getFullYear()}`;
 
   const handleAmountChange = (e) => {
     const newValue = +e.target.value;
@@ -74,7 +73,7 @@ const PlanDetails = () => {
     const planId = id;
     const status = "Active";
     const purchaseData = {
-      userId:user?.id,
+      userId: user?.id,
       planId,
       purchase_date,
       status,
@@ -91,28 +90,28 @@ const PlanDetails = () => {
     if (wallet > inputAmount) {
       const proceed = window.confirm("Are You sure to pay for this ?");
       if (proceed) {
-        
-        try{
+
+        try {
           const response = await axios.post(
-            "https://indian.munihaelectronics.com/public/api/purchase_pkg",purchaseData,
+            "https://indian.munihaelectronics.com/public/api/purchase_pkg", purchaseData,
             {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
             }
           );
-         
-            console.log(response)
-         
-          }
-          catch (error) {
-            console.error("Error creating payment:", error);
-            
-          }
 
-       
+          console.log(response)
 
-        const response =await axios.post(
+        }
+        catch (error) {
+          console.error("Error creating payment:", error);
+
+        }
+
+
+
+        const response = await axios.post(
           "https://indian.munihaelectronics.com/public/api/deduct",
           data,
           {
@@ -125,7 +124,7 @@ const PlanDetails = () => {
           "userInfo",
           JSON.stringify({ ...user, wallet: wallet - inputAmount })
         );
-        // window.location.reload();
+        window.location.reload();
         // const remaining = wallet - inputAmount;
         // setPackages(remaining)
         console.log(response);

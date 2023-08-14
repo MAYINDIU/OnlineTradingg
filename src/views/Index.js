@@ -49,6 +49,7 @@ const Index = (props) => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`)
       .then((res) => res.json())
       .then((data) => setTransactioninfo(data));
+
   }, []);
 
   if (window.Chart) {
@@ -238,54 +239,55 @@ const Index = (props) => {
         </Row>
 
         <Row className="mt-5 mb-3 ">
-        <Col className="mb-5 mb-xl-0" xl="12">
-          <Card className="shadow">
-            <CardHeader className="border-0">
-              <Row className="align-items-center">
-                <div className="col">
-                  <h3 className="mb-0">Recent Deposit History ({transactioninfo.length < 5 ? transactioninfo.length : '5'})</h3>
-                </div>
-                <div className="col text-right">
-                  <Link to='/user/transactions/deposit'>
-                  <Button
-                    color="primary"
-                    href="#pablo"
-                    size="sm"
-                  >
-                    See all
-                  </Button>
-                  </Link>
-                </div>
-              </Row>
-            </CardHeader>
-            <Table className="" hover bordered responsive>
-              <thead className="text-white bg-gradient-info">
-                <tr>
-                <th>Sl No</th>
-              <th>Amount</th>
-              <th>Transiction Type</th>
-              <th>Method Type</th>
-              <th className="text-center">Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactioninfo.slice(-5).map((tnx, index) => (
+          <Col className="mb-5 mb-xl-0" xl="12">
+            <Card className="shadow">
+              <CardHeader className="border-0">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h3 className="mb-0">Recent Deposit History ({transactioninfo.length < 5 ? transactioninfo.length : '5'})</h3>
+                  </div>
+                  <div className="col text-right">
+                    <Link to='/user/transactions/deposit'>
+                      <Button
+                        color="primary"
+                        href="#pablo"
+                        size="sm"
+                      >
+                        See all
+                      </Button>
+                    </Link>
+                  </div>
+                </Row>
+              </CardHeader>
+              <Table className="" hover bordered responsive>
+                <thead className="text-white bg-gradient-info">
                   <tr>
-                    <th className="text-center" scope="row">
-                      {index + 1}
-                    </th>
-                    <td className="text-center">{tnx?.amount}</td>
-                    <td className="text-center">{tnx?.tnx_type}</td>
-                    <td className="text-center">{tnx?.method_type}</td>
-                    <td className="text-center">{tnx?.description}</td>
-                    
+                    <th className="text-center">Sl No</th>
+                    <th className="text-center">Amount</th>
+                    {/* <th>Transiction Type</th> */}
+                    <th className="text-center">Method Type</th>
+                    <th className="text-center">Description</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-          </Card>
-        </Col>
-      </Row>
+                </thead>
+                <tbody>
+                  {transactioninfo.slice(-5).map((tnx, index) => (
+                    tnx.tnx_type === "DR" ? (
+                      <tr key={index}>
+                        <th className="text-center" scope="row">
+                          {index + 1}
+                        </th>
+                        <td className="text-center">{tnx?.amount}</td>
+                        {/* <td className="text-center">{tnx?.tnx_type}</td> */}
+                        <td className="text-center">{tnx?.method_type}</td>
+                        <td className="text-center">{tnx?.description}</td>
+                      </tr>
+                    ) : null
+                  ))}
+                </tbody>
+              </Table>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     </>
   );

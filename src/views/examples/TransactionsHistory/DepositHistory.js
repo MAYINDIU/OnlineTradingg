@@ -7,10 +7,10 @@ import { Card, Form, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupTe
 
 
 const DepositHistory = () => {
-    const {user} = useContext(AuthContext)
-    
-    const id = user?.id
-    const [depositHistory,setDepositHistory] = useState([])
+  const { user } = useContext(AuthContext)
+
+  const id = user?.id
+  const [depositHistory, setDepositHistory] = useState([])
 
   const [searchText, setSearchText] = useState("");
   const [sortColumn, setSortColumn] = useState(null);
@@ -30,20 +30,20 @@ const DepositHistory = () => {
 
   const filteredDepositHistory = searchText
     ? depositHistory.filter((history) =>
-        history?.method_type.toLowerCase().includes(searchText.toLowerCase())
-      )
+      history?.method_type.toLowerCase().includes(searchText.toLowerCase())
+    )
     : depositHistory;
 
   const sortedDepositHistory =
     sortColumn && sortDirection
       ? [...filteredDepositHistory].sort((a, b) => {
-          if (sortDirection === "asc") {
-            return a[sortColumn] > b[sortColumn] ? 1 : -1;
-          } else if (sortDirection === "desc") {
-            return a[sortColumn] < b[sortColumn] ? 1 : -1;
-          }
-          return 0;
-        })
+        if (sortDirection === "asc") {
+          return a[sortColumn] > b[sortColumn] ? 1 : -1;
+        } else if (sortDirection === "desc") {
+          return a[sortColumn] < b[sortColumn] ? 1 : -1;
+        }
+        return 0;
+      })
       : filteredDepositHistory;
 
   const columns = [
@@ -73,8 +73,8 @@ const DepositHistory = () => {
       selector: "description",
       sortable: true,
     },
-    
-   
+
+
   ];
 
   const sortIconStyles = {
@@ -84,55 +84,55 @@ const DepositHistory = () => {
     sortDesc: "text-red-500",
   };
 
-    return (
-        
-        //  <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
-        // <Table hover bordered responsive>
-        //   <thead>
-        //     <tr className="text-lg text-white bg-gradient-info">
-        //       <th>Sl No</th>
-        //       <th>Amount</th>
-        //       <th>Transiction Type</th>
-        //       <th>Method Type</th>
-        //       <th>Description</th>
-              
-        //     </tr>
-        //   </thead>
-        //   <tbody>
-        //     {
-        //         depositHistory.map((history,i)=>(
-        //             <tr>
-        //             <th className="text-center" scope="row">{i+1} </th>
-        //             <td>{history?.amount}</td>
-        //             <td>{history?.tnx_type} </td>
-        //             <td>${history?.method_type}</td>
-        //             <td>{history?.description}</td>
-        //           </tr>
+  return (
 
-          
-        //         ))
-        //     }
-             
-        //   </tbody>
-        // </Table>
-        // </Card>
-        <div>
-            <Form className="navbar-search navbar-search-dark form-inline d-md-flex justify-content-end ml-lg-auto mb-3">
-          <FormGroup className="mb-0">
-            <InputGroup className="input-group-alternative">
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  <i className="fas fa-search" />
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input onChange={(e) => setSearchText(e.target.value)}
-                placeholder="Search" type="text" />
-            </InputGroup>
-          </FormGroup>
-        </Form>
-        <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
-           
-          <Table hover bordered responsive>
+    //  <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
+    // <Table hover bordered responsive>
+    //   <thead>
+    //     <tr className="text-lg text-white bg-gradient-info">
+    //       <th>Sl No</th>
+    //       <th>Amount</th>
+    //       <th>Transiction Type</th>
+    //       <th>Method Type</th>
+    //       <th>Description</th>
+
+    //     </tr>
+    //   </thead>
+    //   <tbody>
+    //     {
+    //         depositHistory.map((history,i)=>(
+    //             <tr>
+    //             <th className="text-center" scope="row">{i+1} </th>
+    //             <td>{history?.amount}</td>
+    //             <td>{history?.tnx_type} </td>
+    //             <td>${history?.method_type}</td>
+    //             <td>{history?.description}</td>
+    //           </tr>
+
+
+    //         ))
+    //     }
+
+    //   </tbody>
+    // </Table>
+    // </Card>
+    <div>
+      <Form className="navbar-search navbar-search-dark form-inline d-md-flex justify-content-end ml-lg-auto mb-3">
+        <FormGroup className="mb-0">
+          <InputGroup className="input-group-alternative">
+            <InputGroupAddon addonType="prepend">
+              <InputGroupText>
+                <i className="fas fa-search" />
+              </InputGroupText>
+            </InputGroupAddon>
+            <Input onChange={(e) => setSearchText(e.target.value)}
+              placeholder="Search" type="text" />
+          </InputGroup>
+        </FormGroup>
+      </Form>
+      <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
+
+        <Table hover bordered responsive>
           <DataTable
             columns={columns}
             data={sortedDepositHistory}
@@ -145,10 +145,10 @@ const DepositHistory = () => {
             onSort={handleSort}
           />
         </Table>
-      
-    </Card>
+
+      </Card>
     </div>
-    );
+  );
 };
 
 export default DepositHistory;

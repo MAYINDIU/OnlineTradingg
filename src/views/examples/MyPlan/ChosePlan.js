@@ -19,9 +19,8 @@ const ChosePlan = () => {
   const { user } = useContext(AuthContext);
 
   const current = new Date();
-  const purchase_dt = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`;
+  const purchase_dt = `${current.getDate()}/${current.getMonth() + 1
+    }/${current.getFullYear()}`;
   // console.log(purchase_date);
   const buyalert = () => {
     swal({
@@ -82,27 +81,27 @@ const ChosePlan = () => {
         {packages.map((p) => {
           return (
             <Col lg="4" xl="4" className="">
-              <Card className="bg-default  shadow-lg  shadow-sm--hover card-lift--hover mt-5  mb-4 mb-xl-0 ">
+              <Card className="bg-default shadow-lg  shadow-sm--hover card-lift--hover mt-5  mb-4 mb-xl-0 ">
                 <CardBody>
-                  <div className="text-center">
+                  {/* <div className="text-center">
                     <lavel className="text-white mb-3  w-50 rounded-1">
                       Technology Plan
                     </lavel>
-                  </div>
+                  </div> */}
 
                   <div className="mt-3 text-center">
                     <i className=" icon icon-shape bg-primary text-white rounded-circle shadow fa-solid fa-hand-holding-heart" />
                   </div>
 
-                  <h5 className="text-white mt-3 text-center">
+                  <h4 className="text-white mt-3 text-center">
                     <span className="ml-1">{p?.planName} </span>
-                  </h5>
+                  </h4>
                   <h5 className="text-white mt-0 text-center">
-                    <span className="ml-1">{p?.planType} </span>
+                    <span className="ml-1">Plan Type: {p?.planType} </span>
                   </h5>
 
                   <h5 className="text-white mt-3 text-center">
-                    <span className="ml-1">{p?.profitShare}% </span>
+                    <span className="ml-1">Profit Share: {p?.profitShare}% </span>
                   </h5>
                   <h5 className="text-white mt-3 text-center">
                     <span className="ml-1">Minimum Amount INR{p?.min} </span>
@@ -111,13 +110,13 @@ const ChosePlan = () => {
                     <span className="ml-1">Maximum Amount INR{p?.max} </span>
                   </h5>
                   <h5 className="text-white mt-0 text-center">
-                    <span className="ml-1">{p?.settelementTime} </span>
+                    <span className="ml-1">Settelement Time: {p?.settelementTime} </span>
                   </h5>
                   <h5 className="text-white mt-3 text-center">
-                    <span className="ml-1">{p?.locking_no} {p?.lockinPeriod}</span>
+                    <span className="ml-1">Lockin Period: {p?.locking_no} {p?.lockinPeriod}</span>
                   </h5>
                   <h5 className="text-white mt-3 text-center">
-                    <span className="ml-1">{p?.compoundLevel} </span>
+                    <span className="ml-1">Compound Level: {p?.compoundLevel} </span>
                   </h5>
 
                   <div className="col text-center mt-3">
@@ -137,14 +136,14 @@ const ChosePlan = () => {
                      {p?.status} </Button> 
                     
                   } */}
-                   <Link to={`/user/plandetails/${p.id}`}>
-                   <Button 
-                    className="w-50 btn btn-info text-white"
-                   
-                    >
-                      Join Now
-                    </Button>
-                   </Link>
+                    <Link to={`/user/plandetails/${p.id}`}>
+                      <Button
+                        className="w-50 btn btn-info text-white"
+
+                      >
+                        Join Now
+                      </Button>
+                    </Link>
 
                     {/* {
                     <Button onClick={() => handlePurchase(p?.id)} className="btn btn-primary">

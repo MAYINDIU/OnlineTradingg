@@ -16,7 +16,7 @@ import {
 import { GoogleAuthProvider } from "firebase/auth";
 
 import { AuthContext } from "../../Context/AuthProvider";
-import { useContext, useState,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import swal from "sweetalert";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -28,7 +28,8 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState(null);
-  // const [myfx, setMyfx] = useState(['']);
+  const [myfx, setMyfx] = useState([]);
+  console.log(myfx)
   // const [myfxSingleAcData, setmyfxSingleAcData] = useState(['']);
   // console.log(myfxSingleAcData);
   // const Session=myfx?.session;
@@ -44,21 +45,21 @@ const Login = () => {
     });
   }
   //session fetching
-//   const email ='tanmoysom@gmail.com';
-//   const password ='973257o425@MFXB';
-//   useEffect(() => {
-//     fetch(`https://www.myfxbook.com/api/login.json?email=${email}&password=${password}`)
-//       .then((res) => res.json())
-//       .then((data) => setMyfx(data));
-//   }, []);
-//    //session fetching
-//  //https://www.myfxbook.com/api/get-history.json?session=DSL07vu14QxHWErTIAFrH40&id=12345
-//   //individual data fetch id wise
-//   useEffect(() => {
-//     fetch(`https://www.myfxbook.com/api/get-history.json?session=${Session}&id=10125757`)
-//       .then((res) => res.json())
-//       .then((data) => setmyfxSingleAcData(data));
-//   }, []);
+  // const emailfx = 'tanmoysom@gmail.com';
+  // const passwordfx = '973257o425@MFXB';
+  // useEffect(() => {
+  //   fetch(`https://www.myfxbook.com/api/login.json?email=${emailfx}&password=${passwordfx}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setMyfx(data));
+  // }, []);
+  //    //session fetching
+  //  //https://www.myfxbook.com/api/get-history.json?session=DSL07vu14QxHWErTIAFrH40&id=12345
+  //   //individual data fetch id wise
+  //   useEffect(() => {
+  //     fetch(`https://www.myfxbook.com/api/get-history.json?session=${Session}&id=10125757`)
+  //       .then((res) => res.json())
+  //       .then((data) => setmyfxSingleAcData(data));
+  //   }, []);
 
 
 
@@ -67,38 +68,32 @@ const Login = () => {
   // console.log(historyData);
 
   // Login API parameters
-  const email ='tanmoysom@gmail.com';
-  const password ='973257o425@MFXB';
+  const email = 'tanmoysom@gmail.com';
+  const password = '973257o425@MFXB';
   const loginApiUrl = `https://www.myfxbook.com/api/login.json?email=${email}&password=${password}`;
 
   // Second API parameters
   const accountId = 10125757;
   const historyApiUrl = `https://www.myfxbook.com/api/get-history.json?session=${sessionToken}&id=${accountId}`;
 
-  useEffect(() => {
-    fetchSessionToken();
-  }, []);
+  // useEffect(() => {
+  //   fetchSessionToken();
+  // }, []);
 
   const fetchSessionToken = async () => {
     try {
       const response = await fetch(loginApiUrl);
       const jsonData = await response.json();
       setSessionToken(jsonData.session);
+      console.log(jsonData);
+
+      window.localStorage.setItem('token', sessionToken);
+
     } catch (error) {
       console.error('Error fetching session token:', error);
     }
   };
 
-  const fetchHistoryData = async () => {
-    try {
-      const response = await axios.get(historyApiUrl);
-      setHistoryData(response.data);
-    } catch (error) {
-      console.error('Error fetching history data:', error);
-    }
-  };
-
-  fetchHistoryData();
 
 
 
@@ -123,7 +118,7 @@ const Login = () => {
         const user = response.data;
         console.log(user?.id)
         setUser(user);
-        
+
         window.localStorage.setItem('userInfo', user.id)
         // window.localStorage.setItem('session', Session)
         console.log(response);
@@ -168,7 +163,7 @@ const Login = () => {
         console.log(user)
         setUser(user);
         window.localStorage.setItem('userInfo', JSON.stringify(user))
-        
+
         console.log(response);
         if (email === "admin@gmail.com" && password === '123456') {
           navigate("/admin/index");
@@ -289,7 +284,7 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4 w-100" color="primary" type="submit">
+                <Button onClick={fetchSessionToken} className="my-4 w-100" color="primary" type="submit">
                   LOG IN
                 </Button>
               </div>
