@@ -24,7 +24,7 @@ import swal from "sweetalert";
 const PlanDetails = () => {
   const [p, setPackage] = useState({});
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user, setUpdate } = useContext(AuthContext);
   console.log(user);
   const wallet = user?.wallet;
   const navigate = useNavigate();
@@ -109,8 +109,6 @@ const PlanDetails = () => {
 
         }
 
-
-
         const response = await axios.post(
           "https://indian.munihaelectronics.com/public/api/deduct",
           data,
@@ -124,7 +122,8 @@ const PlanDetails = () => {
           "userInfo",
           JSON.stringify({ ...user, wallet: wallet - inputAmount })
         );
-        window.location.reload();
+        setUpdate(true)
+        // window.location.reload();
         // const remaining = wallet - inputAmount;
         // setPackages(remaining)
         console.log(response);

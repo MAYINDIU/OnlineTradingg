@@ -27,9 +27,11 @@ import Transactions from "./Transactions";
 import { reload } from "firebase/auth";
 
 const Deposit = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setUpdate } = useContext(AuthContext);
   console.log(user)
+
   const [userInfo, setUserInfo] = useState({})
+
   useEffect(() => {
     const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
     console.log(url);
@@ -154,10 +156,11 @@ const Deposit = () => {
     }
 
     // Step 2: Update wallet balance in userData object
-    const amountToAdd = transactionDetails.order_amount; // Example amount to add
+    const amountToAdd = transactionDetails.order_amount;
     const newWalletBalance = parseFloat(userData.wallet) + amountToAdd;
 
     window.localStorage.setItem('userInfo', JSON.stringify({ ...user, wallet: newWalletBalance }));
+    setUpdate(true);
 
     swal({
       title: "Deposited Successfully",

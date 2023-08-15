@@ -44,12 +44,6 @@ const MyPlan = () => {
   }, []);
 
 
-
-
-
-
-
-
   return (
     <div>
       <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">

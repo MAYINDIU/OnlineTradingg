@@ -66,19 +66,33 @@ const Sidebar = (props) => {
           </>
         )
       }
+      if (prop.name) {
+        return (
+          <NavItem key={key}>
+            <NavLink
+              to={prop.layout + prop.path}
+              tag={NavLinkRRD}
+              onClick={closeCollapse}
+            >
+              <i className={prop.icon} />
+              {prop.name}
+            </NavLink>
+          </NavItem>
+        )
+      }
 
-      return (
-        <NavItem key={key}>
-          <NavLink
-            to={prop.layout + prop.path}
-            tag={NavLinkRRD}
-            onClick={closeCollapse}
-          >
-            <i className={prop.icon} />
-            {prop.name}
-          </NavLink>
-        </NavItem>
-      );
+      // return (
+      //   <NavItem key={key}>
+      //     <NavLink
+      //       to={prop.layout + prop.path}
+      //       tag={NavLinkRRD}
+      //       onClick={closeCollapse}
+      //     >
+      //       <i className={prop.icon} />
+      //       {prop.name}
+      //     </NavLink>
+      //   </NavItem>
+      // );
     });
   };
 
