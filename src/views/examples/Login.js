@@ -65,7 +65,9 @@ const Login = () => {
 
   const [sessionToken, setSessionToken] = useState('');
   const [historyData, setHistoryData] = useState(null);
-  // console.log(historyData);
+  console.log(sessionToken);
+  window.localStorage.setItem('token', sessionToken);
+
 
   // Login API parameters
   const email = 'tanmoysom@gmail.com';
@@ -87,7 +89,7 @@ const Login = () => {
       setSessionToken(jsonData.session);
       console.log(jsonData);
 
-      window.localStorage.setItem('token', sessionToken);
+
 
     } catch (error) {
       console.error('Error fetching session token:', error);

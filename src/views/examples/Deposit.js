@@ -278,7 +278,7 @@ const Deposit = () => {
                 </tr>
               </thead>
               <tbody>
-                {transactioninfo.slice(-5).map((tnx, index) => (
+                {transactioninfo.slice(-6).map((tnx, index) => (
                   tnx.tnx_type === "DR" ? (
                     <tr key={index}>
                       <th className="text-center" scope="row">

@@ -37,6 +37,10 @@ const Tradehistory = () => {
   }
 
 
+  const token = localStorage.getItem('token');
+  // console.log(token);
+
+
 
   // Login API parameters
   // const email = 'tanmoysom@gmail.com';
@@ -44,8 +48,8 @@ const Tradehistory = () => {
   // const loginApiUrl = `https://www.myfxbook.com/api/login.json?email=${email}&password=${password}`;
 
   // // Second API parameters
-  // const accountId = 10125757;
-  // const historyApiUrl = `https://www.myfxbook.com/api/get-history.json?session=${sessionToken}&id=${accountId}`;
+  const accountId = 10125757;
+  const historyApiUrl = `https://www.myfxbook.com/api/get-history.json?session=${token}&id=${accountId}`;
 
   // useEffect(() => {
   //   fetchSessionToken();
@@ -62,16 +66,18 @@ const Tradehistory = () => {
   //   }
   // };
 
-  // const fetchHistoryData = async () => {
-  //   try {
-  //     const response = await axios.get(historyApiUrl);
-  //     setHistoryData(response.data?.history);
-  //   } catch (error) {
-  //     console.error('Error fetching history data:', error);
-  //   }
-  // };
+  const fetchHistoryData = async () => {
+    try {
+      const response = await axios.get(historyApiUrl);
+      setHistoryData(response.data?.history);
+    } catch (error) {
+      console.error('Error fetching history data:', error);
+    }
+  };
+  useEffect(() => {
+    fetchHistoryData();
+  }, []);
 
-  // fetchHistoryData();
 
 
   return (
