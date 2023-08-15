@@ -19,35 +19,43 @@ const AllUser = () => {
 
 
   //******Handle post data in database********
-  const handleUpdate = (id) => {
+  const handleUpdate = async (id) => {
     const confirm = window.confirm("Are You Sure?");
     if (confirm) {
       const ID = id;
       console.log(ID);
-      const url = `https://indian.munihaelectronics.com/public/api/update_status/${ID}`;
-      fetch(url, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json"
-        },
-      })
-        .then(res => res.json())
-        .then(data => console.log(data));
-      // .then(result => {
 
-      //     if (result.status = true) {
+      try {
+        const response = await axios.put(
+          `https://indian.munihaelectronics.com/public/api/update_status/${ID}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log((response))
+        window.location.reload()
 
-      //         toast(`${NAME} Successfully Saved Your Application`);
-      //     }
-      //     else {
-      //         toast.error(`${NAME} Don,t Saved Your Application`)
-      //     }
 
-      //     console.log(result);
-      // event.target.reset()
+      }
+      catch (error) {
+        console.error("Error creating payment:", error);
 
-      // Navigate('/purchaselist');
+      }
+      // Previous Active deactivate data 
+
+      // const url = `https://indian.munihaelectronics.com/public/api/update_status/${ID}`;
+      // fetch(url, {
+      //     method: "PUT",
+      //     headers: {
+      //         "content-type": "application/json"
+      //     },
       // })
+      // window.location.reload()
+      //     .then(res => res.json())
+      //     .then(data=>console.log(data));
+
     }
   }
 

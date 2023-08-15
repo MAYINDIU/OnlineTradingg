@@ -6,6 +6,7 @@ import Adminindex from "views/examples/Adminindex";
 import Purchaselist from "./examples/Purchase/Purchaselist";
 import All_transactions from "./examples/Transactions/All_transactions";
 import Adminnotification from "./examples/Notification/Adminnotification";
+import Tradehistory from "./examples/TradeHistory/Tradehistory";
 var adminroutes = [
   {
     path: "/index",
@@ -42,13 +43,13 @@ var adminroutes = [
     ]
   },
 
-  {
-    path: "/purchaselist",
-    name: "Purchase list",
-    icon: "fa-solid fa-cart-shopping text-primary",
-    component: <Purchaselist />,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/purchaselist",
+  //   name: "Purchase list",
+  //   icon: "fa-solid fa-cart-shopping text-primary",
+  //   component: <Purchaselist />,
+  //   layout: "/admin",
+  // },
   {
     path: "/transactionlist",
     name: "Transaction list",
@@ -62,6 +63,13 @@ var adminroutes = [
     icon: "fa-solid fa-bell text-primary",
     component: <Adminnotification />,
     layout: "/admin"
+  },
+  {
+    path: "/trade-history",
+    name: "Trade History",
+    icon: "fa-solid fa-user text-primary",
+    component: <Tradehistory />,
+    layout: "/admin",
   },
 
   {

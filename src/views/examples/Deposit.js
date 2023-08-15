@@ -1,6 +1,6 @@
-import React, { useState,useEffect } from 'react';
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -18,232 +18,286 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import { useContext} from "react";
+import { useContext } from "react";
 import { AuthContext } from "Context/AuthProvider";
+import cashfree from "../../../src/assets/img/icons/common/cashfree.png";
+import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import swal from "sweetalert";
+import Transactions from "./Transactions";
+import { reload } from "firebase/auth";
+
 const Deposit = () => {
   const { user } = useContext(AuthContext);
-  const wallet=user?.wallet;
-  console.log(wallet);
-  const [paytype, setPayType] = useState("");
-  console.log(paytype);
-  const [transactioninfo, setTransactioninfo] = useState([]);
-  const [amount, setAmount] = useState("");
-  console.log(amount);
-
-  const userid=user?.id;
-  console.log(userid);
+  console.log(user)
+  const [userInfo, setUserInfo] = useState({})
   useEffect(() => {
-    fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${userid}`)
+    const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
+    console.log(url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setUserInfo(data));
+  }, []);
+
+
+
+  const wallet = userInfo?.wallet;
+  console.log(wallet)
+
+
+  const typeOfPayment = ["Cashfree", "HandCash"]
+  const [paytype, setPayType] = useState(null);
+  const [successText, setSuccessText] = useState('');
+
+
+  const [transactioninfo, setTransactioninfo] = useState([]);
+  const [depositAmount, setDepositAmount] = useState("");
+  const navigate = useNavigate();
+  const w = parseInt(wallet);
+  const newWallet = w + (depositAmount);
+
+  const [transactionDetails, setTransactionDetails] = useState({});
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const orderId = queryParams.get("order_id");
+  const orderToken = queryParams.get("order_token");
+  console.log('Show', orderId, orderToken)
+
+
+  // Show Recent 5 Transactions 
+  useEffect(() => {
+    fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`)
       .then((res) => res.json())
       .then((data) => setTransactioninfo(data));
   }, []);
 
 
-      //Deposit amount
-      const handleDeposit = async (e) => {
-        console.log(e);
-        e.preventDefault();
-        const description="Deposited";
-        const method_type=paytype;
+  const handleDeposit = async (e) => {
+    console.log(e);
+    e.preventDefault();
 
-        const data = {
-            userid,
-            amount,
-            method_type,
-            description
-
-        };
-        console.log(data);
-        try {
+    const formData = {
+      name: user?.name,
+      email: user?.email,
+      mobile: user?.mobile_no,
+      amount: depositAmount,
+    };
+    console.log(formData)
+    const depositData = {
+      userid: user?.id,
+      amount: depositAmount,
+      method_type: "CashFree",
+      description: 'Payment deposited by Cashfreee',
+    };
+    console.log('Deposit Amount', depositData)
+    if (paytype == 'Cashfree' || paytype == 'Handcash') {
+      try {
+        if (paytype === 'Cashfree') {
           const response = await axios.post(
-            "https://indian.munihaelectronics.com/public/api/deposit",
-            data,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
+            "https://indian.munihaelectronics.com/public/api/create-payment",
+            formData
           );
-          console.log(response);
-    
-          // Reset the form inputs
-          
-          // setPayType("");
-          // setAmount("");
-    
-          alert(response?.data?.message)
-        } catch (error) {
-          toast.error(error?.response?.data?.error);
+          const paymentLink = response.data.payment_link;
+          window.location.href = paymentLink;
         }
-      };
+        else {
+          navigate("/user/index");
+        }
+      } catch (error) {
+        console.error("Error creating payment:", error);
+        // Handle error here
+      }
+      try {
+        const response = await axios.post(
+          "https://indian.munihaelectronics.com/public/api/deposit", depositData,
 
-    return (
-        <div >
-        <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
-        <h2 className='text-white font-weight-bold'>Deposit For buy plan</h2>
-        </div>
- 
-            <Row className='container-fluid'>
-       
-              <Col lg="12" xl="8" className=' mt--7'>
-                <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
-                  <CardBody>
-                  <Form role="form" onSubmit={handleDeposit}>
-                  <Label for="exampleEmail">
-                   Enter Deposit Amount*
-                  </Label>
-                  <Input
-                    id="amount"
-                    name="amount"
-                    placeholder="Enter Amount"
-                    type='number'
-                    required
-                    onChange={(e) => setAmount(e.target.value)}
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
-                    />
-  
-                   {/* <Label className='mt-3' for="exampleEmail">
+
+        setSuccessText(response)
+
+      }
+      catch (error) {
+        console.error("Error creating payment:", error);
+
+      }
+
+    }
+
+
+  };
+
+  useEffect(() => {
+    fetch(
+      `https://indian.munihaelectronics.com/public/api/cashfree/payments/success?order_id=${orderId}&order_token=${orderToken}`
+    )
+      .then((res) => res.json())
+      .then((data) => setTransactionDetails(data));
+  }, []);
+  console.log(transactionDetails)
+
+  if (transactionDetails.order_amount > 0) {
+
+    const userDataString = localStorage.getItem('userInfo'); // Change 'userInfo' to your actual local storage key
+    let userData = {};
+
+    if (userDataString) {
+      try {
+        userData = JSON.parse(userDataString);
+      } catch (error) {
+        console.error('Error parsing userData from local storage', error);
+      }
+    }
+
+    // Step 2: Update wallet balance in userData object
+    const amountToAdd = transactionDetails.order_amount; // Example amount to add
+    const newWalletBalance = parseFloat(userData.wallet) + amountToAdd;
+
+    window.localStorage.setItem('userInfo', JSON.stringify({ ...user, wallet: newWalletBalance }));
+
+    swal({
+      title: "Deposited Successfully",
+      text: 'Success',
+      icon: "success",
+    });
+    navigate('/user/index')
+  }
+
+
+
+  return (
+    <div>
+      <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
+        <h2 className="text-white font-weight-bold">Deposit For buy plan</h2>
+      </div>
+
+      <Row className="container-fluid">
+        <Col lg="12" xl="8" className=" mt--7">
+          <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
+            <CardBody>
+              <Form role="form" onSubmit={handleDeposit}>
+                <Label for="exampleEmail">Enter Deposit Amount*</Label>
+                <Input
+                  id="amount"
+                  name="amount"
+                  placeholder="Enter Amount"
+                  type="number"
+                  required
+                  onChange={(e) => setDepositAmount(+e.target.value)}
+                />
+
+                {/* <Label className='mt-3' for="exampleEmail">
                    Choose Payment Method from the list below
                   </Label> */}
 
-                   <Row>
-                   <Col lg="12" xl="12" className=" mt-3">
+                <Row>
+                  <Col lg="12" xl="12" className=" mt-3">
                     <FormGroup className="mb-3">
                       <Label>Select Payment Method*</Label>
                       <InputGroup className="input-group-alternative">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                          <i class="fa-solid fa-money-bill text-blue"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
+
                         <Input
                           id="exampleSelect"
                           name="select"
                           type="select"
                           onChange={(e) => setPayType(e.target.value)}
                         >
-                          <option className='p-5'>CARD</option>
-                          <option className='p-5'>CASH</option>
-                          <option>MOBILE PAY</option>
+
+                          <option className="p-5">--select--</option>
+                          {typeOfPayment?.map(typ => <option value={typ} className="p-5">{typ}</option>)}
+
                         </Input>
                       </InputGroup>
                     </FormGroup>
                   </Col>
-                   {/* <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>BUSD</p>
-                        </CardBody>
-                        </Card>
-                    </Col>
-                    <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg  mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>USDT</p>
-                        </CardBody>
-                        </Card>
-                    </Col> */}
 
-                   </Row>
-                   <Row>
-                   {/* <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p>Bank Transfer</p>
-                        </CardBody>
-                        </Card>
-                    </Col>
-                    <Col lg="12" xl="6" className=' mt-3'>
-                        <Card className="shadow-lg   mb-4 mb-xl-0 ">
-                        <CardBody>
-                        <p> Paypal</p>
-                        </CardBody>
-                        </Card>
-                    </Col> */}
-                    <div className=" mt-2 text-center col">
-                        <button className="btn btn-primary" type="submit">
-                          Add Deposit
-                        </button>
-                      </div>
-
-                   </Row>
-                   </Form>
-                  </CardBody>
-                </Card>
-              </Col>
-             
-              <Col lg="12" xl="4" className=' mt--7 '>
-                <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4 mb-xl-0 ">
-                  <CardBody>
-                  <Row className='container-fluid'>
-                 <h4> Total Deposit: </h4>
-            
-                  <h4 className='ml-3'>{wallet}</h4>
-                  </Row>
-            
-                  <hr/>
-           
-                 <p className='text-center'>View Deposit History</p>
-               
-                  </CardBody>
-                </Card>
-              </Col>
-             </Row>
-
-
-          <Row className="mt-5 mb-3 container-fluid">
-          <Col className="mb-5 mb-xl-0" xl="12">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Recent Deposit History (5)</h3>
+                  <div className=" mt-2 text-center col">
+                    <button className="btn btn-primary" type="submit" disabled={depositAmount == "" || paytype == null}>
+                      Add Deposit
+                    </button>
                   </div>
-                  <div className="col text-right">
+                </Row>
+              </Form>
+            </CardBody>
+          </Card>
+        </Col>
+
+
+        <Col lg="12" xl="4" className=" mt--7 ">
+          <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4 mb-xl-0 ">
+            <CardBody>
+              <Row className="container-fluid">
+                <h4> Total Deposit: </h4>
+
+                <h4 className="ml-3">{newWallet}</h4>
+              </Row>
+
+              <hr />
+
+              <p className="text-center">View Deposit History</p>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+      {/* {
+          <h2 className="text-center">{transactionDetails?.order_amount}</h2>
+        } */}
+      <Row className="mt-5 mb-3 container-fluid">
+        <Col className="mb-5 mb-xl-0" xl="12">
+          <Card className="shadow">
+            <CardHeader className="border-0">
+              <Row className="align-items-center">
+                <div className="col">
+                  <h3 className="mb-0">Recent Deposit History ({transactioninfo.length < 5 ? transactioninfo.length : '5'})</h3>
+                </div>
+                <div className="col text-right">
+                  <Link to='/user/transactions/deposit'>
                     <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
                       size="sm"
                     >
                       See all
                     </Button>
-                  </div>
-                </Row>
-              </CardHeader>
-              <Table className=" hover bordered responsive">
-                <thead className="text-white bg-gradient-info">
-               
-                  <tr>
-                    <th className="text-center" scope="col ">Sl No.</th>
-                    <th className="text-center"  scope="col">Date</th>
-                    <th className="text-center" scope="col">User ID</th>
-                    <th className="text-center" scope="col">Amount</th>
-                    <th className="text-center" scope="col">Description</th>
-                    <th className="text-center" scope="col">Method Type</th>
-                  </tr>
-                </thead>
-                <tbody>
-            {transactioninfo.map((tnx, index) => (
-              <tr>
-                <th className="text-center" scope="row">{index + 1}</th>
-                <td className="text-center">{tnx?.created_at}</td>
-                <td className="text-center">{tnx?.userid}</td>
-                <td className="text-center">{tnx?.amount}</td>
-                <td className="text-center">{tnx?.description}</td>
-                <td className="text-center">{tnx?.method_type}</td>
-              </tr>
-            ))}
-          </tbody>
-              </Table>
-            </Card>
-          </Col>
-
-
-        </Row>
-      
-        </div>
-    );
+                  </Link>
+                </div>
+              </Row>
+            </CardHeader>
+            <Table className="" hover bordered responsive>
+              <thead className="text-white bg-gradient-info">
+                <tr>
+                  <th className="text-center">Sl No</th>
+                  <th className="text-center">Amount</th>
+                  {/* <th>Transiction Type</th> */}
+                  <th className="text-center">Method Type</th>
+                  <th className="text-center">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactioninfo.slice(-5).map((tnx, index) => (
+                  tnx.tnx_type === "DR" ? (
+                    <tr key={index}>
+                      <th className="text-center" scope="row">
+                        {index + 1}
+                      </th>
+                      <td className="text-center">{tnx?.amount}</td>
+                      {/* <td className="text-center">{tnx?.tnx_type}</td> */}
+                      <td className="text-center">{tnx?.method_type}</td>
+                      <td className="text-center">{tnx?.description}</td>
+                    </tr>
+                  ) : null
+                ))}
+              </tbody>
+            </Table>
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  );
 };
 
 export default Deposit;

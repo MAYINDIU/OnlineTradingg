@@ -1,4 +1,5 @@
 import { AuthContext } from "Context/AuthProvider";
+import useAlluser from "components/CustomHook/useAlluser";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
@@ -25,9 +26,11 @@ import {
 } from "reactstrap";
 
 const UserNavbar = (props) => {
-
+  // const [user] = useAlluser()
   const { user, logOut } = useContext(AuthContext);
-  const wallet = user?.wallet;
+  const [userInfo, setUserInfo] = useState({})
+  // console.log(userInfo)
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -36,11 +39,25 @@ const UserNavbar = (props) => {
   const handleSignOut = () => {
     logOut().then(() => {
       navigate(from, { replace: true });
+      localStorage.removeItem("token");
     }).catch((error) => {
 
     });
   }
   const [notifications, setNotifications] = useState([]);
+
+
+  useEffect(() => {
+    const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
+    console.log(url);
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setUserInfo(data));
+  }, []);
+
+
+
+
 
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
@@ -123,7 +140,8 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name} (${wallet})
+                        {user?.name} (INR {user?.wallet})
+
                       </span>
                     }
 
