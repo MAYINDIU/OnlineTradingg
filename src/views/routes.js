@@ -13,6 +13,7 @@ import Request from "./examples/CashFree/Request";
 import Tradehistory from "./examples/TradeHistory/Tradehistory";
 import PaymentSuccessComponent from "./examples/PaymentSuccessComponent/PaymentSuccessComponent";
 import ChosePlan from "./examples/MyPlan/ChosePlan";
+import Myinvestmentlist from "./examples/InvestmentList/Myinvestmentlist";
 var routes = [
 
   {
@@ -49,6 +50,13 @@ var routes = [
     name: "My Plan",
     icon: "fa-solid fa-hand-holding-heart text-primary",
     component: <MyPlan />,
+    layout: "/user",
+  },
+  {
+    path: "/my_investment",
+    name: "My Investment",
+    icon: "fa-solid fa-hand-holding-heart text-primary",
+    component: <Myinvestmentlist />,
     layout: "/user",
   },
 

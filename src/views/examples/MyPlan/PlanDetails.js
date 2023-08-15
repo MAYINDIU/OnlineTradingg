@@ -46,6 +46,7 @@ const PlanDetails = () => {
       .then((data) => setPackage(data));
   }, [id]);
 
+
   const [inputAmount, setInputAmount] = useState(p?.min);
   const [isOutOfRange, setIsOutOfRange] = useState(false);
 
@@ -68,17 +69,7 @@ const PlanDetails = () => {
   const handleInvestmentAmount = async (e) => {
     e.preventDefault();
 
-    // For Purchuse Plan
-    const purchase_date = purchase_dt;
-    const planId = id;
-    const status = "Active";
-    const purchaseData = {
-      userId: user?.id,
-      planId,
-      purchase_date,
-      status,
-    };
-    console.log(purchaseData);
+
     // for deduct
     const userid = user?.id;
     const amount = inputAmount;
@@ -91,6 +82,35 @@ const PlanDetails = () => {
       const proceed = window.confirm("Are You sure to pay for this ?");
       if (proceed) {
 
+        const response = await axios.post(
+          "https://indian.munihaelectronics.com/public/api/deductMoneyforpkgpurchase",
+          data,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+
+        window.localStorage.setItem(
+          "userInfo",
+          JSON.stringify({ ...user, wallet: wallet - inputAmount })
+        );
+
+        // For Purchuse Plan
+        const purchase_date = purchase_dt;
+        const planId = id;
+        const status = "Active";
+        const transaction_id = response.data?.transaction_id;
+        const purchaseData = {
+          userId: user?.id,
+          planId,
+          purchase_date,
+          status,
+          transaction_id,
+        };
+        console.log(purchaseData);
         try {
           const response = await axios.post(
             "https://indian.munihaelectronics.com/public/api/purchase_pkg", purchaseData,
@@ -109,25 +129,8 @@ const PlanDetails = () => {
 
         }
 
+        // window.location.reload();
 
-
-        const response = await axios.post(
-          "https://indian.munihaelectronics.com/public/api/deduct",
-          data,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        window.localStorage.setItem(
-          "userInfo",
-          JSON.stringify({ ...user, wallet: wallet - inputAmount })
-        );
-        window.location.reload();
-        // const remaining = wallet - inputAmount;
-        // setPackages(remaining)
-        console.log(response);
 
         swal({
           title: "Successflly Payed!",

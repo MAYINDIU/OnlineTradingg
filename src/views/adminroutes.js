@@ -7,6 +7,7 @@ import Purchaselist from "./examples/Purchase/Purchaselist";
 import All_transactions from "./examples/Transactions/All_transactions";
 import Adminnotification from "./examples/Notification/Adminnotification";
 import Tradehistory from "./examples/TradeHistory/Tradehistory";
+import Investmentlist from "./examples/InvestmentList/Investmentlist";
 var adminroutes = [
   {
     path: "/index",
@@ -69,6 +70,13 @@ var adminroutes = [
     name: "Trade History",
     icon: "fa-solid fa-user text-primary",
     component: <Tradehistory />,
+    layout: "/admin",
+  },
+  {
+    path: "/investment_list",
+    name: "Flat Investment List",
+    icon: "fa-solid fa-user text-primary",
+    component: <Investmentlist />,
     layout: "/admin",
   },
 

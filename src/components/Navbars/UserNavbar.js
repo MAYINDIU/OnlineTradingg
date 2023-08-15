@@ -58,10 +58,6 @@ const UserNavbar = (props) => {
       .then((data) => setUserInfo(data));
   }, []);
 
-
-
-
-
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
       .then((res) => res.json())
