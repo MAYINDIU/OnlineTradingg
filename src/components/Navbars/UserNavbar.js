@@ -1,8 +1,7 @@
 import { AuthContext } from "Context/AuthProvider";
 import useAlluser from "components/CustomHook/useAlluser";
 import { useContext, useEffect, useState } from "react";
-
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -45,8 +44,6 @@ const UserNavbar = (props) => {
 
     });
   }
-
-  const [modal, setModal] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
 
@@ -58,14 +55,13 @@ const UserNavbar = (props) => {
       .then((data) => setUserInfo(data));
   }, []);
 
+
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
       .then((res) => res.json())
       .then((data) => setNotifications(data));
   }, []);
 
-
-  const toggle = () => setModal(!modal);
 
   return (
     <>
@@ -109,33 +105,13 @@ const UserNavbar = (props) => {
 
                 ))
               }
-              <DropdownItem className='text-center'>
-                <span>See All Notification</span>
-              </DropdownItem>
+              <Link to='/user/notification'>
+                <DropdownItem className='text-center m-0' tag="div">
+                  <span >See All Notification</span>
+                </DropdownItem>
+              </Link>
             </DropdownMenu>
           </UncontrolledDropdown>
-
-          {/* <div>
-            <FaBell className="text-xl text-white" onClick={toggle}></FaBell>
-            <Modal isOpen={modal} toggle={toggle}>
-              <ModalHeader className='border-bottom' toggle={toggle}>Notifications</ModalHeader>
-              <ModalBody >
-                {
-                  notifications.map((n, i) => (
-                    <h5 className="">{n.text}</h5>
-                  ))
-                }
-
-
-              </ModalBody>
-              <ModalFooter className='border-top' >
-                <Button color="secondary" className="text-center" >
-                  See All Notification
-                </Button>
-              </ModalFooter>
-            </Modal>
-          </div> */}
-
 
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>

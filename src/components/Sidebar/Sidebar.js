@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import { FaAngleRight } from "react-icons/fa";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
@@ -65,19 +66,33 @@ const Sidebar = (props) => {
           </>
         )
       }
+      if (prop.name) {
+        return (
+          <NavItem key={key}>
+            <NavLink
+              to={prop.layout + prop.path}
+              tag={NavLinkRRD}
+              onClick={closeCollapse}
+            >
+              <i className={prop.icon} />
+              {prop.name}
+            </NavLink>
+          </NavItem>
+        )
+      }
 
-      return (
-        <NavItem key={key}>
-          <NavLink
-            to={prop.layout + prop.path}
-            tag={NavLinkRRD}
-            onClick={closeCollapse}
-          >
-            <i className={prop.icon} />
-            {prop.name}
-          </NavLink>
-        </NavItem>
-      );
+      // return (
+      //   <NavItem key={key}>
+      //     <NavLink
+      //       to={prop.layout + prop.path}
+      //       tag={NavLinkRRD}
+      //       onClick={closeCollapse}
+      //     >
+      //       <i className={prop.icon} />
+      //       {prop.name}
+      //     </NavLink>
+      //   </NavItem>
+      // );
     });
   };
 

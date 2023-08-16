@@ -27,7 +27,7 @@ import Transactions from "./Transactions";
 import { reload } from "firebase/auth";
 
 const Deposit = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setUpdate, update } = useContext(AuthContext);
   console.log(user)
   const [userInfo, setUserInfo] = useState({})
   useEffect(() => {
@@ -158,7 +158,7 @@ const Deposit = () => {
     const newWalletBalance = parseFloat(userData.wallet) + amountToAdd;
 
     window.localStorage.setItem('userInfo', JSON.stringify({ ...user, wallet: newWalletBalance }));
-
+    setUpdate(!update);
     swal({
       title: "Deposited Successfully",
       text: 'Success',
