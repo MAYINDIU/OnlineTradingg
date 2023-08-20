@@ -132,7 +132,7 @@ const DepositHistory = () => {
         </Form>
         <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
            
-          <Table hover bordered responsive>
+          <Table  hover bordered responsive>
           <DataTable
             columns={columns}
             data={sortedDepositHistory}

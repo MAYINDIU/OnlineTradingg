@@ -50,7 +50,7 @@ const Deposit = () => {
   // var w = wallet ;
   // var final = d+w
   const w=parseInt(wallet);
-  const newWallet = w +(depositAmount+0);
+  const newWallet = w +(depositAmount);
  
   
   //  success payment 
