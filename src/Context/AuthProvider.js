@@ -7,16 +7,24 @@ export const AuthContext = createContext()
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-    // const [user, setUser] = useState('');
-
-    // const userId = window.localStorage.getItem('userInfo')
     const userInfo = window.localStorage.getItem('userInfo')
     const loginUser = JSON.parse(userInfo)
+
+    const [update, setUpdate] = useState(false);
+
+    useEffect(() => {
+        const userInfo = window.localStorage.getItem('userInfo')
+        const loginUser = JSON.parse(userInfo)
+        setUser(loginUser)
+
+    }, [update])
+
     const [user, setUser] = useState(loginUser || {});
+
     const [loading, setLoading] = useState(true);
 
 
-    // console.log(user)
+    console.log(user)
 
     const providerLogin = (provider) => {
         setLoading(true);
@@ -42,7 +50,7 @@ const AuthProvider = ({ children }) => {
         }
     }, [])
 
-    const authInfo = { user, loading, setUser, logOut, providerLogin }
+    const authInfo = { user, loading, setUser, setUpdate, update, logOut, providerLogin }
 
     return (
         <AuthContext.Provider value={authInfo} >

@@ -27,11 +27,10 @@ const Manageuser = () => {
   const [user, setUser] = useState([]);
   const [wallet, setWallet] = useState("");
   const [amount, setAmount] = useState("");
-  const [method_type, setPlanType] = useState("");
   const [deductamount, setDeductAmount] = useState("");
-  const [name,setFirstName] = useState('')
-  const [email,setEmail] = useState('')
-  const [referal_code,setReferalCode] = useState('')
+  const [name, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [referal_code, setReferalCode] = useState("");
 
   // const newWallet = user?.wallet;
   // console.log(method_type,amount,wallet,id);
@@ -45,29 +44,31 @@ const Manageuser = () => {
       amount,
     };
     console.log(data);
-    try {
-      const response = await axios.post(
-        "https://indian.munihaelectronics.com/public/api/deduct",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log(response);
-        
-      // Reset the form inputs
-
-      setDeductAmount("");
-
-      alert(response?.data?.message);
-      // const remaining = newWallet - deductamount
-      //   user?.wallet(remaining)
-        window.location.reload()
-    } catch (error) {
-      toast.error(error?.response?.data?.error);
+    const confirm = window.confirm("Are you sure for deduct amount ?");
+    if(confirm){
+      try {
+        const response = await axios.post(
+          "https://indian.munihaelectronics.com/public/api/deduct",
+          data,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response);
+  
+        // Reset the form inputs
+  
+        setDeductAmount("");
+  
+        alert(response?.data?.message);
+        window.location.reload();
+      } catch (error) {
+        toast.error(error?.response?.data?.error);
+      }
     }
+    
   };
 
   //Deposit amount
@@ -79,31 +80,27 @@ const Manageuser = () => {
     const data = {
       userid,
       amount,
-      method_type,
+      method_type: "By Admin",
       description,
     };
     console.log(data);
-    try {
-      const response = await axios.post(
-        "https://indian.munihaelectronics.com/public/api/deposit",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log(response);
-
-      // Reset the form inputs
-
-      setWallet("");
-      setPlanType("");
-      setAmount("");
-
-      alert(response?.data?.message);
-    } catch (error) {
-      toast.error(error?.response?.data?.error);
+    const confirm= window.confirm('Are you sure for deposit amount ?')
+    if(confirm){
+      try {
+        const response = await axios.post(
+          "https://indian.munihaelectronics.com/public/api/deposit",
+          data,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response);
+        window.location.reload();
+      } catch (error) {
+        console.error("Error creating payment:", error);
+      }
     }
   };
 
@@ -116,8 +113,8 @@ const Manageuser = () => {
       .then((data) => setUser(data));
   }, [id]);
 
-  const handleUpdateUser = async (e)=>{
-    e.preventDefault()
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
 
     const data = {
       name: name ? name : user?.name,
@@ -129,7 +126,7 @@ const Manageuser = () => {
         `https://indian.munihaelectronics.com/public/api/update_user/${user?.id}`,
         data
       );
-        console.log(response)
+      console.log(response);
       swal({
         title: "Successflly Updated!",
         text: response?.data?.message,
@@ -139,8 +136,7 @@ const Manageuser = () => {
       console.log(error?.response);
       toast.error(error.response?.data?.error);
     }
-  
-  }
+  };
 
   const handleInfoClick = () => {
     setIsInfoClicked(true);
@@ -266,11 +262,12 @@ const Manageuser = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-user"></i>
+                                <i class="fa-solid fa-user text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                            defaultValue={user?.name}
+                            className="text-dark"
+                              defaultValue={user?.name}
                               onChange={(e) => setFirstName(e.target.value)}
                               placeholder={user?.name}
                               type="text"
@@ -285,11 +282,13 @@ const Manageuser = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-envelope"></i>
+                                <i class="fa-solid fa-envelope text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                            defaultValue={user?.email}
+                            className="text-dark"
+                            readOnly
+                              // defaultValue={user?.email}
                               onChange={(e) => setEmail(e.target.value)}
                               placeholder={user?.email}
                               type="text"
@@ -306,10 +305,11 @@ const Manageuser = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-dollar"></i>
+                              <i class="fa-solid fa-indian-rupee-sign text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
+                            readOnly
                               // onChange={(e) => setPlanName(e.target.value)}
                               placeholder={user?.wallet}
                               type="text"
@@ -320,16 +320,18 @@ const Manageuser = () => {
 
                       <Col lg="12" xl="6" className=" mt-3">
                         <FormGroup>
-                          <Label>Status</Label>
+                          <Label>Mobile Number</Label>
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-globe"></i>
+                                <i class="fa-solid text-info">+91</i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
+                            className="text-dark"
                               // onChange={(e) => setPlanName(e.target.value)}
-                              placeholder={user?.status}
+                              placeholder={user?.mobile_no}
+                              defaultValue={user?.mobile_no}
                               type="text"
                             />
                           </InputGroup>
@@ -337,19 +339,19 @@ const Manageuser = () => {
                       </Col>
                     </Row>
                     <Row>
-                      
                       <Col lg="12" xl="6" className=" mt-3">
                         <FormGroup className="mb-3">
                           <Label>Address</Label>
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                              <i class="fa-regular fa-address-card"></i>
+                                <i class="fa-regular fa-address-card text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
+                            className="text-dark"
                               // onChange={(e) => setPlanName(e.target.value)}
-                              placeholder={user?.address}
+                              placeholder='Type Your Address'
                               type="textarea"
                             />
                           </InputGroup>
@@ -362,11 +364,12 @@ const Manageuser = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-qrcode"></i>
+                                <i class="fa-solid fa-hand-holding text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                            defaultValue={user?.referal_code}
+                            className="text-dark"
+                              defaultValue={user?.referal_code}
                               onChange={(e) => setReferalCode(e.target.value)}
                               placeholder={user?.referal_code}
                               type="text"
@@ -401,7 +404,7 @@ const Manageuser = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-envelope"></i>
+                              <i class="fa-solid fa-indian-rupee-sign text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -420,7 +423,7 @@ const Manageuser = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-dollar"></i>
+                              <i class="fa-solid fa-indian-rupee-sign text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -428,29 +431,6 @@ const Manageuser = () => {
                               placeholder="Type Deposit Amount"
                               type="text"
                             />
-                          </InputGroup>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="12" xl="12" className=" mt-1">
-                        <FormGroup className="mb-3">
-                          <Label>Payment Type</Label>
-                          <InputGroup className="input-group-alternative">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i class="fa-solid fa-rectangle-list"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              id="exampleSelect"
-                              name="select"
-                              type="select"
-                              onChange={(e) => setPlanType(e.target.value)}
-                            >
-                              <option>OFFICE CASH</option>
-                              <option>OFFICE CASH</option>
-                            </Input>
                           </InputGroup>
                         </FormGroup>
                       </Col>
@@ -481,7 +461,7 @@ const Manageuser = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-envelope"></i>
+                              <i class="fa-solid fa-indian-rupee-sign text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -496,11 +476,11 @@ const Manageuser = () => {
 
                       <Col lg="12" xl="6" className=" mt-3">
                         <FormGroup className="mb-3">
-                          <Label>Add Amount</Label>
+                          <Label>Deduct Amount</Label>
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-dollar"></i>
+                              <i class="fa-solid fa-indian-rupee-sign text-info"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -508,29 +488,6 @@ const Manageuser = () => {
                               placeholder="Type Deduct Amount"
                               type="text"
                             />
-                          </InputGroup>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="12" xl="12" className=" mt-1">
-                        <FormGroup className="mb-3">
-                          <Label>Payment Type</Label>
-                          <InputGroup className="input-group-alternative">
-                            <InputGroupAddon addonType="prepend">
-                              <InputGroupText>
-                                <i class="fa-solid fa-rectangle-list"></i>
-                              </InputGroupText>
-                            </InputGroupAddon>
-                            <Input
-                              id="exampleSelect"
-                              name="select"
-                              type="select"
-                              // onChange={(e) => setPlanType(e.target.value)}
-                            >
-                              <option>OFFICE CASH</option>
-                              {/* <option>OFFICE CASH</option> */}
-                            </Input>
                           </InputGroup>
                         </FormGroup>
                       </Col>

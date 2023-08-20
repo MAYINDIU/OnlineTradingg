@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink as NavLinkRRD, Link } from "react-router-dom";
-import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { NavItem, NavLink } from 'reactstrap';
 
+import { NavItem, NavLink } from 'reactstrap';
+import { FaAngleDown, FaAngleUp } from 'react-icons/fa';
 const SidebarMenu = ({ key, prop, closeCollapse }) => {
 
     const [isMenuOpen, setIsMenuOpen] = useState(false)

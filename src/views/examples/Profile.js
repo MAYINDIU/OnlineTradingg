@@ -88,7 +88,7 @@ const Profile = () => {
                         <img
                           alt="..."
                           className="rounded-circle"
-                          src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                          src={require("../../assets/img/theme/user.png")}
                         />
                       )}
                     </a>
@@ -122,32 +122,25 @@ const Profile = () => {
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                       <div>
-                        <span className="heading">22</span>
-                        <span className="description">Friends</span>
+
+                        <span className="heading btn btn-primary w-full">
+                          <i class="fa-solid fa-user mr-3"></i>{userInfo?.name}</span>
+
                       </div>
-                      <div>
-                        <span className="heading">10</span>
-                        <span className="description">Photos</span>
-                      </div>
-                      <div>
-                        <span className="heading">89</span>
-                        <span className="description">Comments</span>
-                      </div>
+
+
                     </div>
                   </div>
                 </Row>
                 <div className="text-center">
-                  <h3>
-                    {user?.uid ? (
-                      <span>{user.displayName}</span>
-                    ) : (
-                      <span>Jessica Jones</span>
-                    )}
-                    <span className="font-weight-light">, 27</span>
-                  </h3>
-                  <div className="h5 font-weight-300">
-                    <i className="ni location_pin mr-2" />
-                    Bucharest, Romania
+
+                  <div className="h5 font-weight-300 btn btn-primary">
+                    <i class="fa-solid fa-phone-volume mr-2"></i>
+                    {userInfo?.mobile_no}
+                  </div>
+                  <div className="h5 font-weight-300 btn btn-primary">
+                    <i class="fa-solid fa-envelope mr-2"></i>
+                    {userInfo?.email}
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
@@ -155,17 +148,10 @@ const Profile = () => {
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
-                    University of Computer Science
+                    Trading Online System
                   </div>
-                  <hr className="my-4" />
-                  <p>
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
-                  </p>
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    Show more
-                  </a>
+
+
                 </div>
               </CardBody>
             </Card>
@@ -207,7 +193,7 @@ const Profile = () => {
                           <InputGroup className="input-group-alternative mb-3">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i className="ni ni-hat-3" />
+                                <i class="fa-solid fa-user"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
@@ -279,11 +265,11 @@ const Profile = () => {
                           <InputGroup className="input-group-alternative">
                             <InputGroupAddon addonType="prepend">
                               <InputGroupText>
-                                <i class="fa-solid fa-qrcode"></i>
+                                <i class="fa-solid fa-hand-holding"></i>
                               </InputGroupText>
                             </InputGroupAddon>
                             <Input
-                              defaultValue={user?.referal_code}
+                              defaultValue={userInfo?.referal_code}
                               onChange={(e) => setReferalCode(e.target.value)}
                               placeholder={userInfo?.referal_code}
                               type="text"

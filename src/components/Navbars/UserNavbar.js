@@ -1,8 +1,7 @@
 import { AuthContext } from "Context/AuthProvider";
 import useAlluser from "components/CustomHook/useAlluser";
 import { useContext, useEffect, useState } from "react";
-
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -27,11 +26,11 @@ import {
 } from "reactstrap";
 
 const UserNavbar = (props) => {
-// const [user] = useAlluser()
+  // const [user] = useAlluser()
   const { user, logOut } = useContext(AuthContext);
-  const [userInfo,setUserInfo] = useState({})
-  console.log(userInfo)
-  
+  const [userInfo, setUserInfo] = useState({})
+  // console.log(userInfo)
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -40,16 +39,15 @@ const UserNavbar = (props) => {
   const handleSignOut = () => {
     logOut().then(() => {
       navigate(from, { replace: true });
+      localStorage.removeItem("token");
     }).catch((error) => {
 
     });
   }
-
-  const [modal, setModal] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
-   
-   useEffect(() => {
+
+  useEffect(() => {
     const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
     console.log(url);
     fetch(url)
@@ -57,14 +55,13 @@ const UserNavbar = (props) => {
       .then((data) => setUserInfo(data));
   }, []);
 
+
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
       .then((res) => res.json())
       .then((data) => setNotifications(data));
   }, []);
 
-
-  const toggle = () => setModal(!modal);
 
   return (
     <>
@@ -74,7 +71,7 @@ const UserNavbar = (props) => {
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
           >
-            {props.brandText} 
+            {props.brandText}
           </Link>
           <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
@@ -108,33 +105,13 @@ const UserNavbar = (props) => {
 
                 ))
               }
-              <DropdownItem className='text-center'>
-                <span>See All Notification</span>
-              </DropdownItem>
+              <Link to='/user/notification'>
+                <DropdownItem className='text-center m-0' tag="div">
+                  <span >See All Notification</span>
+                </DropdownItem>
+              </Link>
             </DropdownMenu>
           </UncontrolledDropdown>
-
-          {/* <div>
-            <FaBell className="text-xl text-white" onClick={toggle}></FaBell>
-            <Modal isOpen={modal} toggle={toggle}>
-              <ModalHeader className='border-bottom' toggle={toggle}>Notifications</ModalHeader>
-              <ModalBody >
-                {
-                  notifications.map((n, i) => (
-                    <h5 className="">{n.text}</h5>
-                  ))
-                }
-
-
-              </ModalBody>
-              <ModalFooter className='border-top' >
-                <Button color="secondary" className="text-center" >
-                  See All Notification
-                </Button>
-              </ModalFooter>
-            </Modal>
-          </div> */}
-
 
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
@@ -160,7 +137,8 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name} (INR {user?.wallet}) 
+                        {user?.name} (INR {user?.wallet})
+
                       </span>
                     }
 

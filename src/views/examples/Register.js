@@ -25,6 +25,7 @@ const Register = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [error, setError] = useState(null);
+  const [agree,setAgree] = useState(false)
 
   const from = location.state?.from?.pathname || "/";
 
@@ -183,20 +184,21 @@ const Register = () => {
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-hat-3" />
+                    <i class="fa-solid fa-user text-info"></i>
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Name" type="text" name="name" />
+                  <Input className="text-dark" placeholder="Name" type="text" name="name" />
                 </InputGroup>
               </FormGroup>
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-email-83" />
+                      <i className="ni ni-email-83 text-info" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                  className="text-dark"
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
@@ -208,10 +210,11 @@ const Register = () => {
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
+                      <i className="ni ni-lock-circle-open text-info" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                  className="text-dark"
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
@@ -223,10 +226,11 @@ const Register = () => {
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                    <i class="fa-solid">+91</i>
+                    <i class="fa-solid text-info">+91</i>
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                  className="text-dark"
                     placeholder={`Mobile Number`}
                     type="number"
                     name="mobileNo"
@@ -237,10 +241,11 @@ const Register = () => {
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-hat-3" />
+                    <i class="fa-solid fa-hand-holding text-info"></i>
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                  className="text-dark"
                     placeholder="Refferal Code"
                     type="text"
                     name="refferalCode"
@@ -256,10 +261,12 @@ const Register = () => {
               <Row className="my-4">
                 <Col xs="12">
                   <div className="custom-control custom-control-alternative custom-checkbox">
+                  {/* <i class="fa-solid fa-check"></i> */}
                     <input
-                      className="custom-control-input"
+                      className="custom-control-input "
                       id="customCheckRegister"
                       type="checkbox"
+                     onClick={()=>setAgree(!agree)} 
                     />
                     <label
                       className="custom-control-label"
@@ -274,7 +281,7 @@ const Register = () => {
               </Row>
               <div className="text-center">
                 <div className="text-center">
-                  <Button className="my-4 w-100" color="primary" type="submit">
+                  <Button className="my-4 w-100" color="primary" type="submit" disabled={!agree}>
                     CREATE AN ACCOUNT
                   </Button>
                 </div>
@@ -290,7 +297,7 @@ const Register = () => {
                   className="text-primary text-decoration-none"
                   to={`/auth/login`}
                 >
-                  <Button className="my-2 w-100" color="default" type="submit">
+                  <Button className="my-2 w-100" color="default" type="submit" >
                     LOG IN
                   </Button>
                 </Link>

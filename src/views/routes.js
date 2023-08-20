@@ -12,8 +12,11 @@ import PlanDetails from "./examples/MyPlan/PlanDetails";
 import Request from "./examples/CashFree/Request";
 import Tradehistory from "./examples/TradeHistory/Tradehistory";
 import PaymentSuccessComponent from "./examples/PaymentSuccessComponent/PaymentSuccessComponent";
+import ChosePlan from "./examples/MyPlan/ChosePlan";
+import Myinvestmentlist from "./examples/InvestmentList/Myinvestmentlist";
+import UserNotifications from "./examples/Notification/UserNotifications";
 var routes = [
-  
+
   {
     path: "/index",
     name: "Home",
@@ -21,7 +24,7 @@ var routes = [
     component: <Index />,
     layout: "/user",
   },
-  
+
   {
     path: "/user-profile",
     name: "User Profile",
@@ -50,13 +53,26 @@ var routes = [
     component: <MyPlan />,
     layout: "/user",
   },
-  
+  {
+    path: "/my_investment",
+    name: "My Investment",
+    icon: "fa-solid fa-hand-holding-heart text-primary",
+    component: <Myinvestmentlist />,
+    layout: "/user",
+  },
 
   {
-    // path: "/myplan",
+    path: "/notification",
+    name: "Notifications",
+    icon: "fa-solid fa-bell text-primary",
+    component: <UserNotifications />,
+    layout: "/user"
+  },
+
+  {
+
     name: "Finance",
     icon: "fa-solid fa-money-bill-wheat text-primary",
-    // component: <MyPlan />,
     layout: "/user",
 
     subMenu: [
@@ -65,44 +81,45 @@ var routes = [
         path: "/user/deposit",
         icon: "fa-solid fa-circle-down text-primary",
       },
-      {
-        name: 'Withdraw',
-        path: "/user/withdraw",
-        icon: "fa-solid fa-circle-arrow-up text-primary"
-      },
+      // {
+      //   name: 'Withdraw',
+      //   path: "/user/withdraw",
+      //   icon: "fa-solid fa-circle-arrow-up text-primary"
+      // },
       {
         name: 'Transaction history',
-        path: "/user/transactions",
+        path: "/user/transactions/deposit",
         icon: "fa-solid fa-circle-info text-primary",
       }
     ]
   },
 
   {
-    // path: "/myplan",
+
     name: "Investment Funding",
     icon: "fa-solid fa-money-bill-trend-up text-primary",
-    // component: <MyPlan />,
     layout: "/user",
 
     subMenu: [
       {
-        name: 'Choose Plan',
-        path: "/user/myplan",
+        name: "Choose Plan",
+        path: "/user/chooseplan",
         icon: "fa-solid fa-square-check text-primary",
+        // component: <ChosePlan/>,
       },
       {
         name: 'Upgrade Plan',
-        path: "/user/myplan",
+        // path: "/user/myplan",
         icon: "fa-solid fa-square-pen text-primary"
       },
-      {
-        name: 'Plan details',
-        path: "/user/myplan",
-        icon: "fa-solid fa-circle-info text-primary",
-      }
+      // {
+      //   name: 'Plan details',
+      //   // path: "/user/myplan",
+      //   icon: "fa-solid fa-circle-info text-primary",
+      // }
     ]
   },
+
   {
     path: "/plandetails/:id",
     component: <PlanDetails />,
@@ -135,6 +152,13 @@ var routes = [
     // name: "Withdraw",
     // icon: "fa-solid fa-circle-arrow-up text-primary",
     component: <Withdraw />,
+    layout: "/user",
+  },
+  {
+    path: "/chooseplan",
+    // name: 'Choose Plan',
+    // icon: "fa-solid fa-square-check text-primary",
+    component: <ChosePlan />,
     layout: "/user",
   },
   {
