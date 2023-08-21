@@ -1,4 +1,6 @@
 import { AuthContext } from "Context/AuthProvider";
+import axios from "axios";
+import useAlluser from "components/CustomHook/useAlluser";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 // reactstrap components
@@ -25,9 +27,11 @@ import {
 } from "reactstrap";
 
 const UserNavbar = (props) => {
+  // const [user] = useAlluser()
+  const { user, logOut, update, setUpdate } = useContext(AuthContext);
+  const [userInfo, setUserInfo] = useState({})
+  // console.log(userInfo)
 
-  const { user, logOut } = useContext(AuthContext);
-  const wallet = user?.wallet;
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -36,18 +40,43 @@ const UserNavbar = (props) => {
   const handleSignOut = () => {
     logOut().then(() => {
       navigate(from, { replace: true });
+      localStorage.removeItem("token");
     }).catch((error) => {
 
     });
   }
   const [notifications, setNotifications] = useState([]);
 
+
   useEffect(() => {
-    fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
+    const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
+    console.log(url);
+    fetch(url)
       .then((res) => res.json())
-      .then((data) => setNotifications(data));
+      .then((data) => setUserInfo(data));
   }, []);
 
+
+  useEffect(() => {
+    axios.get(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
+      .then((response) => {
+        setNotifications(response.data);
+      });
+  }, [update]);
+
+
+  const handleStatusChange = async (id) => {
+    try {
+      const response = await axios.post(`https://indian.munihaelectronics.com/public/api/update_notificationstatus/${id}`, {
+        // user_status: 'read'
+      });
+      console.log(response.data);
+      setUpdate(!update)
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
 
   return (
     <>
@@ -85,14 +114,15 @@ const UserNavbar = (props) => {
 
               {
                 notifications.slice(0, 5).map((n, i) => (
-                  <DropdownItem className="border-bottom" >
-                    <span className="" >{n.text}</span>
-                  </DropdownItem>
-
+                  <Link to='/user/notification'>
+                    <DropdownItem className={n.user_status === 'unread' ? ' border-bottom' : ' text-gray border-bottom'} >
+                      <span onClick={() => handleStatusChange(n.id)} >{n.text}</span>
+                    </DropdownItem>
+                  </Link>
                 ))
               }
-              <Link to='/user/notifications'>
-                <DropdownItem className='text-center m-0' tag="div">
+              <Link to='/user/notification'>
+                <DropdownItem className='text-center text-info m-0' tag="div">
                   <span >See All Notification</span>
                 </DropdownItem>
               </Link>
@@ -123,7 +153,8 @@ const UserNavbar = (props) => {
                         {user.displayName}
                       </span>
                       : <span className="mb-0 text-sm font-weight-bold">
-                        {user?.name} (${wallet})
+                        {user?.name} (INR {user?.wallet})
+
                       </span>
                     }
 

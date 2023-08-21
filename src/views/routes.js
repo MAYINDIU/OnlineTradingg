@@ -8,8 +8,11 @@ import Transactions from "views/examples/Transactions";
 import TradingPlan from "views/examples/TradingPlan/TradingPlan";
 import MyPlan from "views/examples/MyPlan/MyPlan";
 import PlanDetails from "./examples/MyPlan/PlanDetails";
+import Request from "./examples/CashFree/Request";
 import Tradehistory from "./examples/TradeHistory/Tradehistory";
 import UserNotifications from "./examples/Notification/UserNotifications";
+import PaymentSuccessComponent from "./examples/PaymentSuccessComponent/PaymentSuccessComponent";
+import ChosePlan from "./examples/MyPlan/ChosePlan";
 var routes = [
 
   {
@@ -62,14 +65,14 @@ var routes = [
         path: "/user/deposit",
         icon: "fa-solid fa-circle-down text-primary",
       },
-      {
-        name: 'Withdraw',
-        path: "/user/withdraw",
-        icon: "fa-solid fa-circle-arrow-up text-primary"
-      },
+      // {
+      //   name: 'Withdraw',
+      //   path: "/user/withdraw",
+      //   icon: "fa-solid fa-circle-arrow-up text-primary"
+      // },
       {
         name: 'Transaction history',
-        path: "/user/transactions",
+        path: "/user/transactions/deposit",
         icon: "fa-solid fa-circle-info text-primary",
       }
     ]
@@ -82,26 +85,37 @@ var routes = [
 
     subMenu: [
       {
-        name: 'Choose Plan',
-        path: "/user/myplan",
+        name: "Choose Plan",
+        path: "/user/chooseplan",
         icon: "fa-solid fa-square-check text-primary",
+        // component: <ChosePlan/>,
       },
       {
         name: 'Upgrade Plan',
-        path: "/user/myplan",
+        // path: "/user/myplan",
         icon: "fa-solid fa-square-pen text-primary"
       },
-      {
-        name: 'Plan details',
-        path: "/user/myplan",
-        icon: "fa-solid fa-circle-info text-primary",
-      }
+      // {
+      //   name: 'Plan details',
+      //   // path: "/user/myplan",
+      //   icon: "fa-solid fa-circle-info text-primary",
+      // }
     ]
   },
 
   {
     path: "/plandetails/:id",
     component: <PlanDetails />,
+    layout: "/user",
+  },
+  {
+    path: "/paymentmethod",
+    component: <Request />,
+    layout: "/user",
+  },
+  {
+    path: "/paymentsuccess",
+    component: <PaymentSuccessComponent />,
     layout: "/user",
   },
   {
@@ -121,6 +135,13 @@ var routes = [
     // name: "Withdraw",
     // icon: "fa-solid fa-circle-arrow-up text-primary",
     component: <Withdraw />,
+    layout: "/user",
+  },
+  {
+    path: "/chooseplan",
+    // name: 'Choose Plan',
+    // icon: "fa-solid fa-square-check text-primary",
+    component: <ChosePlan />,
     layout: "/user",
   },
   {

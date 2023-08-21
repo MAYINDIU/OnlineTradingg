@@ -16,13 +16,15 @@ import {
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
+import { AuthContext } from "Context/AuthProvider";
 
 const Tradehistory = () => {
 
   const [sessionToken, setSessionToken] = useState('');
   const [historyData, setHistoryData] = useState(['']);
   const history = historyData;
-  // console.log(history);
+  const { user } = useContext(AuthContext)
+  // console.log(sessionToken);
 
   const duration = (std, ed) => {
     const start = new Date(std);
@@ -152,12 +154,12 @@ const Tradehistory = () => {
                 ))}
               </tbody>
             </Table>
-          </Card>
-        </Col>
+          </Card >
+        </Col >
 
 
-      </Row>
-    </div>
+      </Row >
+    </div >
   );
 };
 

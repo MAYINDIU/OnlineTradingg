@@ -58,7 +58,7 @@ const PackageList = () => {
                 <td>{pkg?.planName}</td>
                 <td>{pkg?.planType}</td>
                 <td>{pkg?.planType} Profit {pkg?.profitShare}%</td>
-                <td>${pkg?.min}-${pkg?.max}</td>
+                <td>INR {pkg?.min} - INR {pkg?.max}</td>
                 <td>{pkg?.settelementTime}</td>
                 <td>{pkg?.locking_no} {pkg?.lockinPeriod}</td>
                 <td>{pkg?.compoundLevel}</td>
