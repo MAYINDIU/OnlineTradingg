@@ -43,7 +43,15 @@ const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
   const [chartExample1Data, setChartExample1Data] = useState("data1");
   const [transactioninfo, setTransactioninfo] = useState([]);
+  const [activeplan, setactiveplan] = useState('');
+ 
+  //Fetch total active plan
+  useEffect(() => {
+    fetch(`https://indian.munihaelectronics.com/public/api/total_plan/${user?.id}`)
+      .then((res) => res.json())
+      .then((data) => setactiveplan(data));
 
+  }, []);
   // Fetch for transiction 
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`)
@@ -79,7 +87,7 @@ const Index = (props) => {
                           tag="h4"
                           className="text-uppercase text-primary mb-0"
                         >
-                          Account balance
+                          Wallet balance
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           INR {wallet}
@@ -217,7 +225,7 @@ const Index = (props) => {
           <Col lg="12" xl="12" className=" mb-5 mt-3">
             <Card className="card-stats   mb-4 mb-xl-0 ">
               <CardBody>
-                <h2>Your Active Plans (0)</h2>
+                <h2>Your Active Trades ({activeplan?.activePlan})</h2>
                 <Row>
                   <div className="col text-center">
                     <p>
@@ -225,7 +233,7 @@ const Index = (props) => {
                     </p>
 
                     <div className="text-center">
-                      <Link to={`/user/myplan`}>
+                      <Link to={`/user/chooseplan`}>
                         <Button className="my-4" color="primary" type="button">
                           Click for Buy a new Plan
                         </Button>

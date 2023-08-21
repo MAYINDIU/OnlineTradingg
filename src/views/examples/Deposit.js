@@ -46,11 +46,12 @@ const Deposit = () => {
 
   const typeOfPayment = ["Cashfree", "HandCash"]
   const [paytype, setPayType] = useState(null);
-  const [successText, setSuccessText] = useState('');
+  // const [successText, setSuccessText] = useState('');
 
 
   const [transactioninfo, setTransactioninfo] = useState([]);
   const [depositAmount, setDepositAmount] = useState("");
+  console.log(depositAmount);
   const navigate = useNavigate();
   const w = parseInt(wallet);
   const newWallet = w + (depositAmount);
@@ -70,6 +71,34 @@ const Deposit = () => {
       .then((data) => setTransactioninfo(data));
   }, []);
 
+  const test =async (e)=>{
+
+    const depositData = {
+      userid: user?.id,
+      amount: transactionDetails?.order_amount,
+      method_type: "CashFree",
+      description: 'Payment deposited by Cashfreee',
+    };
+    console.log('Deposit Amount', depositData)
+    try {
+      const response = await axios.post(
+        "https://indian.munihaelectronics.com/public/api/deposit", depositData,
+
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      // setSuccessText(response)
+
+    }
+    catch (error) {
+      console.error("Error creating payment:", error);
+
+    }
+  }
 
   const handleDeposit = async (e) => {
     console.log(e);
@@ -82,13 +111,8 @@ const Deposit = () => {
       amount: depositAmount,
     };
     console.log(formData)
-    const depositData = {
-      userid: user?.id,
-      amount: depositAmount,
-      method_type: "CashFree",
-      description: 'Payment deposited by Cashfreee',
-    };
-    console.log('Deposit Amount', depositData)
+
+
     if (paytype == 'Cashfree' || paytype == 'Handcash') {
       try {
         if (paytype === 'Cashfree') {
@@ -106,30 +130,15 @@ const Deposit = () => {
         console.error("Error creating payment:", error);
         // Handle error here
       }
-      try {
-        const response = await axios.post(
-          "https://indian.munihaelectronics.com/public/api/deposit", depositData,
-
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-
-        setSuccessText(response)
-
-      }
-      catch (error) {
-        console.error("Error creating payment:", error);
-
-      }
+      
+   
 
     }
 
 
   };
+
+
 
   useEffect(() => {
     fetch(
@@ -139,9 +148,15 @@ const Deposit = () => {
       .then((data) => setTransactionDetails(data));
   }, []);
   console.log(transactionDetails)
+  // transactionDetails.order_amount > 0 && transactionDetails.payment_status==='success'
 
-  if (transactionDetails.order_amount > 0) {
+   console.log(transactionDetails.payment_status);
 
+
+   
+  if (transactionDetails.cf_settlement_id!=null) {
+    test();
+    
     const userDataString = localStorage.getItem('userInfo'); // Change 'userInfo' to your actual local storage key
     let userData = {};
 
@@ -166,6 +181,13 @@ const Deposit = () => {
     });
     navigate('/user/index')
   }
+  // else{
+  //   swal({
+  //     title: "Deposit Faiure",
+  //     text: 'fail',
+  //     icon: "warning",
+  //   });
+  // }
 
 
 

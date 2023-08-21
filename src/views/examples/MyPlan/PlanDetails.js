@@ -151,7 +151,7 @@ const PlanDetails = () => {
           text: response?.data?.message,
           icon: "success",
         });
-
+        navigate('/user/myplan')
         // cear input
         setInputAmount("");
         // alert(response?.data?.message);

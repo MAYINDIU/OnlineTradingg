@@ -30,7 +30,7 @@ const DepositHistory = () => {
 
   const filteredDepositHistory = searchText
     ? depositHistory.filter((history) =>
-      history?.method_type.toLowerCase().includes(searchText.toLowerCase())
+      history?.amount.toLowerCase().includes(searchText.toLowerCase())
     )
     : depositHistory;
 

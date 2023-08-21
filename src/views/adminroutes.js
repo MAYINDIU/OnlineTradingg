@@ -68,7 +68,7 @@ var adminroutes = [
   {
     path: "/trade-history",
     name: "Trade History",
-    icon: "fa-solid fa-user text-primary",
+    icon: "fa-solid fa-notes-medical text-primary",
     component: <Tradehistory />,
     layout: "/admin",
   },
