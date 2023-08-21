@@ -1,4 +1,5 @@
 import { AuthContext } from "Context/AuthProvider";
+import axios from "axios";
 import useAlluser from "components/CustomHook/useAlluser";
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -62,6 +63,18 @@ const UserNavbar = (props) => {
       .then((data) => setNotifications(data));
   }, []);
 
+  const handleStatusChange = async (id) => {
+    try {
+      const response = await axios.post(`https://indian.munihaelectronics.com/public/api/update_notificationstatus/${id}`, {
+        // user_status: 'read'
+      });
+      console.log(response.data);
+      // setUpdate(!update)
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
 
   return (
     <>
@@ -99,13 +112,13 @@ const UserNavbar = (props) => {
 
               {
                 notifications.slice(0, 5).map((n, i) => (
-                  <DropdownItem className="border-bottom" >
-                    <span className="" >{n.text}</span>
+                  <DropdownItem className={n.user_status === 'unread' ? 'bg-gray border-bottom' : 'border-bottom'} >
+                    <span onClick={() => handleStatusChange(n.id)} >{n.text}</span>
                   </DropdownItem>
 
                 ))
               }
-              <Link to='/user/notifications'>
+              <Link to='/user/notification'>
                 <DropdownItem className='text-center m-0' tag="div">
                   <span >See All Notification</span>
                 </DropdownItem>
