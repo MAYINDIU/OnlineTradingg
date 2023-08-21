@@ -8,6 +8,12 @@ const UserNotifications = () => {
     const { user, update, setUpdate } = useContext(AuthContext);
     const [notifications, setNotifications] = useState([]);
 
+    useEffect(() => {
+        fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
+            .then((res) => res.json())
+            .then((data) => setNotifications(data));
+    }, [update]);
+
     const handleStatusChange = async (id) => {
         try {
             const response = await axios.post(`https://indian.munihaelectronics.com/public/api/update_notificationstatus/${id}`, {
@@ -43,11 +49,11 @@ const UserNotifications = () => {
 
     ];
     const customStyles = {
-        // rows: {
-        //     style: {
-        //         backgroundColor:  // override the row height
-        //     },
-        // },
+        rows: {
+            style: {
+                cursor: 'pointer',
+            },
+        },
         headCells: {
             style: {
                 backgroundColor: 'blue',
@@ -61,12 +67,18 @@ const UserNotifications = () => {
             },
         },
     }
+    const conditionalRowStyles = [
+        {
+            when: row => row.user_status == 'unread',
+            style: {
+                // backgroundColor: 'gray-100',
+                // opacity: 0.2,
+                fontWeight: "bold",
+            },
+        },
+    ];
 
-    useEffect(() => {
-        fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
-            .then((res) => res.json())
-            .then((data) => setNotifications(data));
-    }, [update]);
+
 
     console.log(notifications)
 
@@ -83,20 +95,10 @@ const UserNotifications = () => {
                         customStyles={customStyles}
                         pagination
                         highlightOnHover
-                    // conditionalRowStyles={conditionalRowStyles}
+                        conditionalRowStyles={conditionalRowStyles}
                     />
 
                 </Card>
-                {/* <Card className="shadow-lg  ">
-                    {
-                        notifications.map((n, i) => (
-                            <p className={n.user_status === 'unread' ? 'bg-gray border-bottom' : 'border-bottom'} >
-                                <span onClick={() => handleStatusChange(n.id)} >{n.text}</span>
-                            </p>
-
-                        ))
-                    }
-                </Card> */}
             </div>
         </div>
     );

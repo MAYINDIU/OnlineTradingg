@@ -28,7 +28,7 @@ import {
 
 const UserNavbar = (props) => {
   // const [user] = useAlluser()
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, update, setUpdate } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({})
   // console.log(userInfo)
 
@@ -61,7 +61,7 @@ const UserNavbar = (props) => {
     fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
       .then((res) => res.json())
       .then((data) => setNotifications(data));
-  }, []);
+  }, [update]);
 
   const handleStatusChange = async (id) => {
     try {
@@ -69,7 +69,7 @@ const UserNavbar = (props) => {
         // user_status: 'read'
       });
       console.log(response.data);
-      // setUpdate(!update)
+      setUpdate(!update)
     } catch (error) {
       console.error(error);
     }
@@ -112,14 +112,14 @@ const UserNavbar = (props) => {
 
               {
                 notifications.slice(0, 5).map((n, i) => (
-                  <DropdownItem className={n.user_status === 'unread' ? 'bg-gray border-bottom' : 'border-bottom'} >
+                  <DropdownItem className={n.user_status === 'unread' ? 'bg-gray border-bottom' : 'fw-bold border-bottom'} >
                     <span onClick={() => handleStatusChange(n.id)} >{n.text}</span>
                   </DropdownItem>
 
                 ))
               }
               <Link to='/user/notification'>
-                <DropdownItem className='text-center m-0' tag="div">
+                <DropdownItem className='text-center text-info m-0' tag="div">
                   <span >See All Notification</span>
                 </DropdownItem>
               </Link>
