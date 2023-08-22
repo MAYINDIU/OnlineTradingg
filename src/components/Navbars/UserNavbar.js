@@ -24,13 +24,15 @@ import {
   Button,
   ModalBody,
   ModalFooter,
+  Badge,
 } from "reactstrap";
 
 const UserNavbar = (props) => {
-  // const [user] = useAlluser()
+
   const { user, logOut, update, setUpdate } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState({})
-  // console.log(userInfo)
+
+
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,6 +48,7 @@ const UserNavbar = (props) => {
     });
   }
   const [notifications, setNotifications] = useState([]);
+  const [unreadNotifications, setUnreadNotifications] = useState([]);
 
 
   useEffect(() => {
@@ -64,6 +67,13 @@ const UserNavbar = (props) => {
       });
   }, [update]);
 
+  useEffect(() => {
+    axios.get(`https://indian.munihaelectronics.com/public/api/notification_count/${user.id}`)
+      .then((response) => {
+        setUnreadNotifications(response.data.total);
+      });
+  }, [update]);
+
 
   const handleStatusChange = async (id) => {
     try {
@@ -75,8 +85,9 @@ const UserNavbar = (props) => {
     } catch (error) {
       console.error(error);
     }
-
   }
+
+  console.log(unreadNotifications)
 
   return (
     <>
@@ -101,11 +112,13 @@ const UserNavbar = (props) => {
             </FormGroup>
           </Form>
 
-          <UncontrolledDropdown nav>
+          <UncontrolledDropdown className="" nav>
             <DropdownToggle className="px-0" nav>
               <Media className="icon icon-shape bg-primary text-white rounded-circle shadow-xl">
-                <i class="fa-solid fa-bell "></i>
+                <i class="fa-solid fa-bell  "> </i>
+                <p className="mt--4 mr--4 badge text-danger rounded-pill bg-secondary"> {unreadNotifications}</p>
               </Media>
+
             </DropdownToggle>
             <DropdownMenu className="dropdown-menu-arrow" right>
               <DropdownItem className="noti-title border-bottom" header tag="div">
