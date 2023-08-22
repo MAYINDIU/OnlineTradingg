@@ -106,25 +106,25 @@ const Deposit = () => {
         console.error("Error creating payment:", error);
         // Handle error here
       }
-      try {
-        const response = await axios.post(
-          "https://indian.munihaelectronics.com/public/api/deposit", depositData,
+      // try {
+      //   const response = await axios.post(
+      //     "https://indian.munihaelectronics.com/public/api/deposit", depositData,
 
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+      //     {
+      //       headers: {
+      //         "Content-Type": "multipart/form-data",
+      //       },
+      //     }
+      //   );
 
 
-        setSuccessText(response)
+      //   setSuccessText(response)
 
-      }
-      catch (error) {
-        console.error("Error creating payment:", error);
+      // }
+      // catch (error) {
+      //   console.error("Error creating payment:", error);
 
-      }
+      // }
 
     }
 
@@ -140,7 +140,32 @@ const Deposit = () => {
   }, []);
   console.log(transactionDetails)
 
-  if (transactionDetails.order_amount > 0) {
+  if (transactionDetails.cf_settlement_id!==null) {
+    const depositData = {
+      userid: user?.id,
+      amount: depositAmount,
+      method_type: "CashFree",
+      description: 'Payment deposited by Cashfreee',
+    };
+    try {
+      const response =  axios.post(
+        "https://indian.munihaelectronics.com/public/api/deposit", depositData,
+
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+
+      setSuccessText(response)
+
+    }
+    catch (error) {
+      console.error("Error creating payment:", error);
+
+    }
 
     const userDataString = localStorage.getItem('userInfo'); // Change 'userInfo' to your actual local storage key
     let userData = {};
