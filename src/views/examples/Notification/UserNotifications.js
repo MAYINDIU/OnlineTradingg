@@ -1,35 +1,63 @@
 import { AuthContext } from 'Context/AuthProvider';
+import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { Card, Table } from 'reactstrap';
 
 const UserNotifications = () => {
-    const { user } = useContext(AuthContext);
+    const { user, update, setUpdate } = useContext(AuthContext);
     const [notifications, setNotifications] = useState([]);
+
+
+    const duration = (std) => {
+        const start = new Date(std);
+        const end = new Date();
+        const find = end - start;
+        const h = Math.floor(find / (1000 * 60 * 60));
+        const min = Math.floor((find % (1000 * 60 * 60)) / (1000 * 60));
+        // console.log(h+"h "+min+"m");
+        const d = (h + "h " + min + "m" + ' ago');
+        return d;
+    }
+
+    useEffect(() => {
+        axios.get(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
+            .then((response) => {
+                setNotifications(response.data);
+            });
+    }, [update]);
+
+    const handleStatusChange = async (id) => {
+        try {
+            const response = await axios.post(`https://indian.munihaelectronics.com/public/api/update_notificationstatus/${id}`, {
+                // user_status: 'read'
+            });
+            console.log(response.data);
+            setUpdate(!update)
+        } catch (error) {
+            console.error(error);
+        }
+
+    }
 
     const columns = [
         {
-            name: 'Index',
-            selector: row => row.id,
+            name: 'Notifications',
+            cell: row => <span onClick={() => handleStatusChange(row.id)}>{row.text}</span>,
 
         },
         {
-            name: 'Text',
-            selector: row => row.text,
-
-        },
-        {
-            name: 'Date',
-            selector: row => row.created_at,
+            name: 'Duration',
+            cell: row => <span onClick={() => handleStatusChange(row.id)}>{duration(row.created_at)}</span>,
         },
 
     ];
     const customStyles = {
-        // rows: {
-        //     style: {
-        //         minHeight: '72px', // override the row height
-        //     },
-        // },
+        rows: {
+            style: {
+                cursor: 'pointer',
+            },
+        },
         headCells: {
             style: {
                 backgroundColor: 'blue',
@@ -43,14 +71,15 @@ const UserNotifications = () => {
             },
         },
     }
-
-    useEffect(() => {
-        fetch(`https://indian.munihaelectronics.com/public/api/show_userNotification/${user.id}`)
-            .then((res) => res.json())
-            .then((data) => setNotifications(data));
-    }, []);
-
-    // console.log(notifications)
+    const conditionalRowStyles = [
+        {
+            when: row => row.user_status === 'unread',
+            style: {
+                fontWeight: "bold",
+            },
+        },
+    ];
+    console.log(notifications)
 
 
     return (
@@ -60,7 +89,14 @@ const UserNotifications = () => {
             </div>
             <div className="container-fluid  mb-2 mx-auto mt--7">
                 <Card className="shadow-lg  ">
-                    <DataTable columns={columns} data={notifications} customStyles={customStyles} pagination />
+                    <DataTable columns={columns}
+                        data={notifications}
+                        customStyles={customStyles}
+                        pagination
+                        highlightOnHover
+                        conditionalRowStyles={conditionalRowStyles}
+                    />
+
                 </Card>
             </div>
         </div>

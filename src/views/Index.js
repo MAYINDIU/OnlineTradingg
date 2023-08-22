@@ -44,7 +44,7 @@ const Index = (props) => {
   const [chartExample1Data, setChartExample1Data] = useState("data1");
   const [transactioninfo, setTransactioninfo] = useState([]);
   const [activeplan, setactiveplan] = useState('');
- 
+
   //Fetch total active plan
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/total_plan/${user?.id}`)
@@ -278,7 +278,7 @@ const Index = (props) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactioninfo.slice(-6).map((tnx, index) => (
+                  {transactioninfo.slice(-5).map((tnx, index) => (
                     tnx.tnx_type === "DR" ? (
                       <tr key={index}>
                         <th className="text-center" scope="row">
