@@ -79,7 +79,7 @@ const Register = () => {
       .catch((error) => console.error(error));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit =async (event) => {
     event.preventDefault();
     const form = event.target;
     const userName = form.name.value;
@@ -96,6 +96,11 @@ const Register = () => {
     formdata.append("referal_code", referalCode);
     formdata.append("mobile_no", mobileNo);
     formdata.append("status", status);
+
+    const emailData = {
+      to: email,
+     
+  };
 
     axios
       .post(
@@ -121,6 +126,20 @@ const Register = () => {
           // Successful login
           navigate(from, { replace: true });
           loginAlert();
+          try {
+            const response = axios.post('https://indian.munihaelectronics.com/public/api/send-welcome-email', emailData);
+            if (response.status === 200) {
+              // swal({
+              //   title: "Successflly Mailed!",
+              //   text: response?.data?.message,
+              //   icon: "Mailed",
+              // });
+            } else {
+                // Display error message to the user
+            }
+        } catch (error) {
+            // Handle errors
+        }
         } else if (response.data.status === "0") {
           console.error(error);
         }
@@ -128,6 +147,7 @@ const Register = () => {
       .catch((error) => {
         console.error(error);
       });
+     
   };
   return (
     <>

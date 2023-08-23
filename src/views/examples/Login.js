@@ -244,7 +244,7 @@ const Login = () => {
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-email-83" />
+                      <i className="ni ni-email-83 text-info" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
@@ -259,7 +259,7 @@ const Login = () => {
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
+                      <i className="ni ni-lock-circle-open text-info" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input

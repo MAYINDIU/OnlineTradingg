@@ -37,7 +37,7 @@ const MyPlan = () => {
 
   useEffect(() => {
     fetch(
-      `https://indian.munihaelectronics.com/public/api/show_p_list/95`
+      `https://indian.munihaelectronics.com/public/api/show_p_list/${userid}`
     )
       .then((res) => res.json())
       .then((data) => setActivePackages(data));

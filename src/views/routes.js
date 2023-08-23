@@ -14,6 +14,7 @@ import Tradehistory from "./examples/TradeHistory/Tradehistory";
 import PaymentSuccessComponent from "./examples/PaymentSuccessComponent/PaymentSuccessComponent";
 import ChosePlan from "./examples/MyPlan/ChosePlan";
 import Myinvestmentlist from "./examples/InvestmentList/Myinvestmentlist";
+import UserNotifications from "./examples/Notification/UserNotifications";
 var routes = [
 
   {
@@ -60,6 +61,13 @@ var routes = [
     layout: "/user",
   },
 
+  {
+    path: "/notification",
+    name: "Notifications",
+    icon: "fa-solid fa-bell text-primary",
+    component: <UserNotifications />,
+    layout: "/user"
+  },
 
   {
 
@@ -111,6 +119,7 @@ var routes = [
       // }
     ]
   },
+
   {
     path: "/plandetails/:id",
     component: <PlanDetails />,

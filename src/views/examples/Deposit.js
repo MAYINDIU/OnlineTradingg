@@ -27,7 +27,7 @@ import Transactions from "./Transactions";
 import { reload } from "firebase/auth";
 
 const Deposit = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setUpdate, update } = useContext(AuthContext);
   console.log(user)
   const [userInfo, setUserInfo] = useState({})
   useEffect(() => {
@@ -46,11 +46,12 @@ const Deposit = () => {
 
   const typeOfPayment = ["Cashfree", "HandCash"]
   const [paytype, setPayType] = useState(null);
-  const [successText, setSuccessText] = useState('');
+  // const [successText, setSuccessText] = useState('');
 
 
   const [transactioninfo, setTransactioninfo] = useState([]);
   const [depositAmount, setDepositAmount] = useState("");
+  console.log(depositAmount);
   const navigate = useNavigate();
   const w = parseInt(wallet);
   const newWallet = w + (depositAmount);
@@ -70,6 +71,53 @@ const Deposit = () => {
       .then((data) => setTransactioninfo(data));
   }, []);
 
+  const test =async (e)=>{
+
+    const depositData = {
+      userid: user?.id,
+      amount: transactionDetails?.order_amount,
+      method_type: "CashFree",
+      description: 'Payment deposited by Cashfreee',
+    };
+    console.log('Deposit Amount', depositData)
+    const emailData = {
+      to: user?.email,
+      deposit_amount:transactionDetails?.order_amount
+     
+  };
+    try {
+      const response = await axios.post(
+        "https://indian.munihaelectronics.com/public/api/deposit", depositData,
+
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      // setSuccessText(response)
+
+    }
+    catch (error) {
+      console.error("Error creating payment:", error);
+
+    }
+    try {
+      const response = axios.post('https://indian.munihaelectronics.com/public/api/send-user-deposit-email', emailData);
+      if (response.status === 200) {
+        // swal({
+        //   title: "Successflly Mailed!",
+        //   text: response?.data?.message,
+        //   icon: "Mailed",
+        // });
+      } else {
+          // Display error message to the user
+      }
+  } catch (error) {
+      // Handle errors
+  }
+  }
 
   const handleDeposit = async (e) => {
     console.log(e);
@@ -82,13 +130,8 @@ const Deposit = () => {
       amount: depositAmount,
     };
     console.log(formData)
-    const depositData = {
-      userid: user?.id,
-      amount: depositAmount,
-      method_type: "CashFree",
-      description: 'Payment deposited by Cashfreee',
-    };
-    console.log('Deposit Amount', depositData)
+
+
     if (paytype == 'Cashfree' || paytype == 'Handcash') {
       try {
         if (paytype === 'Cashfree') {
@@ -106,30 +149,15 @@ const Deposit = () => {
         console.error("Error creating payment:", error);
         // Handle error here
       }
-      // try {
-      //   const response = await axios.post(
-      //     "https://indian.munihaelectronics.com/public/api/deposit", depositData,
-
-      //     {
-      //       headers: {
-      //         "Content-Type": "multipart/form-data",
-      //       },
-      //     }
-      //   );
-
-
-      //   setSuccessText(response)
-
-      // }
-      // catch (error) {
-      //   console.error("Error creating payment:", error);
-
-      // }
+      
+   
 
     }
 
 
   };
+
+
 
   useEffect(() => {
     fetch(
@@ -139,34 +167,15 @@ const Deposit = () => {
       .then((data) => setTransactionDetails(data));
   }, []);
   console.log(transactionDetails)
+  // transactionDetails.order_amount > 0 && transactionDetails.payment_status==='success'
 
-  if (transactionDetails.cf_settlement_id!==null) {
-    const depositData = {
-      userid: user?.id,
-      amount: depositAmount,
-      method_type: "CashFree",
-      description: 'Payment deposited by Cashfreee',
-    };
-    try {
-      const response =  axios.post(
-        "https://indian.munihaelectronics.com/public/api/deposit", depositData,
-
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+   console.log(transactionDetails.payment_status);
 
 
-      setSuccessText(response)
-
-    }
-    catch (error) {
-      console.error("Error creating payment:", error);
-
-    }
-
+   
+  if (transactionDetails.cf_settlement_id!=null) {
+    test();
+    
     const userDataString = localStorage.getItem('userInfo'); // Change 'userInfo' to your actual local storage key
     let userData = {};
 
@@ -183,7 +192,7 @@ const Deposit = () => {
     const newWalletBalance = parseFloat(userData.wallet) + amountToAdd;
 
     window.localStorage.setItem('userInfo', JSON.stringify({ ...user, wallet: newWalletBalance }));
-
+    setUpdate(!update);
     swal({
       title: "Deposited Successfully",
       text: 'Success',
@@ -191,6 +200,13 @@ const Deposit = () => {
     });
     navigate('/user/index')
   }
+  // else{
+  //   swal({
+  //     title: "Deposit Faiure",
+  //     text: 'fail',
+  //     icon: "warning",
+  //   });
+  // }
 
 
 

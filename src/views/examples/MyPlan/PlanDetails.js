@@ -2,6 +2,7 @@ import { AuthContext } from "Context/AuthProvider";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { MailruIcon } from "react-share";
 import {
   Button,
   Card,
@@ -24,10 +25,23 @@ import swal from "sweetalert";
 const PlanDetails = () => {
   const [p, setPackage] = useState({});
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
+  const { user, setUpdate, update } = useContext(AuthContext);
   console.log(user);
   const wallet = user?.wallet;
   const navigate = useNavigate();
+
+  const [transactioninfo, setTransactioninfo] = useState([]);
+
+  // Fetch for transiction 
+  useEffect(() => {
+    fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`)
+      .then((res) => res.json())
+      .then((data) => setTransactioninfo(data));
+
+  }, []);
+
+
+
   //  Sweet Alert
   const warningAlert = () => {
     swal({
@@ -97,6 +111,7 @@ const PlanDetails = () => {
           "userInfo",
           JSON.stringify({ ...user, wallet: wallet - inputAmount })
         );
+        setUpdate(!update)
 
         // For Purchuse Plan
         const purchase_date = purchase_dt;
@@ -131,13 +146,40 @@ const PlanDetails = () => {
 
         // window.location.reload();
 
-
+        // For Mail Messeage 
+        const emailData = {
+          to: user?.email,
+          plan_name: p.planName,
+          active_amount: inputAmount,
+         
+      };
+  
+      try {
+          const response = await axios.post('https://indian.munihaelectronics.com/public/api/send-user-activeplan', emailData);
+          if (response.status === 200) {
+            // swal({
+            //   title: "Successflly Mailed!",
+            //   text: response?.data?.message,
+            //   icon: "Mailed",
+            // });
+          } else {
+              // Display error message to the user
+          }
+      } catch (error) {
+          // Handle errors
+      }
+// End Mail 
+        // swal({
+        //   title: "Successfully Payed!",
+        //   text: response?.data?.message,
+        //   icon: "success",
+        // });
+        navigate('/user/myplan')
         swal({
-          title: "Successflly Payed!",
+          title: "Successfully Mailed & Paied",
           text: response?.data?.message,
           icon: "success",
         });
-
         // cear input
         setInputAmount("");
         // alert(response?.data?.message);
@@ -338,37 +380,27 @@ const PlanDetails = () => {
             <Table className="" hover bordered responsive>
               <thead className="text-white bg-gradient-info">
                 <tr>
-                  <th className="text-center" scope="col ">
-                    Sl No.
-                  </th>
-                  <th className="text-center" scope="col">
-                    Date
-                  </th>
-                  <th className="text-center" scope="col">
-                    User ID
-                  </th>
-                  <th className="text-center" scope="col">
-                    Amount
-                  </th>
-                  <th className="text-center" scope="col">
-                    Description
-                  </th>
-                  <th className="text-center" scope="col">
-                    Method Type
-                  </th>
+                  <th className="text-center">Sl No</th>
+                  <th className="text-center">Amount</th>
+                  {/* <th>Transiction Type</th> */}
+                  <th className="text-center">Method Type</th>
+                  <th className="text-center">Description</th>
                 </tr>
               </thead>
               <tbody>
-                {/* {transactioninfo.map((tnx, index) => (
-              <tr>
-                <th className="text-center" scope="row">{index + 1}</th>
-                <td className="text-center">{tnx?.created_at}</td>
-                <td className="text-center">{tnx?.userid}</td>
-                <td className="text-center">{tnx?.amount}</td>
-                <td className="text-center">{tnx?.description}</td>
-                <td className="text-center">{tnx?.method_type}</td>
-              </tr>
-            ))} */}
+                {transactioninfo.slice(-6).map((tnx, index) => (
+                  tnx.tnx_type === "DR" ? (
+                    <tr key={index}>
+                      <th className="text-center" scope="row">
+                        {index + 1}
+                      </th>
+                      <td className="text-center">{tnx?.amount}</td>
+                      {/* <td className="text-center">{tnx?.tnx_type}</td> */}
+                      <td className="text-center">{tnx?.method_type}</td>
+                      <td className="text-center">{tnx?.description}</td>
+                    </tr>
+                  ) : null
+                ))}
               </tbody>
             </Table>
           </Card>

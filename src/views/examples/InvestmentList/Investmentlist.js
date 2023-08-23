@@ -97,7 +97,7 @@ const Investmentlist = () => {
                                         <td className="text-center">INR {investData?.transaction_amount}</td>
                                         <td className="text-center">{investData?.plan_name}</td>
                                         <td className="text-center">{investData?.purchase_date}</td>
-                                        <td className="text-center text-success">{investData?.status}</td>
+                                        <td className="text-center text-success text-md">{investData?.status}</td>
 
                                     </tr>
                                 ))}
