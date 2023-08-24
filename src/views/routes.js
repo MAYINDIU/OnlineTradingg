@@ -15,6 +15,7 @@ import PaymentSuccessComponent from "./examples/PaymentSuccessComponent/PaymentS
 import ChosePlan from "./examples/MyPlan/ChosePlan";
 import Myinvestmentlist from "./examples/InvestmentList/Myinvestmentlist";
 import UserNotifications from "./examples/Notification/UserNotifications";
+import ReferCode from "./examples/ReferCode";
 var routes = [
 
   {
@@ -119,6 +120,13 @@ var routes = [
       // }
     ]
   },
+  {
+    path: "/refercode",
+    name: "Referal Code",
+    icon: "fa-solid fa-money-bill-transfer text-primary",
+    component: <ReferCode />,
+    layout: "/user",
+  },
 
   {
     path: "/plandetails/:id",
@@ -137,6 +145,11 @@ var routes = [
   },
   {
     path: "/register",
+    component: <Register />,
+    layout: "/auth",
+  },
+  {
+    path: "/register/:refer_code",
     component: <Register />,
     layout: "/auth",
   },
@@ -168,13 +181,8 @@ var routes = [
     component: <Transactions />,
     layout: "/user",
   },
-  // {
-  //   path: "/tables",
-  //   name: "Tables",
-  //   icon: "ni ni-bullet-list-67 text-red",
-  //   component: <Tables />,
-  //   layout: "/user",
-  // },
+ 
+  
   {
     path: "/login",
     component: <Login />,

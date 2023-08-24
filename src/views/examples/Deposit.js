@@ -80,6 +80,11 @@ const Deposit = () => {
       description: 'Payment deposited by Cashfreee',
     };
     console.log('Deposit Amount', depositData)
+    const emailData = {
+      to: user?.email,
+      deposit_amount:transactionDetails?.order_amount
+     
+  };
     try {
       const response = await axios.post(
         "https://indian.munihaelectronics.com/public/api/deposit", depositData,
@@ -98,6 +103,20 @@ const Deposit = () => {
       console.error("Error creating payment:", error);
 
     }
+    try {
+      const response = axios.post('https://indian.munihaelectronics.com/public/api/send-user-deposit-email', emailData);
+      if (response.status === 200) {
+        // swal({
+        //   title: "Successflly Mailed!",
+        //   text: response?.data?.message,
+        //   icon: "Mailed",
+        // });
+      } else {
+          // Display error message to the user
+      }
+  } catch (error) {
+      // Handle errors
+  }
   }
 
   const handleDeposit = async (e) => {

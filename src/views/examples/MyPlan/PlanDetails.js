@@ -2,6 +2,7 @@ import { AuthContext } from "Context/AuthProvider";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { MailruIcon } from "react-share";
 import {
   Button,
   Card,
@@ -150,13 +151,40 @@ const PlanDetails = () => {
 
         // window.location.reload();
 
-
+        // For Mail Messeage 
+        const emailData = {
+          to: user?.email,
+          plan_name: p.planName,
+          active_amount: inputAmount,
+         
+      };
+  
+      try {
+          const response = await axios.post('https://indian.munihaelectronics.com/public/api/send-user-activeplan', emailData);
+          if (response.status === 200) {
+            // swal({
+            //   title: "Successflly Mailed!",
+            //   text: response?.data?.message,
+            //   icon: "Mailed",
+            // });
+          } else {
+              // Display error message to the user
+          }
+      } catch (error) {
+          // Handle errors
+      }
+// End Mail 
+        // swal({
+        //   title: "Successfully Payed!",
+        //   text: response?.data?.message,
+        //   icon: "success",
+        // });
+        navigate('/user/myplan')
         swal({
-          title: "Successflly Payed!",
+          title: "Successfully Mailed & Paied",
           text: response?.data?.message,
           icon: "success",
         });
-        navigate('/user/myplan')
         // cear input
         setInputAmount("");
         // alert(response?.data?.message);
