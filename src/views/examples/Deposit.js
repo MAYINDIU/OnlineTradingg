@@ -71,7 +71,7 @@ const Deposit = () => {
       .then((data) => setTransactioninfo(data));
   }, []);
 
-  const test =async (e)=>{
+  const test = async (e) => {
 
     const depositData = {
       userid: user?.id,
@@ -130,8 +130,8 @@ const Deposit = () => {
         console.error("Error creating payment:", error);
         // Handle error here
       }
-      
-   
+
+
 
     }
 
@@ -150,13 +150,13 @@ const Deposit = () => {
   console.log(transactionDetails)
   // transactionDetails.order_amount > 0 && transactionDetails.payment_status==='success'
 
-   console.log(transactionDetails.payment_status);
+  console.log(transactionDetails.payment_status);
 
 
-   
-  if (transactionDetails.cf_settlement_id!=null) {
+
+  if (transactionDetails.cf_settlement_id != null) {
     test();
-    
+
     const userDataString = localStorage.getItem('userInfo'); // Change 'userInfo' to your actual local storage key
     let userData = {};
 

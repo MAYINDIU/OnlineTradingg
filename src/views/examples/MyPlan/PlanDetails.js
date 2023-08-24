@@ -63,10 +63,15 @@ const PlanDetails = () => {
   const [inputAmount, setInputAmount] = useState(p?.min);
   const [isOutOfRange, setIsOutOfRange] = useState(false);
 
-  // For Date 
-  const current = new Date();
-  const purchase_dt = `${current.getDate()}/${current.getMonth() + 1
-    }/${current.getFullYear()}`;
+  const date = new Date();
+  // Format the date to YYYY-MM-DD
+  const purchase_dt = date.toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).split('/').reverse().join('-');
+
+
 
   const handleAmountChange = (e) => {
     const newValue = +e.target.value;
