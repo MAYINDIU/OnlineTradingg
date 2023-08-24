@@ -2,7 +2,7 @@ import { AuthContext } from "Context/AuthProvider";
 import axios from "axios";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useContext, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -21,6 +21,7 @@ import swal from "sweetalert";
 
 const Register = () => {
   const { providerLogin, setUser } = useContext(AuthContext);
+  const {refer_code} = useParams()
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -86,7 +87,7 @@ const Register = () => {
     const email = form.email.value;
     const password = form.password.value;
     const mobileNo = form.mobileNo.value;
-    const referalCode = form.refferalCode.value || "NA";
+    const referalCode = form.refferalCode.value || "root";
     const status = "1";
 
     const formdata = new FormData();
@@ -267,6 +268,7 @@ const Register = () => {
                   <Input
                   className="text-dark"
                     placeholder="Refferal Code"
+                    defaultValue={refer_code}
                     type="text"
                     name="refferalCode"
                   />
