@@ -8,6 +8,8 @@ import All_transactions from "./examples/Transactions/All_transactions";
 import Adminnotification from "./examples/Notification/Adminnotification";
 import Tradehistory from "./examples/TradeHistory/Tradehistory";
 import Investmentlist from "./examples/InvestmentList/Investmentlist";
+import AdminLevelSetting from "./examples/AdminLevelSetting/AdminLevelSetting";
+import UpdateLevelSetting from "./examples/AdminLevelSetting/UpdateLevelSetting";
 var adminroutes = [
   {
     path: "/index",
@@ -79,6 +81,18 @@ var adminroutes = [
     component: <Investmentlist />,
     layout: "/admin",
   },
+  {
+    path: "/AdminLevelSetting",
+    name: "Admin Level Setting",
+    icon: "fa-solid fa-list-check text-primary",
+    component: <AdminLevelSetting />,
+    layout: "/admin"
+  },
+  {
+    path: "/updateadminevel/:id",
+    component: <UpdateLevelSetting />,
+    layout: "/admin"
+  },
 
   {
     path: "/updatepackages/:id",
@@ -100,6 +114,7 @@ var adminroutes = [
     component: <PackageList />,
     layout: "/admin"
   },
+
 
 
 ];
