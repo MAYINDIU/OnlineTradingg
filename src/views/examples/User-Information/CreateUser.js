@@ -96,7 +96,7 @@ const CreateUser = () => {
                       <i class="fa-solid fa-user text-info"></i>
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input className="text-dark" placeholder="Name" type="text" name="name" />
+                    <Input className="text-dark" placeholder="Name" type="text" name="name"  required/>
                   </InputGroup>
                 </FormGroup>
                 </Col>
@@ -114,6 +114,7 @@ const CreateUser = () => {
                       type="email"
                       autoComplete="new-email"
                       name="email"
+                      required
                     />
                   </InputGroup>
                 </FormGroup>
@@ -134,6 +135,7 @@ const CreateUser = () => {
                       type="password"
                       autoComplete="new-password"
                       name="password"
+                      required
                     />
                   </InputGroup>
                 </FormGroup>
@@ -151,6 +153,7 @@ const CreateUser = () => {
                       placeholder={`Mobile Number`}
                       type="number"
                       name="mobileNo"
+                      required
                     />
                   </InputGroup>
                 </FormGroup>
