@@ -10,6 +10,7 @@ import Tradehistory from "./examples/TradeHistory/Tradehistory";
 import Investmentlist from "./examples/InvestmentList/Investmentlist";
 import AdminLevelSetting from "./examples/AdminLevelSetting/AdminLevelSetting";
 import UpdateLevelSetting from "./examples/AdminLevelSetting/UpdateLevelSetting";
+import CreateUser from "./examples/User-Information/CreateUser";
 var adminroutes = [
   {
     path: "/index",
@@ -19,14 +20,24 @@ var adminroutes = [
     layout: "/admin",
   },
   {
-    path: "/alluser",
-    name: "All User",
+    name: "User Information",
     icon: "fa-solid fa-users text-primary",
-    component: <AllUser />,
     layout: "/admin",
+    subMenu: [
+      {
+        name: 'All User',
+        path: '/admin/alluser',
+        icon:  "fa-solid fa-list text-primary",
+      },
+      {
+        name: 'Create User',
+        path: '/admin/create-user',
+        icon: "fa-solid fa-user-plus text-blue",
+      }
+    ]
   },
   {
-    path: "/addpackage",
+    // path: "/addpackage",
     name: "Investment Plans",
     icon: "fa-solid fa-warehouse text-primary",
     component: <AddPackage />,
@@ -112,6 +123,20 @@ var adminroutes = [
     // name: "Package List",
     // icon: "fa-solid fa-list text-primary",
     component: <PackageList />,
+    layout: "/admin"
+  },
+  {
+    path: "/alluser",
+    // name: "Package List",
+    // icon: "fa-solid fa-list text-primary",
+    component: <AllUser />,
+    layout: "/admin"
+  },
+  {
+    path: "/create-user",
+    // name: "Package List",
+    // icon: "fa-solid fa-user-plus text-primary",
+    component: <CreateUser />,
     layout: "/admin"
   },
 

@@ -44,6 +44,7 @@ const Register = () => {
     const userPassword = "NA";
     const referalCode = "NA";
     const status = "1";
+    const role = "user";
 
     const formdata = new FormData();
     formdata.append("name", userName);
@@ -51,6 +52,7 @@ const Register = () => {
     formdata.append("password", userPassword);
     formdata.append("referal_code", referalCode);
     formdata.append("status", status);
+    formdata.append("role", role);
 
     axios
       .post(

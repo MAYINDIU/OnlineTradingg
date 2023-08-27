@@ -167,11 +167,11 @@ const Login = () => {
         window.localStorage.setItem('userInfo', JSON.stringify(user))
 
         console.log(response);
-        if (email === "admin@gmail.com" && password === '123456') {
+        if (response.data.status === '1' && response?.data.role === 'admin') {
           navigate("/admin/index");
           window.localStorage.setItem('admin-loggedIn', true)
         }
-        else if (response.data.status === '1') {
+        else if (response.data.status === '1' && response?.data.role === 'user') {
           window.localStorage.setItem('user-loggedIn', true)
           // Successful login
           navigate(from, { replace: true });

@@ -25,9 +25,51 @@ const AllUser = () => {
     const ID=id;
     console.log(ID);
 
+
     try{
       const response = await axios.put(
         `https://indian.munihaelectronics.com/public/api/update_status/${ID}`,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+     console.log((response))
+      window.location.reload()
+     
+     
+      }
+      catch (error) {
+        console.error("Error creating payment:", error);
+        
+      }
+      // Previous Active deactivate data 
+
+    // const url = `https://indian.munihaelectronics.com/public/api/update_status/${ID}`;
+    // fetch(url, {
+    //     method: "PUT",
+    //     headers: {
+    //         "content-type": "application/json"
+    //     },
+    // })
+    // window.location.reload()
+    //     .then(res => res.json())
+    //     .then(data=>console.log(data));
+       
+      }
+}
+ const handleRole =async (id) => {
+  
+  const confirm = window.confirm("Are You Sure?");
+    if(confirm){
+    const ID=id;
+    console.log(ID);
+
+
+    try{
+      const response = await axios.put(
+        `https://indian.munihaelectronics.com/public/api/roleUpdate/${ID}`,
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -90,6 +132,7 @@ const AllUser = () => {
                 <th>Email</th>
                 <th>User ID</th>
                 <th>Status</th>
+                <th>Role</th>
               </tr>
             </thead>
             <tbody>
@@ -120,6 +163,9 @@ const AllUser = () => {
                    </Button>
                       </Link>
                     </td>
+                    {
+                      user.role === "admin" ? <td><Button onClick={() => handleRole(user?.id)}  size="sm" title="Change Role" className="btn btn-success w-100  h-12 border-none">{user?.role}</Button></td> : <td><Button onClick={() => handleRole(user?.id)} size="sm" title="Change Role" className="btn btn-info w-100  h-12 border-none">{user?.role}</Button></td>
+                    }
                   </tr>
                 ))}
             </tbody>

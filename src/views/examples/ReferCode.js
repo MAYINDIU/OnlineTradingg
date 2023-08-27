@@ -103,13 +103,13 @@ const ReferCode = () => {
               <InputGroup className="input-group-alternative">
                 <Input
                   //   onChange={(e) => setCompoundLevel(e.target.value)}
-                  value={`http://localhost:3000/auth/register/${user?.refer_code}`}
+                  value={`https://onlinetradingd.netlify.app/auth/register/${user?.refer_code}`}
                   type="text"
                 />
                 <InputGroupAddon addonType="append">
                   <InputGroupText>
                     <CopyToClipboard
-                      text={`http://localhost:3000/auth/register/${user?.refer_code}`}
+                      text={`https://onlinetradingd.netlify.app/auth/register/${user?.refer_code}`}
                     >
                       <i class="fa-solid text-info fa-copy cursor" style={{fontSize:'23px', cursor:'pointer'}} title="copied"></i>
                     </CopyToClipboard>
