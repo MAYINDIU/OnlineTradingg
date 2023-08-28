@@ -11,6 +11,8 @@ import Investmentlist from "./examples/InvestmentList/Investmentlist";
 import AdminLevelSetting from "./examples/AdminLevelSetting/AdminLevelSetting";
 import UpdateLevelSetting from "./examples/AdminLevelSetting/UpdateLevelSetting";
 import CreateUser from "./examples/User-Information/CreateUser";
+import AddPermission from "./examples/All Permissiom/AddPermission";
+import AddRole from "./examples/All Permissiom/AddRole";
 var adminroutes = [
   {
     path: "/index",
@@ -54,6 +56,25 @@ var adminroutes = [
         path: '/admin/packages',
         icon: "fa-solid fa-list text-primary",
       }
+    ]
+  },
+  {
+   
+    name: "All Permissiom",
+    icon: "fa-solid fa-warehouse text-primary",
+
+    subMenu: [
+      {
+        name: 'Add Permission',
+        path: '/admin/addpermission',
+        icon: "fa-solid fa-box-open text-blue",
+      },
+      {
+        name: 'Add Role',
+        path: '/admin/addrole',
+        icon: "fa-solid fa-box-open text-blue",
+      },
+     
     ]
   },
 
@@ -137,6 +158,20 @@ var adminroutes = [
     // name: "Package List",
     // icon: "fa-solid fa-user-plus text-primary",
     component: <CreateUser />,
+    layout: "/admin"
+  },
+  {
+    path: "/addpermission",
+    // name: "Package List",
+    // icon: "fa-solid fa-user-plus text-primary",
+    component: <AddPermission />,
+    layout: "/admin"
+  },
+  {
+    path: "/addrole",
+    // name: "Package List",
+    // icon: "fa-solid fa-user-plus text-primary",
+    component: <AddRole />,
     layout: "/admin"
   },
 

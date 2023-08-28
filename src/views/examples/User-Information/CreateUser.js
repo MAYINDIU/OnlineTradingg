@@ -194,7 +194,9 @@ const CreateUser = () => {
                         >
                             <option>----Select Role----</option>
                           <option>admin</option>
-                          <option>user</option>
+                          <option>client</option>
+                          <option>manager</option>
+                          <option>super admin</option>
                         </Input>
                       </InputGroup>
                     </FormGroup>

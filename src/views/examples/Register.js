@@ -92,7 +92,7 @@ const Register = () => {
     const mobileNo = form.mobileNo.value;
     const referalCode = form.refferalCode.value || "root";
     const status = "1";
-    const role = "user";
+    const role = "client";
 
     const formdata = new FormData();
     formdata.append("name", userName);
