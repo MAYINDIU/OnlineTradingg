@@ -171,7 +171,7 @@ const Login = () => {
           navigate("/admin/index");
           window.localStorage.setItem('admin-loggedIn', true)
         }
-        else if (response.data.status === '1' && response?.data.role === 'user') {
+        else if (response.data.status === '1' && response?.data.role === 'client') {
           window.localStorage.setItem('user-loggedIn', true)
           // Successful login
           navigate(from, { replace: true });

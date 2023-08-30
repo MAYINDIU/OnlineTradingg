@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import axios from "axios";
 import { Card, CardBody, Col, Form, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label, Row, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const AddRole = () => {
     const [name,setRole] = useState('')
@@ -39,7 +40,12 @@ console.log(permissions)
           
           setRole("");
          
-          alert(response?.data?.message)
+          swal({
+          title: "Role added successfully",
+          text: 'success' ,
+          icon: "success",
+        });
+        window.location.reload()
         } catch (error) {
           toast.error(error?.response?.data?.error);
         }

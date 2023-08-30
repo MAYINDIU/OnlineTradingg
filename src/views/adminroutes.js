@@ -13,6 +13,9 @@ import UpdateLevelSetting from "./examples/AdminLevelSetting/UpdateLevelSetting"
 import CreateUser from "./examples/User-Information/CreateUser";
 import AddPermission from "./examples/All Permissiom/AddPermission";
 import AddRole from "./examples/All Permissiom/AddRole";
+import UpdatePermission from "./examples/All Permissiom/UpdatePermission";
+import PermissionRoleWise from "./examples/All Permissiom/PermissionRoleWise";
+import PermissionTable from "./examples/All Permissiom/PermissionTable";
 var adminroutes = [
   {
     path: "/index",
@@ -72,6 +75,16 @@ var adminroutes = [
       {
         name: 'Add Role',
         path: '/admin/addrole',
+        icon: "fa-solid fa-box-open text-blue",
+      },
+      {
+        name: 'Permission Role Wise',
+        path: '/admin/permissionrolewise',
+        icon: "fa-solid fa-box-open text-blue",
+      },
+      {
+        name: 'Permission Table',
+        path: '/admin/permissiontable',
         icon: "fa-solid fa-box-open text-blue",
       },
      
@@ -168,10 +181,31 @@ var adminroutes = [
     layout: "/admin"
   },
   {
+    path: "/updatepermission/:id",
+    // name: "Package List",
+    // icon: "fa-solid fa-user-plus text-primary",
+    component: <UpdatePermission />,
+    layout: "/admin"
+  },
+  {
     path: "/addrole",
     // name: "Package List",
     // icon: "fa-solid fa-user-plus text-primary",
     component: <AddRole />,
+    layout: "/admin"
+  },
+  {
+    path: "/permissionrolewise",
+    // name: "Package List",
+    // icon: "fa-solid fa-user-plus text-primary",
+    component: <PermissionRoleWise />,
+    layout: "/admin"
+  },
+  {
+    path: "/permissiontable",
+    // name: "Package List",
+    // icon: "fa-solid fa-user-plus text-primary",
+    component: <PermissionTable />,
     layout: "/admin"
   },
 

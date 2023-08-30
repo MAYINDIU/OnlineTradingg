@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from "axios";
-import { Card, CardBody, Col, Form, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label, Row, Table } from 'reactstrap';
+import { Button, Card, CardBody, Col, Form, FormGroup, Input, InputGroup, InputGroupAddon, InputGroupText, Label, Row, Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 const AddPermission = () => {
@@ -42,6 +42,23 @@ console.log(permissions)
           alert(response?.data?.message)
         } catch (error) {
           toast.error(error?.response?.data?.error);
+        }
+      };
+
+      // delete permission 
+      const handleDelete = (id) => {
+        const confirm = window.confirm("Are you want do delete?");
+        if (confirm) {
+          const url = `https://indian.munihaelectronics.com/public/api/permission_delete/${id}`
+          fetch(url,{
+            method:'DELETE'
+          })
+          .then(res=>res.json())
+            const remaining = permissions.filter(p=> p.id !== id)
+            setAllpermissions(remaining)
+    
+          toast.success("Delete Successfull!!");
+         
         }
       };
     return (
@@ -105,12 +122,19 @@ console.log(permissions)
                     <td className="text-center">{list?.name}</td>
                     
                     <td className="flex text-center">
-                      <Link to={`/admin/updateadminevel/${list?.id}`}>
+                      <Link to={`/admin/updatepermission/${list?.id}`}>
                         <i
                           className="fa-solid fa-pen-to-square text-info mr-2"
                           style={{ width: "30px", fontSize: "23px" }}
                         ></i>
                       </Link>
+                   
+                        <i
+                          className="fa-solid fa-trash-can text-danger mr-2"
+                          onClick={()=>handleDelete(list.id)}
+                          style={{ width: "30px", fontSize: "23px" }}
+                        ></i>
+                     
                     </td>
                   </tr>
                 ))}
