@@ -20,7 +20,17 @@ const PermissionTable = () => {
   const [activeModule, setActiveModule] = useState(false);
   const [roleId, setRoleId] = useState({});
 
-  const [selected, setSelected] = useState(permissions[0].id);
+  const [selected, setSelected] = useState('');
+  const getInitialState = () => {
+    const value = "Orange";
+    return value;
+  };
+  const [value, setValue] = useState("1");
+
+  console.log(value);
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
 
   useEffect(() => {
     fetch("https://indian.munihaelectronics.com/public/api/all_roles")
@@ -28,10 +38,9 @@ const PermissionTable = () => {
       .then((data) => setPermission(data));
   }, []);
 
-  const handleChange = (event) => {
-    console.log(event.target.value);
-    setSelected(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setSelected(event.target.value);
+  // };
 
   console.log(selected);
 
@@ -46,29 +55,17 @@ const PermissionTable = () => {
         <Card className="shadow-lg border-0 p-5 ">
           <Form role="form">
             <Row className="text-left">
-              <Col lg="12" xl="12" className=" mt-3">
-                <FormGroup className="mb-3">
-                  <Label>Select Role</Label>
-                  <InputGroup className="input-group-alternative">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i class="fa-solid text-info fa-rectangle-list"></i>
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input
-                      id="exampleSelect"
-                      name="select"
-                      type="select"
-                      //   onChange={(e) => setPlanType(e.target.value)}
-                    >
-                      <select  value={selected} onChange={handleChange}>
-                        {permissions?.map((p) => (
-                          <option key={p.value} value={p.id}>{p.name}</option>
-                        ))}
-                      </select>
-                    </Input>
-                  </InputGroup>
-                </FormGroup>
+              <Col lg="12" xl="12" className=" mt-3">    
+                 <select  value={value} onChange={handleChange}>
+                {permissions?.map((p) => (
+                  <option className="shadow mt-3" lg="12" xl="12" value={p.id}>{p.name}</option>
+                ))}
+                </select>
+  
+               <h1>{value}</h1>
+                      
+                    {/* </Input> */}
+          
               </Col>
             </Row>
           </Form>
@@ -116,6 +113,7 @@ const ModuleRow = ({ moduleName, activeModule, setActiveModule }) => {
   const [permissionTypesForId, setPermissionTypesforId] = useState([]);
   const [active, setActive] = useState(false);
 
+
   const fetchPermissionTypes = () => {
     fetch(
       `https://indian.munihaelectronics.com/public/api/permission_list/${moduleName}`
@@ -142,7 +140,7 @@ const ModuleRow = ({ moduleName, activeModule, setActiveModule }) => {
     fetchPermissionTypes();
   }, [moduleName]);
   console.log(permissionTypes);
-  console.log(permissionTypesForId);
+  // console.log(permissionTypesForId);
 
   return (
     <tr>
