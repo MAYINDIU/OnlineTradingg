@@ -16,6 +16,8 @@ import ChosePlan from "./examples/MyPlan/ChosePlan";
 import Myinvestmentlist from "./examples/InvestmentList/Myinvestmentlist";
 import UserNotifications from "./examples/Notification/UserNotifications";
 import ReferCode from "./examples/ReferCode";
+import CreateTicket from "./examples/Support/CreateTicket";
+import TicketHistory from "./examples/Support/TicketHistory";
 var routes = [
 
   {
@@ -113,19 +115,35 @@ var routes = [
         // path: "/user/myplan",
         icon: "fa-solid fa-square-pen text-primary"
       },
-      // {
-      //   name: 'Plan details',
-      //   // path: "/user/myplan",
-      //   icon: "fa-solid fa-circle-info text-primary",
-      // }
+      
     ]
   },
   {
     path: "/refercode",
-    name: "Referal Code",
-    icon: "fa-solid fa-money-bill-transfer text-primary",
+    name: "Referal code",
+    icon: "fa-solid fa-hand-holding-hand text-primary",
     component: <ReferCode />,
     layout: "/user",
+  },
+  {
+
+    name: "Support",
+    icon: "fa-solid fa-phone text-primary",
+    layout: "/user",
+
+    subMenu: [
+      {
+        name: "Create Support Ticket",
+        path: "/user/create-ticket",
+        icon: "fa-solid fa-square-check text-primary",
+      },
+      {
+        name: 'Support Ticket History',
+        path: "/user/ticket-history",
+        icon: "fa-solid fa-square-pen text-primary"
+      },
+      
+    ]
   },
 
   {
@@ -172,6 +190,16 @@ var routes = [
     // name: 'Choose Plan',
     // icon: "fa-solid fa-square-check text-primary",
     component: <ChosePlan />,
+    layout: "/user",
+  },
+  {
+    path: "/create-ticket",
+    component: <CreateTicket />,
+    layout: "/user",
+  },
+  {
+    path: "/ticket-history",
+    component: <TicketHistory />,
     layout: "/user",
   },
   {

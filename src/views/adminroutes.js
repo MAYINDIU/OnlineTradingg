@@ -16,6 +16,7 @@ import AddRole from "./examples/All Permissiom/AddRole";
 import UpdatePermission from "./examples/All Permissiom/UpdatePermission";
 import PermissionRoleWise from "./examples/All Permissiom/PermissionRoleWise";
 import PermissionTable from "./examples/All Permissiom/PermissionTable";
+import UserSupportList from "./examples/Support/UserSupportList";
 var adminroutes = [
   {
     path: "/index",
@@ -91,13 +92,6 @@ var adminroutes = [
     ]
   },
 
-  // {
-  //   path: "/purchaselist",
-  //   name: "Purchase list",
-  //   icon: "fa-solid fa-cart-shopping text-primary",
-  //   component: <Purchaselist />,
-  //   layout: "/admin",
-  // },
   {
     path: "/transactionlist",
     name: "Transaction list",
@@ -133,6 +127,33 @@ var adminroutes = [
     component: <AdminLevelSetting />,
     layout: "/admin"
   },
+
+  {
+   
+    name: "Help Center",
+    icon: "fa-solid fa-warehouse text-primary",
+
+    subMenu: [
+      {
+        name: 'User Support Tickets',
+        path: '/admin/ticket-list',
+        icon: "fa-solid fa-box-open text-blue",
+      },
+      {
+        name: 'Knowledge Base',
+        path: '/admin/knowledge-base',
+        icon: "fa-solid fa-box-open text-blue",
+      },
+      {
+        name: 'FAQs',
+        path: '/admin/faqs',
+        icon: "fa-solid fa-box-open text-blue",
+      },
+     
+     
+    ]
+  },
+
   {
     path: "/updateadminevel/:id",
     component: <UpdateLevelSetting />,
@@ -206,6 +227,11 @@ var adminroutes = [
     // name: "Package List",
     // icon: "fa-solid fa-user-plus text-primary",
     component: <PermissionTable />,
+    layout: "/admin"
+  },
+  {
+    path: "/ticket-list",
+    component: <UserSupportList />,
     layout: "/admin"
   },
 
