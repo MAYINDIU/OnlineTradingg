@@ -17,6 +17,7 @@ import UpdatePermission from "./examples/All Permissiom/UpdatePermission";
 import PermissionRoleWise from "./examples/All Permissiom/PermissionRoleWise";
 import PermissionTable from "./examples/All Permissiom/PermissionTable";
 import UserSupportList from "./examples/Support/UserSupportList";
+import AdminViewTicket from "./examples/Support/AdminViewTicket";
 var adminroutes = [
   {
     path: "/index",
@@ -210,9 +211,12 @@ var adminroutes = [
   },
   {
     path: "/addrole",
-    // name: "Package List",
-    // icon: "fa-solid fa-user-plus text-primary",
     component: <AddRole />,
+    layout: "/admin"
+  },
+  {
+    path: "/view-tickets/:id",
+    component: <AdminViewTicket />,
     layout: "/admin"
   },
   {

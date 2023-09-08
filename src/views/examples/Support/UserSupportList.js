@@ -13,6 +13,7 @@ import {
   InputGroupText,
   Table,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const UserSupportList = () => {
   const { user } = useContext(AuthContext);
@@ -103,10 +104,14 @@ const UserSupportList = () => {
       cell: (row) => (
         <>
           {row?.status === "0" ? (
-            <Button className="btn-warning text-white mr-2" size="sm" onClick={()=>handleUpdate(row?.id)}>Pending</Button>
+            <Button className="btn-warning text-white mr-2 w-50" size="sm" onClick={()=>handleUpdate(row?.id)}>Open</Button>
           ) : (
-            <Button className=" btn-success text-white mr-2" size="sm" onClick={()=>handleUpdate(row?.id)}>Approved</Button>
+            <Button className=" btn-success text-white mr-2 w-50" size="sm" onClick={()=>handleUpdate(row?.id)}>Approve</Button>
           )}
+
+          <Link to={`/admin/view-tickets/${row?.id}`}>
+          <Button className="btn-info text-white mr-2 w-50" size="sm" >View</Button>
+          </Link>
         </>
       ),
       sortable: false,

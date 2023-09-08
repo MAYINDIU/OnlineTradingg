@@ -1,6 +1,7 @@
 import { AuthContext } from "Context/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
+import { Link } from "react-router-dom";
 import {
   Button,
   Card,
@@ -17,118 +18,82 @@ const TicketHistory = () => {
   const { user } = useContext(AuthContext);
 
   const id = user?.id;
+// console.log((typeof id))
   const [ticketHistory, setTicketHistory] = useState([]);
 
-  const [searchText, setSearchText] = useState("");
-  const [sortColumn, setSortColumn] = useState(null);
-  const [sortDirection, setSortDirection] = useState(null);
+  const filterUserId = ticketHistory?.filter(t=> +t?.userid === id)
+  console.log(filterUserId)
 
   useEffect(() => {
     fetch(
-      `https://indian.munihaelectronics.com/public/api/singleSupportlist/${id}`
+      `https://indian.munihaelectronics.com/public/api/all_support_list`
     )
       .then((res) => res.json())
       .then((data) => setTicketHistory(data));
-  }, [id]);
-  console.log(ticketHistory);
-
-  const handleSort = (column, direction) => {
-    setSortColumn(column.selector);
-    setSortDirection(direction);
-  };
-
-  const filteredTicketHistory = searchText
-    ? ticketHistory.filter((history) =>
-        history?.method_type.toLowerCase().includes(searchText.toLowerCase())
-      )
-    : ticketHistory;
-
-  const sortedTicketHistory =
-    sortColumn && sortDirection
-      ? [...filteredTicketHistory].sort((a, b) => {
-          if (sortDirection === "asc") {
-            return a[sortColumn] > b[sortColumn] ? 1 : -1;
-          } else if (sortDirection === "desc") {
-            return a[sortColumn] < b[sortColumn] ? 1 : -1;
-          }
-          return 0;
-        })
-      : filteredTicketHistory;
-
-  const columns = [
-    {
-      name: "Sl No.",
-      selector: (row, index) => index + 1,
-      sortable: false,
-    },
-
-    {
-      name: "Token No",
-      selector: "token_no",
-      sortable: true,
-    },
-    {
-      name: "Description",
-      selector: "description",
-      sortable: true,
-    },
-    {
-      name: "Status",
-      cell: (row) => (
-        <>
-          {row?.status === "0" ? (
-            <Button className="btn-warning text-white mr-2" size="sm">Pending</Button>
-          ) : (
-            <Button className=" btn-success text-white mr-2" size="sm">Approved</Button>
-          )}
-        </>
-      ),
-      sortable: false,
-    },
-  ];
-
-  const sortIconStyles = {
-    base: "mr-1",
-    sortNone: "hidden",
-    sortAsc: "text-green-500",
-    sortDesc: "text-red-500",
-  };
+  }, []);
+  // console.log(ticketHistory);
 
   return (
     <div>
       <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
         <h2 className="text-white text-center mb-2">Ticket History</h2>
-        <Form className="navbar-search navbar-search-dark form-inline d-md-flex justify-content-end ml-lg-auto mb-3">
-          <FormGroup className="mb-0">
-            <InputGroup className="input-group-alternative">
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>
-                  <i className="fas fa-search" />
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                onChange={(e) => setSearchText(e.target.value)}
-                placeholder="Search"
-                type="text"
-              />
-            </InputGroup>
-          </FormGroup>
-        </Form>
       </div>
       <div className="container-fluid  mb-2 mx-auto mt--7 mb-5">
-        <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
+        <Card className="shadow-lg  ">
           <Table hover bordered responsive>
-            <DataTable
-              columns={columns}
-              data={sortedTicketHistory}
-              pagination
-              highlightOnHover
-              sortServer
-              fixedHeader
-              // responsive
-              sortIconStyles={sortIconStyles}
-              onSort={handleSort}
-            />
+            <thead className="text-white bg-gradient-info">
+              <tr className="text-md text-center">
+                <th>SL No</th>
+                <th>Token No</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                filterUserId?.map((t,i)=>(
+                  <tr>
+                <th className="text-center" scope="row">
+                  {i+1}
+                </th>
+                <th className="text-center" >
+                  {t?.token_no}{" "}
+                </th>
+                <td className="text-center">{t?.description}</td>
+                <td className="text-center">
+                {
+          t?.priority === "Low" || t?.priority === "Medium" ?    <Button className="btn-warning text-white mr-2 w-50" size="sm">{t?.priority}</Button> :    <Button className="btn-danger text-white mr-2 w-50" size="sm">{t?.priority}</Button>   
+         }
+         
+                </td>
+                <td className="text-center">
+                  {t?.status === "0" ? (
+                    <Button
+                      className="btn-warning text-white w-50"
+                      size="sm"
+                    >
+                      Open
+                    </Button>
+                  ) : (
+                    <Button
+                      className="btn-success text-white w-50"
+                      size="sm"
+                    >
+                      On Progress
+                    </Button>
+                  )}
+                   <Link to={`/user/viewticket/${t?.id}`}>
+                  <Button size="sm" className="btn-info text-white w-50">View</Button>
+                </Link>
+                </td>
+
+               
+              </tr>
+                ))
+              }
+              
+            </tbody>
           </Table>
         </Card>
       </div>

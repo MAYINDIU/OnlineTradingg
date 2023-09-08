@@ -18,6 +18,7 @@ import UserNotifications from "./examples/Notification/UserNotifications";
 import ReferCode from "./examples/ReferCode";
 import CreateTicket from "./examples/Support/CreateTicket";
 import TicketHistory from "./examples/Support/TicketHistory";
+import ViewTicket from "./examples/Support/ViewTicket";
 var routes = [
 
   {
@@ -204,9 +205,12 @@ var routes = [
   },
   {
     path: "/transactions",
-    // name: "Transactions",
-    // icon: "fa-solid fa-money-bill-transfer text-primary",
     component: <Transactions />,
+    layout: "/user",
+  },
+  {
+    path: "/viewticket/:id",
+    component: <ViewTicket />,
     layout: "/user",
   },
  

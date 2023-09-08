@@ -12,12 +12,17 @@ import {
   FormGroup,
   Input,
   Row,
+  Label,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
 } from "reactstrap";
 import axios from "axios";
 import { AuthContext } from "Context/AuthProvider";
 
 const CreateTicket = () => {
   const [description, setDescrption] = useState("");
+  const [priority, setPriority] = useState("");
   const { user } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
@@ -27,6 +32,7 @@ const CreateTicket = () => {
     const data = {
       description,
       userid: user?.id,
+      priority,
     };
     console.log(user.id);
     try {
@@ -44,6 +50,7 @@ const CreateTicket = () => {
       // Reset the form inputs
 
       setDescrption("");
+      setPriority("");
 
       alert(response?.data?.message);
     } catch (error) {
@@ -74,6 +81,32 @@ const CreateTicket = () => {
                 />
 
                 <Row>
+                  <Row>
+                    <Col lg="12" xl="12" className=" mt-3">
+                      <FormGroup>
+                        <Label>Priority</Label>
+                        <InputGroup className="input-group-alternative">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i class="fa-solid text-info fa-calendar-day"></i>
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input
+                            required
+                            id="exampleSelect"
+                            name="select"
+                            type="select"
+                            onChange={(e) => setPriority(e.target.value)}
+                          >
+                            <option>----Select----</option>
+                            <option>High</option>
+                            <option>Low</option>
+                            <option>Medium</option>
+                          </Input>
+                        </InputGroup>
+                      </FormGroup>
+                    </Col>
+                  </Row>
                   <div className=" mt-4 text-center col">
                     <button className="btn btn-primary" type="submit">
                       Submit
