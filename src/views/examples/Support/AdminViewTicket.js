@@ -55,6 +55,7 @@ const AdminViewTicket = () => {
           },
         }
       );
+      window.location.reload()
       console.log(response);
 
       // Reset the form inputs
@@ -98,9 +99,9 @@ const AdminViewTicket = () => {
               <Col lg="12" xl="8" className="mt-2">
                 <h3> {ticketHistory?.description}</h3>
                 {
-                  ticketHistory?.replies?.map(r=>(
+                   ticketHistory?.replies?.map(r=>(
                    
-                    r?.userid === "6" ?  <p className="text-right"> {r?.description_read} <i class="fa-solid fa-angles-left text-info" style={{width:'30px'}}></i></p> : <p className=""><i class="fa-solid fa-angles-right text-info" style={{width:'30px'}}></i> {r?.description_read}</p>
+                    r?.userid != user?.id ?  <p className=""><span>Client: </span><i class="fa-solid fa-angles-right text-dark" style={{width:'20px'}} ></i> {r?.description_read} </p> : <p className="text-right text-info"><span className="text-gray"></span> {r?.description_read}<i class="fa-solid fa-angles-left text-dark ml-1"></i></p>
                    
                   ))
                 }

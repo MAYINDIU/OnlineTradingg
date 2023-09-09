@@ -57,6 +57,7 @@ const ViewTicket = () => {
         }
       );
       console.log(response);
+      window.location.reload()
 
       // Reset the form inputs
 
@@ -102,7 +103,7 @@ const ViewTicket = () => {
                 {
                    ticketHistory?.replies?.map(r=>(
                    
-                    r?.userid === "6" ?  <p className="text-right text-info"> {r?.description_read}  <i class="fa-solid fa-angles-left text-dark" ></i></p> : <p className=""><span className="text-gray">Admin:</span><i class="fa-solid fa-angles-right text-dark" style={{width:'30px'}}></i> {r?.description_read}</p>
+                    r?.userid == user?.id ?  <p className="text-right text-info"> {r?.description_read}  <i class="fa-solid fa-angles-left text-dark ml-1" ></i></p> : <p className=""><span className="text-gray">Admin:</span><i class="fa-solid fa-angles-right text-dark" style={{width:'20px'}}></i> {r?.description_read}</p>
                    
                   ))
                 }
