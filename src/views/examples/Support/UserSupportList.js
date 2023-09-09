@@ -1,7 +1,7 @@
 import { AuthContext } from "Context/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import axios from 'axios'
+import axios from "axios";
 import {
   Button,
   Card,
@@ -33,8 +33,8 @@ const UserSupportList = () => {
   console.log(ticketHistory);
 
   // Status Update
-  const handleUpdate = async (id)=>{
-    try{
+  const handleUpdate = async (id) => {
+    try {
       const response = await axios.put(
         `https://indian.munihaelectronics.com/public/api/tokenStatus/${id}`,
         {
@@ -43,16 +43,12 @@ const UserSupportList = () => {
           },
         }
       );
-     console.log((response))
-      window.location.reload()
-     
-     
-      }
-      catch (error) {
-        console.error("Error creating payment:", error);
-        
-      }
-  }
+      console.log(response);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error creating payment:", error);
+    }
+  };
 
   const handleSort = (column, direction) => {
     setSortColumn(column.selector);
@@ -99,18 +95,48 @@ const UserSupportList = () => {
       selector: "description",
       sortable: true,
     },
+
+    {
+      name: "Prority",
+      cell: (row) => (
+        <>
+          {row?.priority === "Low" || row?.priority === "Medium" ? (
+            <Button className="btn-warning text-white mr-2 w-75" size="sm">
+              {row?.priority}
+            </Button>
+          ) : (
+            <Button className="btn-danger text-white mr-2 w-75" size="sm">
+              {row?.priority}
+            </Button>
+          )}
+        </>
+      ),
+      sortable: false,
+    },
     {
       name: "Status",
       cell: (row) => (
         <>
           {row?.status === "0" ? (
-            <Button className="btn-warning text-white mr-2 w-50" size="sm" onClick={()=>handleUpdate(row?.id)}>Open</Button>
+            <Button
+              className="btn-warning text-white mr-2 w-50"
+              size="sm"
+              onClick={() => handleUpdate(row?.id)}
+            >
+              Open
+            </Button>
           ) : (
-            <Button className=" btn-success text-white mr-2 w-50" size="sm" onClick={()=>handleUpdate(row?.id)}>Approve</Button>
+            <Button
+              className=" btn-success text-white mr-2 w-50"
+              size="sm"
+              onClick={() => handleUpdate(row?.id)}
+            >
+              Approve
+            </Button>
           )}
 
           <Link to={`/admin/view-tickets/${row?.id}`}>
-          <Button className="btn-info text-white mr-2 w-50" size="sm" >View</Button>
+            <button className="btn-info rounded border" style={{width:'60px',height:'30px'}} >View</button>
           </Link>
         </>
       ),

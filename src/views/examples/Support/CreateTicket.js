@@ -19,11 +19,13 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import { AuthContext } from "Context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const CreateTicket = () => {
   const [description, setDescrption] = useState("");
   const [priority, setPriority] = useState("");
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     console.log(e);
@@ -46,7 +48,7 @@ const CreateTicket = () => {
         }
       );
       console.log(response);
-
+        navigate('/user/ticket-history')
       // Reset the form inputs
 
       setDescrption("");

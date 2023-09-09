@@ -64,7 +64,7 @@ const ViewTicket = () => {
       setDescrption("");
       
 
-      alert(response?.data?.message);
+      // alert(response?.data?.message);
     } catch (error) {
       toast.error(error?.response?.data?.error);
     }
@@ -72,145 +72,121 @@ const ViewTicket = () => {
 
   return (
     <div>
-      <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
-        <h2 className="text-white font-weight-bold">Ticket</h2>
-      </div>
-      <Container className="mt--7 mb-3" fluid>
-        <Row>
-          <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
-            <CardBody>
-              <Col lg="12" xl="8">
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  {user?.photoURL ? (
-                    <img
-                      alt="..."
-                      style={{ height: "100px" }}
-                      className="rounded-circle"
-                      src={user.photoURL}
-                    />
-                  ) : (
-                    <img
-                      alt="..."
-                      style={{ height: "100px" }}
-                      className="rounded-circle"
-                      src={require("../../../assets/img/theme/user.png")}
-                    />
-                  )}
-                </a>
-              </Col>
-              <Col lg="12" xl="8" className="mt-2">
-                <h3> {ticketHistory?.description}</h3>
-                {
-                   ticketHistory?.replies?.map(r=>(
-                   
-                    r?.userid == user?.id ?  <p className="text-right text-info"> {r?.description_read}  <i class="fa-solid fa-angles-left text-dark ml-1" ></i></p> : <p className=""><span className="text-gray">Admin:</span><i class="fa-solid fa-angles-right text-dark" style={{width:'20px'}}></i> {r?.description_read}</p>
-                   
-                  ))
-                }
-              </Col>
-            </CardBody>
-          </Card>
-        </Row>
+    <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
+      <h2 className="text-white font-weight-bold">Support Ticket</h2>
+    </div>
 
-
-
-        <Row>
-          <Col lg="12" xl="8">
-            <div className="mt-2">
-              <h2 className="text-gray font-weight-bold">Write Comment</h2>
-            </div>
-            <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
-              <CardBody>
-                <Form role="form" onSubmit={handleSubmit}>
-                  <Input
-                    style={{ height: "150px" }}
-                    className="text-dark"
-                    id="exampleText"
-                    name="text"
-                    type="textarea"
-                    placeholder="Write your probelm...."
-                    onChange={(e) => setDescrption(e.target.value)}
-                  />
-
-                  <Row>
-                    <div className=" mt-4 text-center col">
-                      <button className="btn btn-primary" type="submit">
-                        Submit
-                      </button>
-                    </div>
-                  </Row>
-                </Form>
-              </CardBody>
-            </Card>
+    <Row className="mt--7 mb-3 container-fluid">
+      <Col className="mb-5 mb-xl-0" xl="12">
+        <Card className="shadow border-0">
+          <Col lg="12" xl="8" className="mt-2">
+            <h3> {ticketHistory?.description}</h3>
+            {ticketHistory?.replies?.map((r) =>
+              r?.userid != user?.id ? (
+                <p className="shadow-lg rounded">
+                  <span>Admin: </span>
+                  <i
+                    class="fa-solid fa-comment-dots p-3 text-dark "
+                    
+                  ></i>
+                  {r?.description_read}
+                </p>
+              ) : (
+                <p className="text-right  ">
+                  <span className="text-white bg-primary shadow-xl p-2 rounded "> {r?.description_read}</span>
+                  <i class="fa-solid fa-comment-dots text-dark ml-1"></i>
+                </p>
+              )
+            )}
           </Col>
+        </Card>
+      </Col>
+    </Row>
+    <Row className="container-fluid">
+      <Col lg="12" xl="8">
+        <div className="mt-2">
+          <h4 className="text-gray font-weight-bold">Write Comment</h4>
+        </div>
+        <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
+          <CardBody>
+            <Form role="form" onSubmit={handleSubmit}>
+              <Input
+                style={{ height: "150px" }}
+                className="text-dark"
+                id="exampleText"
+                name="text"
+                type="textarea"
+                placeholder="Write your probelm...."
+                onChange={(e) => setDescrption(e.target.value)}
+              />
 
-           <Col lg="12" xl="4" className="mt--5">
-            <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4  ">
-              <CardBody>
-                <Row>
-                  <Col lg="12" xl="6" className="mt-2">
-                    <div>
-                      <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                        {user?.photoURL ? (
-                          <img
-                            alt="..."
-                            style={{ height: "100px" }}
-                            className="rounded-circle"
-                            src={user.photoURL}
-                          />
-                        ) : (
-                          <img
-                            alt="..."
-                            style={{ height: "100px" }}
-                            className="rounded-circle"
-                            src={require("../../../assets/img/theme/user.png")}
-                          />
-                        )}
-                      </a>
-                    </div>
-                  </Col>
-                  <Col lg="12" xl="6" className="mt-5 font-bold">
-                    <h3 className="align-items-center">Faruk</h3>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xl="12" lg="12" className="mt-3">
-                    <h5>
-                      Token Number: <span className="text-gray"> {ticketHistory?.token_no}</span>
-                    </h5>
-                  
-                    <h5>
-                      Status:{" "}
-                      {ticketHistory?.status === "0" ? (
-                    <Button
-                      className="btn-warning text-white w-25"
-                      size="sm"
-                    >
+              <Row>
+                <div className=" mt-4 text-center col">
+                  <button className="btn btn-primary" type="submit">
+                    Submit
+                  </button>
+                </div>
+              </Row>
+            </Form>
+          </CardBody>
+        </Card>
+      </Col>
+      <Col lg="12" xl="4">
+          <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4  ">
+            <CardBody>
+              <Row>
+                <Col lg="12" xl="6" className="mt-2">
+                  <div>
+                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                      {user?.photoURL ? (
+                        <img
+                          alt="..."
+                          style={{ height: "80px" }}
+                          className="rounded-circle"
+                          src={user.photoURL}
+                        />
+                      ) : (
+                        <img
+                          alt="..."
+                          style={{ height: "80px" }}
+                          className="rounded-circle"
+                          src={require("../../../assets/img/theme/user.png")}
+                        />
+                      )}
+                    </a>
+                  </div>
+                </Col>
+                <Col lg="12" xl="6" className="mt-5 font-bold">
+                  <h5 className="justify-item-center">{user?.name}</h5>
+                </Col>
+              </Row>
+              <Row>
+                <Col xl="12" lg="12" className="mt-3">
+                  <h5>
+                    Token Number: <span className="text-gray"> 0155425</span>
+                  </h5>
+                  <h5>
+                    Support Id: <span className="text-gray"> 03</span>
+                  </h5>
+                  <h5>
+                    Status:{" "}
+                    <Button className="btn-warning " size="sm">
                       Open
                     </Button>
-                  ) : (
-                    <Button
-                      className="btn-success text-white w-25"
-                      size="sm"
-                    >
-                      On Progress
-                    </Button>
-                  )}
-                    </h5>
-                  </Col>
-                </Row>
+                  </h5>
+                </Col>
+              </Row>
 
-                <div className="text-center mt-2">
-                  <Button className="btn-danger text-center" size="md">
-                    Close
-                  </Button>
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-         </Row>
-              </Container>
-    </div>
+              <div className="text-center mt-2">
+                <Button className="btn-danger text-center" size="md">
+                  Close
+                </Button>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+    </Row>
+  </div>
   );
 };
 
