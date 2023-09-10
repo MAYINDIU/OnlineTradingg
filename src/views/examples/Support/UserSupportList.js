@@ -20,10 +20,16 @@ const UserSupportList = () => {
 
   const id = user?.id;
   const [ticketHistory, setTicketHistory] = useState([]);
-
+  
   const [searchText, setSearchText] = useState("");
   const [sortColumn, setSortColumn] = useState(null);
   const [sortDirection, setSortDirection] = useState(null);
+  
+  const findUserIdFromTicketHistory = ticketHistory?.find(t=> +t?.id=== id)
+  console.log(findUserIdFromTicketHistory?.userid)
+  
+  
+  
 
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/all_support_list`)
@@ -31,6 +37,8 @@ const UserSupportList = () => {
       .then((data) => setTicketHistory(data));
   }, [id]);
   console.log(ticketHistory);
+
+ 
 
   // Status Update
   const handleUpdate = async (id) => {
@@ -119,19 +127,19 @@ const UserSupportList = () => {
         <>
           {row?.status === "0" ? (
             <Button
-              className="btn-warning text-white mr-2 w-50"
+              className="btn-warning  text-white  w-50"
               size="sm"
               onClick={() => handleUpdate(row?.id)}
             >
-              Open
+              <small>On-Progress</small>
             </Button>
           ) : (
             <Button
-              className=" btn-success text-white mr-2 w-50"
+              className=" btn-success text-white  w-50"
               size="sm"
               onClick={() => handleUpdate(row?.id)}
             >
-              Approve
+              Solved
             </Button>
           )}
 

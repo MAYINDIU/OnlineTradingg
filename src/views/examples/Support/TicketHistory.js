@@ -76,11 +76,11 @@ const TicketHistory = () => {
                   <td className="text-center">
                     {t?.status === "0" ? (
                       <Button className="btn-warning text-white w-50" size="sm">
-                        Open
+                        On-Progress
                       </Button>
                     ) : (
                       <Button className="btn-success text-white w-50" size="sm">
-                        On Progress
+                        Solved
                       </Button>
                     )}
                     <Link to={`/user/viewticket/${t?.id}`}>

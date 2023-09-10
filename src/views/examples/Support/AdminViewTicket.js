@@ -26,14 +26,23 @@ const AdminViewTicket = () => {
   const { id } = useParams();
   const [ticketHistory, setTicketHistory] = useState({});
   const [description_read, setDescrption] = useState("");
-
-  useEffect(() => {
-    fetch(
-      `https://indian.munihaelectronics.com/public/api/singleSupportlist/${id}`
-    )
-      .then((res) => res.json())
-      .then((data) => setTicketHistory(data?.support));
-  }, []);
+  const [uData, setUData] = useState({});
+  
+  
+   useEffect(() => {
+     fetch(
+       `https://indian.munihaelectronics.com/public/api/singleSupportlist/${id}`
+       )
+       .then((res) => res.json())
+       .then((data) => setTicketHistory(data?.support));
+      }, []);
+      
+      // For user Information 
+      useEffect(() => {
+       fetch(`https://indian.munihaelectronics.com/public/api/SingleUser/${ticketHistory?.userid}`)
+         .then((res) => res.json())
+         .then((data) => setUData(data));
+     }, []);
 
   const handleSubmit = async (e) => {
     console.log(e);
@@ -67,6 +76,28 @@ const AdminViewTicket = () => {
       toast.error(error?.response?.data?.error);
     }
   };
+
+  const handleStatus = async (id) => {
+    const confirm = window.confirm(`Are you sure to ${ticketHistory?.status === "0" ? 'close' : 're-open'} it?`);
+    if (confirm) {
+      const ID = id;
+
+      try {
+        const response = await axios.put(
+          `https://indian.munihaelectronics.com/public/api/tokenStatus/${ID}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log(response);
+        window.location.reload();
+      } catch (error) {
+        console.error("Error creating payment:", error);
+      }
+    }
+  };
   return (
     <div>
       <div className="container-fluid header bg-gradient-info pb-7 pt-5 pt-md-8">
@@ -76,12 +107,12 @@ const AdminViewTicket = () => {
       <Row className="mt--7 mb-3 container-fluid">
         <Col className="mb-5 mb-xl-0" xl="12">
           <Card className="shadow border-0">
-            <Col lg="12" xl="8" className="mt-2">
+            <Col lg="12" xl="12" className="mt-2">
               <h3> {ticketHistory?.description}</h3>
               {ticketHistory?.replies?.map((r) =>
                 r?.userid != user?.id ? (
                   <p className="shadow-lg rounded">
-                    <span>Client: </span>
+                    <span>{uData?.name}: </span>
                     <i
                       class="fa-solid fa-comment-dots p-3 text-dark "
                       
@@ -100,34 +131,45 @@ const AdminViewTicket = () => {
         </Col>
       </Row>
       <Row className="container-fluid">
-        <Col lg="12" xl="8">
-          <div className="mt-2">
-            <h4 className="text-gray font-weight-bold">Write Comment</h4>
-          </div>
-          <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
-            <CardBody>
-              <Form role="form" onSubmit={handleSubmit}>
-                <Input
-                  style={{ height: "150px" }}
-                  className="text-dark"
-                  id="exampleText"
-                  name="text"
-                  type="textarea"
-                  placeholder="Write your probelm...."
-                  onChange={(e) => setDescrption(e.target.value)}
-                />
+      {ticketHistory?.status === "0" ? (
+          <Col lg="12" xl="8">
+            <div className="mt-2">
+              <h4 className="text-gray font-weight-bold">Write Comment</h4>
+            </div>
+            <Card className="card-stats shadow-lg shadow-sm--hover  mb-4 mb-xl-0 ">
+              <CardBody>
+                <Form role="form" onSubmit={handleSubmit}>
+                  <Input
+                    style={{ height: "100px" }}
+                    className="text-dark"
+                    id="exampleText"
+                    name="text"
+                    type="textarea"
+                    placeholder="Write your probelm...."
+                    onChange={(e) => setDescrption(e.target.value)}
+                  />
 
-                <Row>
-                  <div className=" mt-4 text-center col">
-                    <button className="btn btn-primary" type="submit">
-                      Submit
-                    </button>
-                  </div>
-                </Row>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
+                  <Row>
+                    <div className=" mt-4 text-center col">
+                      <button className="btn btn-primary" type="submit">
+                        Submit
+                      </button>
+                    </div>
+                  </Row>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        ) : (
+          <Col lg="12" xl="8" className="mt-5">
+            <div
+              className="shadow-lg font-weight-bold d-flex justify-content-center align-items-center text-lg"
+              style={{ height: "80px" }}
+            >
+              <h3>The Conversation is closed!!</h3>
+            </div>
+          </Col>
+        )}
         <Col lg="12" xl="4" className="text-center">
             <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4  ">
               <CardBody>
@@ -150,10 +192,24 @@ const AdminViewTicket = () => {
                 </Row>
 
                 <div className="text-center mt-2">
-                  <Button className="btn-danger text-center" size="md">
+                {ticketHistory?.status === "0" ? (
+                  <Button
+                    onClick={() => handleStatus(ticketHistory?.id)}
+                    className="btn-danger text-center"
+                    size="md"
+                  >
                     Close
                   </Button>
-                </div>
+                ) : (
+                  <Button
+                    onClick={() => handleStatus(ticketHistory?.id)}
+                    className="btn-success text-center"
+                    size="md"
+                  >
+                    Re-Open
+                  </Button>
+                )}
+              </div>
               </CardBody>
             </Card>
           </Col>
