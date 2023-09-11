@@ -20,6 +20,7 @@ import {
 import axios from "axios";
 import { AuthContext } from "Context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const CreateTicket = () => {
   const [description, setDescrption] = useState("");
@@ -48,13 +49,14 @@ const CreateTicket = () => {
         }
       );
       console.log(response);
-        navigate('/user/ticket-history')
-      // Reset the form inputs
-
-      setDescrption("");
-      setPriority("");
-
-      alert(response?.data?.message);
+      swal({
+        title: "Successflly Created",
+        text: 'Ticket Created Successfully',
+        icon: "success",
+      });
+      e.target.reset()
+    // Reset the form inputs
+      
     } catch (error) {
       toast.error(error?.response?.data?.error);
     }
@@ -73,6 +75,7 @@ const CreateTicket = () => {
             <CardBody>
               <Form role="form" onSubmit={handleSubmit}>
                 <Input
+                required
                   style={{ height: "150px" }}
                   className="text-dark"
                   id="exampleText"

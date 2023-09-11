@@ -74,7 +74,7 @@ const TicketHistory = () => {
                     )}
                   </td>
                   <td className="text-center">
-                    {t?.status === "0" ? (
+                    {t?.status === "1" ? (
                       <Button className="btn-warning text-white w-50" size="sm">
                         On-Progress
                       </Button>

@@ -23,14 +23,8 @@ const UserSupportList = () => {
   
   const [searchText, setSearchText] = useState("");
   const [sortColumn, setSortColumn] = useState(null);
-  const [sortDirection, setSortDirection] = useState(null);
-  
-  const findUserIdFromTicketHistory = ticketHistory?.find(t=> +t?.id=== id)
-  console.log(findUserIdFromTicketHistory?.userid)
-  
-  
-  
-
+  const [sortDirection, setSortDirection] = useState(null)
+ 
   useEffect(() => {
     fetch(`https://indian.munihaelectronics.com/public/api/all_support_list`)
       .then((res) => res.json())
@@ -125,7 +119,7 @@ const UserSupportList = () => {
       name: "Status",
       cell: (row) => (
         <>
-          {row?.status === "0" ? (
+          {row?.status === "1" ? (
             <Button
               className="btn-warning  text-white  w-50"
               size="sm"

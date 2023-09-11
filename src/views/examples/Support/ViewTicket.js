@@ -25,20 +25,15 @@ const ViewTicket = () => {
   const { user } = useContext(AuthContext);
   const { id } = useParams();
   const [ticketHistory, setTicketHistory] = useState({});
-  const [description_read, setDescrption] = useState("");
+  // const [description_read, setDescrption] = useState("");
+  const [isClick,setIsClick] = useState(false)
 
-  useEffect(() => {
-    fetch(
-      `https://indian.munihaelectronics.com/public/api/singleSupportlist/${id}`
-    )
-      .then((res) => res.json())
-      .then((data) => setTicketHistory(data?.support));
-  }, []);
+
 
   const handleSubmit = async (e) => {
     console.log(e);
     e.preventDefault();
-
+const description_read = e.target.text.value
     const data = {
       description_read,
       userid: user?.id,
@@ -56,21 +51,26 @@ const ViewTicket = () => {
         }
       );
       console.log(response);
-      window.location.reload();
+     setIsClick(!isClick)
 
       // Reset the form inputs
-
-      setDescrption("");
-
-      // alert(response?.data?.message);
+        e.target.reset()
+      
     } catch (error) {
       toast.error(error?.response?.data?.error);
     }
   };
+  useEffect(() => {
+    fetch(
+      `https://indian.munihaelectronics.com/public/api/singleSupportlist/${id}`
+    )
+      .then((res) => res.json())
+      .then((data) => setTicketHistory(data?.support));
+  }, [id,isClick]);
 
   // Handle Status
   const handleStatus = async (id) => {
-    const confirm = window.confirm(`Are you sure to ${ticketHistory?.status === "0" ? 'close' : 're-open'} it?`);
+    const confirm = window.confirm(`Are you sure to ${ticketHistory?.status === "1" ? 'close' : 're-open'} it?`);
     if (confirm) {
       const ID = id;
 
@@ -124,7 +124,7 @@ const ViewTicket = () => {
         </Col>
       </Row>
       <Row className="container-fluid">
-        {ticketHistory?.status === "0" ? (
+        {ticketHistory?.status === "1" ? (
           <Col lg="12" xl="8">
             <div className="mt-2">
               <h4 className="text-gray font-weight-bold">Write Comment</h4>
@@ -139,7 +139,7 @@ const ViewTicket = () => {
                     name="text"
                     type="textarea"
                     placeholder="Write your probelm...."
-                    onChange={(e) => setDescrption(e.target.value)}
+                    // onChange={(e) => setDescrption(e.target.value)}
                   />
 
                   <Row>
@@ -210,7 +210,7 @@ const ViewTicket = () => {
               </Row>
 
               <div className="text-center mt-2">
-                {ticketHistory?.status === "0" ? (
+                {ticketHistory?.status === "1" ? (
                   <Button
                     onClick={() => handleStatus(ticketHistory?.id)}
                     className="btn-danger text-center"
