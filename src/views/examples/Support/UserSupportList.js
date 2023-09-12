@@ -46,7 +46,7 @@ const UserSupportList = () => {
         }
       );
       console.log(response);
-      window.location.reload();
+    
     } catch (error) {
       console.error("Error creating payment:", error);
     }
@@ -144,6 +144,7 @@ const UserSupportList = () => {
       ),
       sortable: false,
     },
+  
   ];
 
   const sortIconStyles = {

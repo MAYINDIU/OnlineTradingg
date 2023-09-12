@@ -90,6 +90,22 @@ const description_read = e.target.text.value
       }
     }
   };
+  // Handle Delete Text
+  const handleDelete = (id) => {
+    const confirm = window.confirm("Are you want do delete?");
+    if (confirm) {
+      const url = `https://indian.munihaelectronics.com/public/api/delete-msg/${id}`
+      fetch(url,{
+        method:'DELETE'
+      })
+      .then(res=>res.json())
+        const remaining = ticketHistory?.replies?.filter(p=> p.id !== id)
+        setTicketHistory(remaining)
+
+      
+     
+    }
+  };
 
   return (
     <div>
@@ -111,6 +127,12 @@ const description_read = e.target.text.value
                   </p>
                 ) : (
                   <p className="text-right  ">
+                    <i
+                          className="fa-solid fa-trash-can disable text-gray mr-2"
+                          onClick={()=>handleDelete(r?.id)}
+                          style={{ width: "15px", fontSize: "13px", cursor:'pointer' }}
+                          
+                        ></i>
                     <span className="text-white bg-primary shadow-xl p-2 rounded ">
                       {" "}
                       {r?.description_read}

@@ -2,6 +2,7 @@ import { AuthContext } from "Context/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   Button,
   Card,
@@ -29,7 +30,22 @@ const TicketHistory = () => {
       .then((res) => res.json())
       .then((data) => setTicketHistory(data));
   }, []);
-  // console.log(ticketHistory);
+  
+  const handleDelete = (id) => {
+    const confirm = window.confirm("Are you want do delete?");
+    if (confirm) {
+      const url = `https://indian.munihaelectronics.com/public/api/delete-msg/${id}`
+      fetch(url,{
+        method:'DELETE'
+      })
+      .then(res=>res.json())
+        const remaining = ticketHistory.filter(p=> p.id !== id)
+        setTicketHistory(remaining)
+
+      toast.success("Delete Successfull!!");
+     
+    }
+  };
 
   return (
     <div>
@@ -46,6 +62,7 @@ const TicketHistory = () => {
                 <th>Description</th>
                 <th>Priority</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -76,7 +93,7 @@ const TicketHistory = () => {
                   <td className="text-center">
                     {t?.status === "1" ? (
                       <Button className="btn-warning text-white w-50" size="sm">
-                        On-Progress
+                       <small> On-Progress</small>
                       </Button>
                     ) : (
                       <Button className="btn-success text-white w-50" size="sm">
@@ -88,6 +105,25 @@ const TicketHistory = () => {
                         View
                       </Button>
                     </Link>
+                  </td>
+                  <td className="text-center">
+                 {
+                  t?.status === '1' ?  <Button disabled className="border-none">
+                  <i
+                          className="fa-solid fa-trash-can disable text-gray  mr-2"
+                          onClick={()=>handleDelete(t?.id)}
+                          style={{ width: "30px", fontSize: "23px" }}
+                          
+                        ></i>
+                  </Button> : 
+                  <i
+                          className="fa-solid fa-trash-can disable text-danger mr-2"
+                          onClick={()=>handleDelete(t?.id)}
+                          style={{ width: "30px", fontSize: "23px",cursor:'pointer' }}
+                          
+                        ></i>
+                 
+                 }
                   </td>
                 </tr>
               ))}
