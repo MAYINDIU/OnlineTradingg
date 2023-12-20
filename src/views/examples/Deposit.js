@@ -21,15 +21,21 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "Context/AuthProvider";
 import cashfree from "../../../src/assets/img/icons/common/cashfree.png";
-import { Link, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import swal from "sweetalert";
 import Transactions from "./Transactions";
 import { reload } from "firebase/auth";
 
 const Deposit = () => {
   const { user, setUpdate, update } = useContext(AuthContext);
-  console.log(user)
-  const [userInfo, setUserInfo] = useState({})
+  console.log(user);
+  const [userInfo, setUserInfo] = useState({});
   useEffect(() => {
     const url = `https://indian.munihaelectronics.com/public/api/SingleUser/${user?.id}`;
     console.log(url);
@@ -38,56 +44,52 @@ const Deposit = () => {
       .then((data) => setUserInfo(data));
   }, []);
 
-
-
   const wallet = userInfo?.wallet;
-  console.log(wallet)
+  console.log(wallet);
 
-
-  const typeOfPayment = ["Cashfree", "HandCash"]
+  const typeOfPayment = ["Cashfree", "HandCash"];
   const [paytype, setPayType] = useState(null);
   // const [successText, setSuccessText] = useState('');
-
 
   const [transactioninfo, setTransactioninfo] = useState([]);
   const [depositAmount, setDepositAmount] = useState("");
   console.log(depositAmount);
   const navigate = useNavigate();
   const w = parseInt(wallet);
-  const newWallet = w + (depositAmount);
+  const newWallet = w + depositAmount;
 
   const [transactionDetails, setTransactionDetails] = useState({});
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const orderId = queryParams.get("order_id");
   const orderToken = queryParams.get("order_token");
-  console.log('Show', orderId, orderToken)
+  console.log("Show", orderId, orderToken);
 
-
-  // Show Recent 5 Transactions 
+  // Show Recent 5 Transactions
   useEffect(() => {
-    fetch(`https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`)
+    fetch(
+      `https://indian.munihaelectronics.com/public/api/show_usertransaction/${user?.id}`
+    )
       .then((res) => res.json())
       .then((data) => setTransactioninfo(data));
   }, []);
 
-  const test =async (e)=>{
-
+  const test = async (e) => {
     const depositData = {
       userid: user?.id,
       amount: transactionDetails?.order_amount,
       method_type: "CashFree",
-      description: 'Payment deposited by Cashfreee',
+      description: "Payment deposited by Cashfreee",
     };
-    console.log('Deposit Amount', depositData)
+    console.log("Deposit Amount", depositData);
     const emailData = {
       to: user?.email,
-      deposit_amount:transactionDetails?.order_amount
-     
-  };
+      deposit_amount: transactionDetails?.order_amount,
+    };
     try {
       const response = await axios.post(
-        "https://indian.munihaelectronics.com/public/api/deposit", depositData,
+        "https://indian.munihaelectronics.com/public/api/deposit",
+        depositData,
 
         {
           headers: {
@@ -97,14 +99,14 @@ const Deposit = () => {
       );
 
       // setSuccessText(response)
-
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error creating payment:", error);
-
     }
     try {
-      const response = axios.post('https://indian.munihaelectronics.com/public/api/send-user-deposit-email', emailData);
+      const response = axios.post(
+        "https://indian.munihaelectronics.com/public/api/send-user-deposit-email",
+        emailData
+      );
       if (response.status === 200) {
         // swal({
         //   title: "Successflly Mailed!",
@@ -112,12 +114,12 @@ const Deposit = () => {
         //   icon: "Mailed",
         // });
       } else {
-          // Display error message to the user
+        // Display error message to the user
       }
-  } catch (error) {
+    } catch (error) {
       // Handle errors
-  }
-  }
+    }
+  };
 
   const handleDeposit = async (e) => {
     console.log(e);
@@ -129,35 +131,26 @@ const Deposit = () => {
       mobile: user?.mobile_no,
       amount: depositAmount,
     };
-    console.log(formData)
+    console.log(formData);
 
-
-    if (paytype == 'Cashfree' || paytype == 'Handcash') {
+    if (paytype == "Cashfree" || paytype == "Handcash") {
       try {
-        if (paytype === 'Cashfree') {
+        if (paytype === "Cashfree") {
           const response = await axios.post(
             "https://indian.munihaelectronics.com/public/api/create-payment",
             formData
           );
           const paymentLink = response.data.payment_link;
           window.location.href = paymentLink;
-        }
-        else {
+        } else {
           navigate("/user/index");
         }
       } catch (error) {
         console.error("Error creating payment:", error);
         // Handle error here
       }
-      
-   
-
     }
-
-
   };
-
-
 
   useEffect(() => {
     fetch(
@@ -166,24 +159,22 @@ const Deposit = () => {
       .then((res) => res.json())
       .then((data) => setTransactionDetails(data));
   }, []);
-  console.log(transactionDetails)
+  console.log(transactionDetails);
   // transactionDetails.order_amount > 0 && transactionDetails.payment_status==='success'
 
-   console.log(transactionDetails.payment_status);
+  console.log(transactionDetails.payment_status);
 
-
-   
-  if (transactionDetails.cf_settlement_id!=null) {
+  if (transactionDetails.cf_settlement_id != null) {
     test();
-    
-    const userDataString = localStorage.getItem('userInfo'); // Change 'userInfo' to your actual local storage key
+
+    const userDataString = localStorage.getItem("userInfo"); // Change 'userInfo' to your actual local storage key
     let userData = {};
 
     if (userDataString) {
       try {
         userData = JSON.parse(userDataString);
       } catch (error) {
-        console.error('Error parsing userData from local storage', error);
+        console.error("Error parsing userData from local storage", error);
       }
     }
 
@@ -191,14 +182,17 @@ const Deposit = () => {
     const amountToAdd = transactionDetails.order_amount; // Example amount to add
     const newWalletBalance = parseFloat(userData.wallet) + amountToAdd;
 
-    window.localStorage.setItem('userInfo', JSON.stringify({ ...user, wallet: newWalletBalance }));
+    window.localStorage.setItem(
+      "userInfo",
+      JSON.stringify({ ...user, wallet: newWalletBalance })
+    );
     setUpdate(!update);
     swal({
       title: "Deposited Successfully",
-      text: 'Success',
+      text: "Success",
       icon: "success",
     });
-    navigate('/user/index')
+    navigate("/user/index");
   }
   // else{
   //   swal({
@@ -207,8 +201,6 @@ const Deposit = () => {
   //     icon: "warning",
   //   });
   // }
-
-
 
   return (
     <div>
@@ -240,33 +232,41 @@ const Deposit = () => {
                     <FormGroup className="mb-3">
                       <Label>Select Payment Method*</Label>
                       <InputGroup className="input-group-alternative">
-
                         <Input
                           id="exampleSelect"
                           name="select"
                           type="select"
                           onChange={(e) => setPayType(e.target.value)}
                         >
-
                           <option className="p-5">--select--</option>
-                          {typeOfPayment?.map(typ => <option value={typ} className="p-5">{typ}</option>)}
-
+                          {typeOfPayment?.map((typ) => (
+                            <option value={typ} className="p-5">
+                              {typ}
+                            </option>
+                          ))}
                         </Input>
                       </InputGroup>
                     </FormGroup>
                   </Col>
 
                   <div className=" mt-2 text-center col">
-                    <button className="btn btn-primary" type="submit" disabled={depositAmount == "" || paytype == null}>
+                    <button
+                      className="btn btn-primary"
+                      type="submit"
+                      disabled={depositAmount == "" || paytype == null}
+                    >
                       Add Deposit
                     </button>
                   </div>
+                  {/* <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"  type="submit"
+                      disabled={depositAmount == "" || paytype == null}>
+                    Add Deposit
+                  </button> */}
                 </Row>
               </Form>
             </CardBody>
           </Card>
         </Col>
-
 
         <Col lg="12" xl="4" className=" mt--7 ">
           <Card className="card-stats shadow-lg  shadow-sm--hover h-100  mb-4 mb-xl-0 ">
@@ -293,15 +293,14 @@ const Deposit = () => {
             <CardHeader className="border-0">
               <Row className="align-items-center">
                 <div className="col">
-                  <h3 className="mb-0">Recent Deposit History ({transactioninfo.length < 5 ? transactioninfo.length : '5'})</h3>
+                  <h3 className="mb-0">
+                    Recent Deposit History (
+                    {transactioninfo.length < 5 ? transactioninfo.length : "5"})
+                  </h3>
                 </div>
                 <div className="col text-right">
-                  <Link to='/user/transactions/deposit'>
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      size="sm"
-                    >
+                  <Link to="/user/transactions/deposit">
+                    <Button color="primary" href="#pablo" size="sm">
                       See all
                     </Button>
                   </Link>
@@ -319,7 +318,7 @@ const Deposit = () => {
                 </tr>
               </thead>
               <tbody>
-                {transactioninfo.slice(-6).map((tnx, index) => (
+                {transactioninfo.slice(-6).map((tnx, index) =>
                   tnx.tnx_type === "DR" ? (
                     <tr key={index}>
                       <th className="text-center" scope="row">
@@ -331,7 +330,7 @@ const Deposit = () => {
                       <td className="text-center">{tnx?.description}</td>
                     </tr>
                   ) : null
-                ))}
+                )}
               </tbody>
             </Table>
           </Card>

@@ -44,22 +44,7 @@ const Login = () => {
       button: "Done",
     });
   }
-  //session fetching
-  // const emailfx = 'tanmoysom@gmail.com';
-  // const passwordfx = '973257o425@MFXB';
-  // useEffect(() => {
-  //   fetch(`https://www.myfxbook.com/api/login.json?email=${emailfx}&password=${passwordfx}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setMyfx(data));
-  // }, []);
-  //    //session fetching
-  //  //https://www.myfxbook.com/api/get-history.json?session=DSL07vu14QxHWErTIAFrH40&id=12345
-  //   //individual data fetch id wise
-  //   useEffect(() => {
-  //     fetch(`https://www.myfxbook.com/api/get-history.json?session=${Session}&id=10125757`)
-  //       .then((res) => res.json())
-  //       .then((data) => setmyfxSingleAcData(data));
-  //   }, []);
+ 
 
 
 
@@ -77,10 +62,6 @@ const Login = () => {
   // Second API parameters
   const accountId = 10125757;
   const historyApiUrl = `https://www.myfxbook.com/api/get-history.json?session=${sessionToken}&id=${accountId}`;
-
-  // useEffect(() => {
-  //   fetchSessionToken();
-  // }, []);
 
   const fetchSessionToken = async () => {
     try {
